@@ -1,0 +1,279 @@
+# Front-end de site de voyage
+
+## 1. Contexte
+
+- Petite agence de voyage familiale (fondée en 1987), **7 personnes dont 4 conseillers**.
+- Situation actuelle : données dispersées dans des classeurs, fichiers Excel et notes papier → informations perdues, clients confondus (homonymes).
+- **Objectif de la V1** : une application web centralisant les **comptes** (clients et agents) et un **catalogue** propre (pays, destinations, activités).
+
+---
+
+## 2. Acteurs et rôles
+
+| Rôle | Création du compte | Description |
+|---|---|---|
+| **Visiteur** (non connecté) | — | Consulte le catalogue *(à confirmer)* |
+| **Client** | S'inscrit lui-même | Consulte le catalogue, gère son profil |
+| **Agent** | Créé par un administrateur | Gère le catalogue, consulte les clients |
+| **Administrateur** | — (actuellement : la gérante uniquement) | Agent + gestion des comptes agents |
+
+> Proposition de l'analyste (à valider) : **deux rôles côté personnel**, *agent* et *administrateur*.
+
+---
+
+## 3. Fonctionnalités
+
+### 3.1 Client
+
+- S'inscrire (nom, prénom, e-mail, téléphone, date de naissance, mot de passe).
+- Se connecter avec **e-mail + mot de passe**.
+- Récupérer son mot de passe oublié.
+- Consulter le catalogue : pays, destinations, activités par pays.
+- Modifier ses informations personnelles.
+- Demander la **suppression de son compte** (RGPD).
+- *(Peut-être)* Gérer des **favoris** (nécessite un compte).
+
+### 3.2 Agent
+
+- Se connecter (identifiants fournis par l'administrateur).
+- **CRUD du catalogue** : pays, destinations, activités.
+- Masquer / réactiver un élément du catalogue.
+- Consulter la liste des clients et leur dossier.
+- Modifier les informations d'un client (correction), **sauf son mot de passe**.
+
+### 3.3 Administrateur
+
+- Toutes les fonctionnalités de l'agent.
+- Créer les comptes agents.
+- Désactiver les comptes agents (départ d'un employé).
+
+### 3.4 Recherche et navigation (côté client)
+
+- Parcourir la liste des pays → voir les destinations et activités d'un pays.
+- Recherche par **mot-clé**.
+- Filtre par **catégorie d'activité**.
+- Filtre par **budget**.
+- Interface volontairement simple.
+
+---
+
+## 4. Modèle de données
+
+### 4.1 Entités et attributs
+
+**Client**
+- nom, prénom
+- e-mail (**unique**, identifiant de connexion)
+- téléphone
+- date de naissance
+- mot de passe
+
+**Agent**
+- nom, prénom
+- e-mail professionnel (identifiant de connexion)
+- mot de passe
+- numéro d'employé *(demandé pour la paie, hors besoin logiciel)*
+- rôle : agent / administrateur
+- statut : actif / désactivé
+
+**Pays**
+- nom
+- continent
+- langue principale
+- monnaie
+- description courte
+- visa requis pour les Belges (oui/non)
+- décalage horaire avec la Belgique
+- statut actif / masqué
+
+**Destination** (ville ou région où l'on séjourne)
+- nom
+- description
+- période idéale (ex. « de mai à septembre »)
+- prix indicatif « à partir de »
+- photo (si possible)
+- statut actif / masqué
+
+**Activité**
+- nom
+- description
+- catégorie : culture, détente, sport, gastronomie, aventure
+- durée (en heures ou en jours)
+- prix par personne
+- niveau de difficulté (pour les activités sportives)
+- âge minimum
+- statut actif / masqué
+
+### 4.2 Relations
+
+- **Pays 1 — N Destination** : une destination appartient à **un seul** pays, obligatoire ; un pays a plusieurs destinations.
+- **Pays 1 — N Activité** : une activité appartient à **un seul** pays ; une même activité n'est pas partagée entre pays (deux « cours de cuisine » dans deux pays = deux activités distinctes).
+- **Destination 0..1 — N Activité** : lien **optionnel** vers une destination précise (évolution possible).
+- *(Peut-être)* **Client N — N Destination/Activité** via les favoris.
+
+---
+
+## 5. Règles de gestion
+
+1. Un e-mail = un seul compte client.
+2. Un client ne peut pas se déclarer agent ; seul un administrateur crée les comptes agents.
+3. Mot de passe avec un **niveau de sécurité minimal** (pas de « 123456 »).
+4. Un agent ne peut **jamais** modifier le mot de passe d'un client.
+5. Un client ne voit **jamais** les comptes des autres clients ni ceux des agents.
+6. Seuls les agents créent / modifient / suppriment pays, destinations et activités.
+7. Une destination ne peut pas exister sans pays.
+8. Un pays **ne peut pas être supprimé** tant qu'il contient des destinations ou des activités.
+9. Préférer le **masquage** (actif / inactif) à la suppression : élément invisible pour les clients mais conservé en base.
+10. Suppression de compte client sur demande → **effacement des données personnelles** (RGPD).
+
+---
+
+## 6. Exigences non fonctionnelles
+
+- **Plateformes** : ordinateur et téléphone (responsive).
+- **Accessibilité / ergonomie** : grosses polices, gros boutons, navigation simple (clientèle d'environ 58 ans en moyenne).
+- **Langue** : français (néerlandais éventuellement plus tard, hors V1).
+- **Volumétrie** : ~20 pays, ~50 destinations, ~200 activités, ~1 000 clients (jusqu'à ~2 000 à terme).
+- **Conformité** : RGPD.
+- **Sécurité** : mots de passe robustes, cloisonnement des données par rôle.
+
+---
+
+## 7. Hors périmètre (V1)
+
+- Paiement en ligne
+- Réservation
+- Facturation
+- E-mails promotionnels
+- Version néerlandaise
+- Logo / identité visuelle (logo existant : bleu et blanc, avion en papier)
+
+---
+
+## 8. Points à confirmer
+
+| # | Point | Hypothèse actuelle |
+|---|---|---|
+| 1 | Accès au catalogue sans connexion | Oui (pour donner envie) |
+| 2 | Gestion des favoris | « Peut-être » |
+| 3 | Deux rôles personnel (agent / administrateur) | Proposé par l'analyste, à valider |
+| 4 | Rattachement des activités | Au pays ; destination optionnelle |
+| 5 | Âge minimum des activités | « Ça serait bien » → à confirmer comme obligatoire ou non |
+| 6 | Règles exactes de complexité du mot de passe | « Un minimum sérieux » → à définir |
+| 7 | Utilité du numéro d'employé dans l'application | Hors besoin fonctionnel, à confirmer |
+
+
+## Commandes
+
+
+
+## Git
+
+- Dépôt : https://github.com/Galgo-dev/traveler-site-front — branche principale `main`.
+- **Chaque nouvelle fonctionnalité se développe sur une nouvelle branche** (`feature/<nom-court>`,
+  `docs/<nom>` pour la documentation), jamais directement sur `main`. Intégration par pull request.
+- Messages de commit en français.
+- Ne push jamais sans ma permission
+- Ne supprime aucun commit
+
+## Technologies
+- React
+- Vite
+- Axios
+
+## Structure
+
+Organisation par **fonctionnalité** (features) + couches partagées.
+Flux : **pages → composants → hooks → services API (Axios) → API Express**.
+Un composant n'appelle jamais Axios directement.
+
+```
+old-traveler-website/
+├── public/                         # Fichiers servis tels quels (favicon, logo…)
+├── src/
+│   ├── main.jsx                    # Point d'entrée : monte <App /> dans le DOM
+│   ├── App.jsx                     # Providers globaux (auth) + routeur
+│   ├── api/
+│   │   ├── axiosClient.js          # Instance Axios : baseURL (VITE_API_URL), token, intercepteurs d'erreurs
+│   │   ├── auth.api.js             # inscription, connexion, mot de passe oublié
+│   │   ├── clients.api.js
+│   │   ├── agents.api.js
+│   │   ├── pays.api.js
+│   │   ├── destinations.api.js
+│   │   └── activites.api.js
+│   ├── routes/
+│   │   ├── AppRouter.jsx           # Déclaration de toutes les routes (react-router-dom)
+│   │   ├── ProtectedRoute.jsx      # Redirige vers /connexion si non connecté
+│   │   └── RoleRoute.jsx           # Restreint l'accès selon le rôle (client / agent / administrateur)
+│   ├── layouts/
+│   │   ├── PublicLayout.jsx        # En-tête + pied de page pour visiteurs et clients
+│   │   └── BackOfficeLayout.jsx    # Menu latéral pour agents et administrateur
+│   ├── pages/                      # Un composant par écran (assemble les composants, pas de logique métier)
+│   │   ├── public/
+│   │   │   ├── AccueilPage.jsx
+│   │   │   ├── PaysListePage.jsx
+│   │   │   ├── PaysDetailPage.jsx  # destinations + activités d'un pays
+│   │   │   ├── DestinationDetailPage.jsx
+│   │   │   └── RecherchePage.jsx   # mot-clé, catégorie, budget
+│   │   ├── auth/
+│   │   │   ├── ConnexionPage.jsx
+│   │   │   ├── InscriptionPage.jsx
+│   │   │   └── MotDePasseOubliePage.jsx
+│   │   ├── client/
+│   │   │   ├── ProfilPage.jsx      # modification des infos + demande de suppression (RGPD)
+│   │   │   └── FavorisPage.jsx     # (optionnel)
+│   │   ├── backoffice/
+│   │   │   ├── PaysGestionPage.jsx
+│   │   │   ├── DestinationsGestionPage.jsx
+│   │   │   ├── ActivitesGestionPage.jsx
+│   │   │   ├── ClientsPage.jsx
+│   │   │   ├── ClientDetailPage.jsx
+│   │   │   └── AgentsPage.jsx      # administrateur uniquement
+│   │   └── NotFoundPage.jsx
+│   ├── components/
+│   │   ├── ui/                     # Composants génériques réutilisables (gros boutons, champs, modale…)
+│   │   │   ├── Button.jsx
+│   │   │   ├── Input.jsx
+│   │   │   ├── Select.jsx
+│   │   │   ├── Modal.jsx
+│   │   │   ├── Loader.jsx
+│   │   │   └── ErrorMessage.jsx
+│   │   ├── layout/                 # Header, Footer, NavBar, SideMenu
+│   │   ├── catalogue/              # PaysCard, DestinationCard, ActiviteCard, Filtres
+│   │   └── forms/                  # PaysForm, DestinationForm, ActiviteForm, ClientForm, AgentForm
+│   ├── hooks/                      # Logique réutilisable (chargement, état, erreurs)
+│   │   ├── useAuth.js
+│   │   ├── usePays.js
+│   │   ├── useDestinations.js
+│   │   └── useActivites.js
+│   ├── context/
+│   │   └── AuthContext.jsx         # Utilisateur connecté, rôle, token, login / logout
+│   ├── utils/
+│   │   ├── formatters.js           # Prix (€), dates, durées
+│   │   ├── validators.js           # Validation côté client (dont complexité du mot de passe)
+│   │   └── constants.js            # Catégories d'activité, rôles, routes
+│   ├── styles/
+│   │   ├── variables.css           # Couleurs (bleu / blanc), tailles de police, espacements
+│   │   └── global.css              # Reset + styles de base (polices larges, responsive)
+│   └── assets/                     # Images et icônes importées dans le code
+├── tests/                          # Tests des composants et hooks
+├── .env                            # VITE_API_URL — jamais commité
+├── .env.example                    # Modèle des variables attendues — commité
+├── index.html
+├── vite.config.js
+├── package.json
+└── claude.md
+```
+
+### Conventions
+
+- **Composants** : fichiers `.jsx` en `PascalCase`, un composant par fichier ; hooks en `camelCase` préfixés par `use`.
+- **Services API** : fichiers `<ressource>.api.js`, une fonction par endpoint ; ils utilisent uniquement `axiosClient`.
+- **Pages** : assemblent layouts et composants ; les appels de données passent par les hooks.
+- **Contrôle d'accès** : les routes protégées passent par `ProtectedRoute` / `RoleRoute` ; l'API reste la source de vérité pour les droits.
+- **Variables d'environnement** : préfixe `VITE_` obligatoire, lues uniquement dans `api/axiosClient.js`.
+- **Accessibilité** : police de base ≥ 18 px, boutons larges, contrastes élevés, libellés explicites sur tous les champs (public d'environ 58 ans).
+- **Responsive** : conception mobile d'abord, valeurs communes centralisées dans `styles/variables.css`.
+
+
+## Règles du projet
