@@ -1,17 +1,17 @@
-.connexion-form {
+.formulaire {
   display: flex;
   flex-direction: column;
   gap: var(--espace-l);
 }
 
-.connexion-form__case {
+.formulaire__case {
   display: flex;
   align-items: center;
   gap: var(--espace-s);
   cursor: pointer;
 }
 
-.connexion-form__case input {
+.formulaire__case input {
   width: 1.5rem;
   height: 1.5rem;
   accent-color: var(--couleur-primaire);

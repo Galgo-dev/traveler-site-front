@@ -3,6 +3,7 @@ export const ROUTES = {
   DESTINATIONS: '/destinations',
   DESTINATION_DETAIL: '/destinations/:id',
   CONNEXION: '/connexion',
+  INSCRIPTION: '/inscription',
 }
 
 export function routeDestinationDetail(id) {

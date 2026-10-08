@@ -3,7 +3,7 @@ import { useAuth } from '../../hooks/useAuth'
 import Button from '../ui/Button'
 import ErrorMessage from '../ui/ErrorMessage'
 import Input from '../ui/Input'
-import './ConnexionForm.css'
+import './Formulaire.css'
 
 const IDENTIFIANTS_VIDES = { email: '', motDePasse: '' }
 
@@ -34,7 +34,7 @@ export default function ConnexionForm({ onSucces }) {
   }
 
   return (
-    <form className="connexion-form" onSubmit={soumettre}>
+    <form className="formulaire" onSubmit={soumettre}>
       {erreur && <ErrorMessage message={erreur.message} />}
 
       <Input
@@ -56,7 +56,7 @@ export default function ConnexionForm({ onSucces }) {
         onChange={modifierChamp}
       />
 
-      <label className="connexion-form__case">
+      <label className="formulaire__case">
         <input
           type="checkbox"
           checked={personnel}

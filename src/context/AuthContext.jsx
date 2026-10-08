@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from 'react'
-import { connecterClient, connecterPersonnel } from '../api/auth.api'
+import { connecterClient, connecterPersonnel, inscrireClient } from '../api/auth.api'
 import { TOKEN_STORAGE_KEY } from '../api/axiosClient'
 import { AuthContext } from './contexteAuth'
 
@@ -20,15 +20,26 @@ function lireUtilisateurStocke() {
 export function AuthProvider({ children }) {
   const [utilisateur, setUtilisateur] = useState(lireUtilisateurStocke)
 
-  const connexion = useCallback(async (identifiants, { personnel = false } = {}) => {
-    const connecter = personnel ? connecterPersonnel : connecterClient
-    const { token, utilisateur: utilisateurConnecte } = await connecter(identifiants)
-
+  const ouvrirSession = useCallback(({ token, utilisateur: utilisateurConnecte }) => {
     localStorage.setItem(TOKEN_STORAGE_KEY, token)
     localStorage.setItem(UTILISATEUR_STORAGE_KEY, JSON.stringify(utilisateurConnecte))
     setUtilisateur(utilisateurConnecte)
     return utilisateurConnecte
   }, [])
+
+  const connexion = useCallback(
+    async (identifiants, { personnel = false } = {}) => {
+      const connecter = personnel ? connecterPersonnel : connecterClient
+      return ouvrirSession(await connecter(identifiants))
+    },
+    [ouvrirSession],
+  )
+
+  // L'API renvoie un token à l'inscription : le nouveau client est directement connecté.
+  const inscription = useCallback(
+    async (client) => ouvrirSession(await inscrireClient(client)),
+    [ouvrirSession],
+  )
 
   const deconnexion = useCallback(() => {
     localStorage.removeItem(TOKEN_STORAGE_KEY)
@@ -37,8 +48,8 @@ export function AuthProvider({ children }) {
   }, [])
 
   const valeur = useMemo(
-    () => ({ utilisateur, estConnecte: utilisateur !== null, connexion, deconnexion }),
-    [utilisateur, connexion, deconnexion],
+    () => ({ utilisateur, estConnecte: utilisateur !== null, connexion, inscription, deconnexion }),
+    [utilisateur, connexion, inscription, deconnexion],
   )
 
   return <AuthContext.Provider value={valeur}>{children}</AuthContext.Provider>

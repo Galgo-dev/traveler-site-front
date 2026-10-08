@@ -1,7 +1,6 @@
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import ConnexionForm from '../../components/forms/ConnexionForm'
 import { ROUTES } from '../../utils/constants'
-import './ConnexionPage.css'
 
 export default function ConnexionPage() {
   const navigate = useNavigate()
@@ -9,9 +8,12 @@ export default function ConnexionPage() {
   const destination = location.state?.from ?? ROUTES.ACCUEIL
 
   return (
-    <main className="conteneur connexion-page">
+    <main className="conteneur conteneur--etroit">
       <h1>Se connecter</h1>
       <ConnexionForm onSucces={() => navigate(destination, { replace: true })} />
+      <p className="lien-alternatif">
+        Pas encore de compte ? <Link to={ROUTES.INSCRIPTION}>Créer un compte</Link>
+      </p>
     </main>
   )
 }
