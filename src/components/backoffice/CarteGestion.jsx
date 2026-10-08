@@ -1,15 +1,15 @@
 import './CarteGestion.css'
 
 /**
- * Carte d'un élément géré dans le back-office : titre, caractéristiques, statut et actions.
+ * Carte d'un élément géré dans le back-office : titre, caractéristiques, statut éventuel et actions.
  * @param {{ titre: React.ReactNode, infos: { libelle: string, valeur: React.ReactNode }[],
- *   statut: { actif: boolean, libelle: string }, actions: React.ReactNode }} props
+ *   statut?: { actif: boolean, libelle: string }, actions: React.ReactNode }} props
  */
 export default function CarteGestion({ titre, infos, statut, actions }) {
-  const classeStatut = statut.actif ? 'actif' : 'desactive'
+  const classeStatut = statut && (statut.actif ? 'actif' : 'desactive')
 
   return (
-    <article className={`carte-gestion carte-gestion--${classeStatut}`}>
+    <article className={`carte-gestion ${statut ? `carte-gestion--${classeStatut}` : ''}`.trim()}>
       <h3 className="carte-gestion__titre">{titre}</h3>
 
       <dl className="liste-infos">
@@ -19,12 +19,14 @@ export default function CarteGestion({ titre, infos, statut, actions }) {
             <dd>{valeur}</dd>
           </div>
         ))}
-        <div className="carte-gestion__info">
-          <dt>Statut</dt>
-          <dd>
-            <span className={`etiquette etiquette--${classeStatut}`}>{statut.libelle}</span>
-          </dd>
-        </div>
+        {statut && (
+          <div className="carte-gestion__info">
+            <dt>Statut</dt>
+            <dd>
+              <span className={`etiquette etiquette--${classeStatut}`}>{statut.libelle}</span>
+            </dd>
+          </div>
+        )}
       </dl>
 
       <div className="carte-gestion__actions">{actions}</div>

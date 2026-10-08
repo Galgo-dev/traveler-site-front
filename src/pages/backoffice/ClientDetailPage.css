@@ -1,0 +1,25 @@
+.dossier-client__retour {
+  color: var(--couleur-primaire);
+  font-weight: 700;
+}
+
+.dossier-client__section {
+  margin-bottom: var(--espace-xl);
+  padding: var(--espace-l);
+  border: 2px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+}
+
+.dossier-client__infos {
+  margin-bottom: var(--espace-l);
+}
+
+.dossier-client__infos dd {
+  overflow-wrap: anywhere;
+}
+
+.dossier-client__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espace-m);
+}
