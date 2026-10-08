@@ -35,10 +35,16 @@ function versClient({ prenom, nom, email, telephone, dateNaissance }) {
 }
 
 /**
- * Correction des informations d'un client par le personnel.
- * @param {{ client: object, onEnregistrer: (champs: object) => Promise<unknown>, onSucces: () => void }} props
+ * Modification des informations d'un client : correction par le personnel ou par le client lui-même.
+ * @param {{ client: object, onEnregistrer: (champs: object) => Promise<unknown>, onSucces: () => void,
+ *   libelleEnvoi?: string }} props
  */
-export default function ClientForm({ client, onEnregistrer, onSucces }) {
+export default function ClientForm({
+  client,
+  onEnregistrer,
+  onSucces,
+  libelleEnvoi = 'Enregistrer les corrections',
+}) {
   const { valeurs, erreursChamps, envoi, erreur, modifierChamp, soumettre } = useFormulaire({
     valeursInitiales: () => valeursInitiales(client),
     valider: validerClient,
@@ -66,7 +72,7 @@ export default function ClientForm({ client, onEnregistrer, onSucces }) {
       ))}
 
       <Button type="submit" disabled={envoi}>
-        {envoi ? 'Enregistrement…' : 'Enregistrer les corrections'}
+        {envoi ? 'Enregistrement…' : libelleEnvoi}
       </Button>
     </form>
   )

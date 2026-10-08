@@ -4,6 +4,7 @@ import { ROLES, ROLES_PERSONNEL } from '../utils/constants'
 import {
   effacerSession,
   enregistrerSession,
+  enregistrerUtilisateur,
   expirerSession,
   lireExpiration,
   lireUtilisateur,
@@ -62,6 +63,15 @@ export function AuthProvider({ children }) {
     [ouvrirSession],
   )
 
+  // Garde l'en-tête (« Bonjour … ») à jour après une modification du profil.
+  const mettreAJourUtilisateur = useCallback((champs) => {
+    setUtilisateur((precedent) => {
+      const utilisateurAJour = { ...precedent, ...champs }
+      enregistrerUtilisateur(utilisateurAJour)
+      return utilisateurAJour
+    })
+  }, [])
+
   const deconnexion = useCallback(() => {
     effacerSession()
     setUtilisateur(null)
@@ -80,9 +90,10 @@ export function AuthProvider({ children }) {
       sessionExpiree,
       connexion,
       inscription,
+      mettreAJourUtilisateur,
       deconnexion,
     }
-  }, [utilisateur, sessionExpiree, connexion, inscription, deconnexion])
+  }, [utilisateur, sessionExpiree, connexion, inscription, mettreAJourUtilisateur, deconnexion])
 
   return <AuthContext.Provider value={valeur}>{children}</AuthContext.Provider>
 }

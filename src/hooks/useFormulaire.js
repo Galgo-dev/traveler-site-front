@@ -37,6 +37,8 @@ export function useFormulaire({ valeursInitiales, valider, versApi, onEnregistre
       onSucces()
     } catch (erreurEnregistrement) {
       setErreur(erreurEnregistrement)
+    } finally {
+      // Le formulaire peut rester affiché après l'envoi (ex. page de profil) : le bouton redevient actif.
       setEnvoi(false)
     }
   }

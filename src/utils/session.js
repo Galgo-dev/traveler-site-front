@@ -32,6 +32,11 @@ export function enregistrerSession(token, utilisateur) {
   stockage.setItem(CLE_UTILISATEUR, JSON.stringify(utilisateur))
 }
 
+/** Remplace l'utilisateur mémorisé (ex. après modification de son profil) sans toucher au token. */
+export function enregistrerUtilisateur(utilisateur) {
+  stockage.setItem(CLE_UTILISATEUR, JSON.stringify(utilisateur))
+}
+
 export function effacerSession() {
   stockage.removeItem(CLE_TOKEN)
   stockage.removeItem(CLE_UTILISATEUR)

@@ -230,3 +230,20 @@ export function validerClient(champs) {
     dateNaissance: validerDateNaissance(champs.dateNaissance),
   })
 }
+
+/**
+ * Valide le changement de son propre mot de passe.
+ * @param {{ motDePasseActuel: string, nouveauMotDePasse: string, confirmation: string }} champs
+ * @returns {Record<string, string>} message d'erreur par champ (vide si tout est valide)
+ */
+export function validerChangementMotDePasse({ motDePasseActuel, nouveauMotDePasse, confirmation }) {
+  const { motDePasse, ...autresErreurs } = validerNouveauMotDePasse({ motDePasse: nouveauMotDePasse, confirmation })
+
+  return sansChampsValides({
+    motDePasseActuel: motDePasseActuel ? null : 'Indiquez votre mot de passe actuel.',
+    nouveauMotDePasse:
+      motDePasse ??
+      (nouveauMotDePasse === motDePasseActuel ? "Choisissez un mot de passe différent de l'actuel." : null),
+    ...autresErreurs,
+  })
+}
