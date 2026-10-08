@@ -36,3 +36,13 @@
 .bouton--secondaire:hover:not(:disabled) {
   background: var(--couleur-fond-doux);
 }
+
+.bouton--danger {
+  border-color: var(--couleur-erreur);
+  background: var(--couleur-fond);
+  color: var(--couleur-erreur);
+}
+
+.bouton--danger:hover:not(:disabled) {
+  background: var(--couleur-erreur-fond);
+}
