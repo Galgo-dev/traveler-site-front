@@ -1,0 +1,5 @@
+.confirmation__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espace-m);
+}

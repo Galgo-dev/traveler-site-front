@@ -1,0 +1,12 @@
+.agents-entete {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espace-m);
+  margin-bottom: var(--espace-m);
+}
+
+.agents-entete h1 {
+  margin: 0;
+}
