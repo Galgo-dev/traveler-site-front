@@ -1,0 +1,37 @@
+.header {
+  background: var(--couleur-primaire);
+  color: var(--couleur-fond);
+}
+
+.header__contenu {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espace-m);
+  max-width: var(--largeur-max);
+  margin: 0 auto;
+  padding: var(--espace-m);
+}
+
+.header__marque {
+  color: var(--couleur-fond);
+  font-size: var(--taille-titre-2);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.header__compte {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espace-m);
+}
+
+.header__bienvenue {
+  font-weight: 600;
+}
+
+.header :focus-visible {
+  outline-color: var(--couleur-fond);
+}

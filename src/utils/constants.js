@@ -2,6 +2,7 @@ export const ROUTES = {
   ACCUEIL: '/',
   DESTINATIONS: '/destinations',
   DESTINATION_DETAIL: '/destinations/:id',
+  CONNEXION: '/connexion',
 }
 
 export function routeDestinationDetail(id) {
