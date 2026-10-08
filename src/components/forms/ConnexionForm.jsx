@@ -25,8 +25,8 @@ export default function ConnexionForm({ onSucces }) {
     setErreur(null)
 
     try {
-      await connexion(identifiants, { personnel })
-      onSucces()
+      const utilisateur = await connexion(identifiants, { personnel })
+      onSucces(utilisateur)
     } catch (erreurConnexion) {
       setErreur(erreurConnexion)
       setEnvoi(false)

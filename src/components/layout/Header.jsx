@@ -5,13 +5,18 @@ import Button from '../ui/Button'
 import './Header.css'
 
 function ZoneCompte() {
-  const { utilisateur, estConnecte, deconnexion } = useAuth()
+  const { utilisateur, estConnecte, estPersonnel, deconnexion } = useAuth()
   const { pathname } = useLocation()
 
   if (estConnecte) {
     return (
       <div className="header__compte">
         <span className="header__bienvenue">Bonjour {utilisateur.prenom}</span>
+        {estPersonnel && (
+          <Link to={ROUTES.GESTION} className="bouton bouton--secondaire">
+            Espace agence
+          </Link>
+        )}
         <Button variante="secondaire" onClick={deconnexion}>
           Se déconnecter
         </Button>

@@ -1,0 +1,32 @@
+import { NavLink } from 'react-router-dom'
+import { useAuth } from '../../hooks/useAuth'
+import { ROUTES } from '../../utils/constants'
+import './SideMenu.css'
+
+const LIENS = [
+  { to: ROUTES.GESTION, libelle: 'Accueil de la gestion', end: true },
+  { to: ROUTES.GESTION_AGENTS, libelle: 'Comptes du personnel', administrateurSeulement: true },
+]
+
+function classeLien({ isActive }) {
+  return `menu-lateral__lien ${isActive ? 'menu-lateral__lien--actif' : ''}`.trim()
+}
+
+export default function SideMenu() {
+  const { estAdministrateur } = useAuth()
+  const liensVisibles = LIENS.filter(({ administrateurSeulement }) => !administrateurSeulement || estAdministrateur)
+
+  return (
+    <nav className="menu-lateral" aria-label="Menu de gestion">
+      <ul className="menu-lateral__liste">
+        {liensVisibles.map(({ to, libelle, end }) => (
+          <li key={to}>
+            <NavLink to={to} end={end} className={classeLien}>
+              {libelle}
+            </NavLink>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
