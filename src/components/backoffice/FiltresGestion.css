@@ -1,5 +1,5 @@
 /* Les champs passent à la ligne selon la place disponible (avec ou sans menu latéral) */
-.agents-filtres {
+.filtres-gestion {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
@@ -10,14 +10,14 @@
   background: var(--couleur-fond-doux);
 }
 
-.agents-filtres > .champ {
+.filtres-gestion > .champ {
   flex: 1 1 12rem;
 }
 
-.agents-filtres > .champ:first-child {
+.filtres-gestion > .champ:first-child {
   flex-basis: 100%;
 }
 
-.agents-filtres > .bouton {
+.filtres-gestion > .bouton {
   flex: 1 1 12rem;
 }

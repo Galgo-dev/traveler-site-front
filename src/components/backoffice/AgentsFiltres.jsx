@@ -1,20 +1,9 @@
-import { useState } from 'react'
-import { LIBELLES_ROLE, LIBELLES_STATUT_COMPTE } from '../../utils/constants'
-import Button from '../ui/Button'
-import Input from '../ui/Input'
-import Select from '../ui/Select'
-import './AgentsFiltres.css'
+import { LIBELLES_ROLE, LIBELLES_STATUT_COMPTE, versOptions } from '../../utils/constants'
+import FiltresGestion from './FiltresGestion'
 
-const TOUS = { valeur: '', libelle: 'Tous' }
-
-const OPTIONS_ROLE = [
-  TOUS,
-  ...Object.entries(LIBELLES_ROLE).map(([valeur, libelle]) => ({ valeur, libelle })),
-]
-
-const OPTIONS_STATUT = [
-  TOUS,
-  ...Object.entries(LIBELLES_STATUT_COMPTE).map(([valeur, libelle]) => ({ valeur, libelle })),
+const LISTES = [
+  { name: 'role', label: 'Rôle', options: versOptions(LIBELLES_ROLE) },
+  { name: 'statut', label: 'Statut', options: versOptions(LIBELLES_STATUT_COMPTE) },
 ]
 
 /**
@@ -22,37 +11,6 @@ const OPTIONS_STATUT = [
  * @param {{ filtres: { q: string, role: string, statut: string },
  *   onRechercher: (filtres: { q: string, role: string, statut: string }) => void }} props
  */
-export default function AgentsFiltres({ filtres, onRechercher }) {
-  const [valeurs, setValeurs] = useState(filtres)
-
-  function modifierChamp(event) {
-    const { name, value } = event.target
-    setValeurs((precedentes) => ({ ...precedentes, [name]: value }))
-  }
-
-  function soumettre(event) {
-    event.preventDefault()
-    onRechercher({ ...valeurs, q: valeurs.q.trim() })
-  }
-
-  return (
-    <form className="agents-filtres" role="search" onSubmit={soumettre}>
-      <Input
-        label="Rechercher (nom, prénom ou e-mail)"
-        type="search"
-        name="q"
-        value={valeurs.q}
-        onChange={modifierChamp}
-      />
-      <Select label="Rôle" name="role" options={OPTIONS_ROLE} value={valeurs.role} onChange={modifierChamp} />
-      <Select
-        label="Statut"
-        name="statut"
-        options={OPTIONS_STATUT}
-        value={valeurs.statut}
-        onChange={modifierChamp}
-      />
-      <Button type="submit">Rechercher</Button>
-    </form>
-  )
+export default function AgentsFiltres(props) {
+  return <FiltresGestion libelleRecherche="Rechercher (nom, prénom ou e-mail)" listes={LISTES} {...props} />
 }

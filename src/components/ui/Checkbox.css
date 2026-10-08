@@ -1,0 +1,14 @@
+.case-a-cocher {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-s);
+  min-height: 3rem;
+  cursor: pointer;
+}
+
+.case-a-cocher input {
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  accent-color: var(--couleur-primaire);
+}

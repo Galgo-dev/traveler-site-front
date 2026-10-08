@@ -1,0 +1,4 @@
+textarea.champ__input {
+  resize: vertical;
+  line-height: var(--interligne);
+}

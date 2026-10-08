@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { LIBELLES_ROLE, ROLES } from '../../utils/constants'
+import { LIBELLES_ROLE, ROLES, versOptions } from '../../utils/constants'
 import { REGLE_MOT_DE_PASSE, validerAgent } from '../../utils/validators'
 import Button from '../ui/Button'
 import ErrorMessage from '../ui/ErrorMessage'
@@ -30,7 +30,7 @@ const CHAMPS_MOT_DE_PASSE = [
   },
 ]
 
-const OPTIONS_ROLE = Object.entries(LIBELLES_ROLE).map(([valeur, libelle]) => ({ valeur, libelle }))
+const OPTIONS_ROLE = versOptions(LIBELLES_ROLE)
 
 function valeursInitiales(agent) {
   return {
