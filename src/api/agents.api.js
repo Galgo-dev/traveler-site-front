@@ -30,3 +30,44 @@ export async function getAgentById(id, { signal } = {}) {
   const { data } = await axiosClient.get(`/agents/${id}`, { signal })
   return data
 }
+
+/**
+ * Crée un compte du personnel (administrateur uniquement).
+ * @param {{ nom: string, prenom: string, email: string, motDePasse: string,
+ *   numeroEmploye: string, role: 'agent'|'administrateur' }} agent
+ */
+export async function creerAgent(agent) {
+  const { data } = await axiosClient.post('/agents', agent)
+  return data
+}
+
+/**
+ * Modifie un compte du personnel, sans toucher au mot de passe (administrateur uniquement).
+ * @param {number|string} id
+ * @param {{ nom?: string, prenom?: string, email?: string, numeroEmploye?: string,
+ *   role?: 'agent'|'administrateur' }} champs
+ */
+export async function modifierAgent(id, champs) {
+  const { data } = await axiosClient.patch(`/agents/${id}`, champs)
+  return data
+}
+
+/**
+ * Active ou désactive un compte du personnel (administrateur uniquement).
+ * @param {number|string} id
+ * @param {boolean} actif
+ */
+export async function changerStatutAgent(id, actif) {
+  const { data } = await axiosClient.patch(`/agents/${id}/statut`, { actif })
+  return data
+}
+
+/**
+ * Définit un nouveau mot de passe pour un compte du personnel (administrateur uniquement).
+ * @param {number|string} id
+ * @param {string} motDePasse
+ */
+export async function definirMotDePasseAgent(id, motDePasse) {
+  const { data } = await axiosClient.put(`/agents/${id}/mot-de-passe`, { motDePasse })
+  return data
+}
