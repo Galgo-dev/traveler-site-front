@@ -1,3 +1,5 @@
+import { ROLES_PERSONNEL } from './constants'
+
 const LONGUEUR_MIN_MOT_DE_PASSE = 10
 const FORMAT_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const FORMAT_TELEPHONE = /^\+?[\d\s./-]{8,20}$/
@@ -19,6 +21,14 @@ export function validerMotDePasse(motDePasse) {
     /\d/.test(motDePasse)
 
   return estValide ? null : `Le mot de passe doit comporter ${REGLE_MOT_DE_PASSE.toLowerCase()}`
+}
+
+function validerConfirmation(motDePasse, confirmation) {
+  return confirmation === motDePasse ? null : 'Les deux mots de passe ne sont pas identiques.'
+}
+
+function sansChampsValides(erreurs) {
+  return Object.fromEntries(Object.entries(erreurs).filter(([, message]) => message))
 }
 
 function validerDateNaissance(dateNaissance) {
@@ -45,9 +55,45 @@ export function validerInscription(champs) {
       : 'Indiquez un numéro de téléphone valide, par exemple 0470 12 34 56.',
     dateNaissance: validerDateNaissance(champs.dateNaissance),
     motDePasse: validerMotDePasse(champs.motDePasse),
-    confirmation:
-      champs.confirmation === champs.motDePasse ? null : 'Les deux mots de passe ne sont pas identiques.',
+    confirmation: validerConfirmation(champs.motDePasse, champs.confirmation),
   }
 
-  return Object.fromEntries(Object.entries(erreurs).filter(([, message]) => message))
+  return sansChampsValides(erreurs)
+}
+
+/**
+ * Valide le choix d'un nouveau mot de passe et de sa confirmation.
+ * @param {{ motDePasse: string, confirmation: string }} champs
+ * @returns {Record<string, string>} message d'erreur par champ (vide si tout est valide)
+ */
+export function validerNouveauMotDePasse({ motDePasse, confirmation }) {
+  return sansChampsValides({
+    motDePasse: validerMotDePasse(motDePasse),
+    confirmation: validerConfirmation(motDePasse, confirmation),
+  })
+}
+
+/**
+ * Valide le formulaire de création ou de modification d'un compte du personnel.
+ * Le mot de passe n'est demandé qu'à la création.
+ * @param {{ nom: string, prenom: string, email: string, numeroEmploye: string, role: string,
+ *   motDePasse?: string, confirmation?: string }} champs
+ * @param {{ creation: boolean }} options
+ * @returns {Record<string, string>} message d'erreur par champ (vide si tout est valide)
+ */
+export function validerAgent(champs, { creation }) {
+  const erreurs = {
+    nom: champs.nom.trim() ? null : 'Indiquez le nom.',
+    prenom: champs.prenom.trim() ? null : 'Indiquez le prénom.',
+    email: FORMAT_EMAIL.test(champs.email.trim())
+      ? null
+      : "Indiquez l'adresse e-mail professionnelle, par exemple prenom.nom@agence.be.",
+    numeroEmploye: champs.numeroEmploye.trim() ? null : "Indiquez le numéro d'employé.",
+    role: ROLES_PERSONNEL.includes(champs.role) ? null : 'Choisissez un rôle.',
+  }
+
+  return {
+    ...sansChampsValides(erreurs),
+    ...(creation ? validerNouveauMotDePasse(champs) : {}),
+  }
 }
