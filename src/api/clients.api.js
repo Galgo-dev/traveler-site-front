@@ -59,3 +59,13 @@ export async function modifierClient(id, champs) {
 export async function supprimerClient(id) {
   await axiosClient.delete(`/clients/${id}`)
 }
+
+/**
+ * Modifie le profil du client connecté (jamais son mot de passe, qui a sa propre route).
+ * @param {{ nom?: string, prenom?: string, email?: string, telephone?: string, dateNaissance?: string }} champs
+ * @returns {Promise<object>} le profil à jour
+ */
+export async function modifierMonProfil(champs) {
+  const { data } = await axiosClient.patch('/clients/moi', champs)
+  return data
+}

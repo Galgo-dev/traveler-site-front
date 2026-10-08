@@ -30,3 +30,12 @@ export async function connecterPersonnel(identifiants) {
   const { data } = await axiosClient.post('/auth/agents/connexion', identifiants)
   return data
 }
+
+/**
+ * Change le mot de passe de l'utilisateur connecté (client ou membre du personnel).
+ * @param {{ motDePasseActuel: string, nouveauMotDePasse: string }} motsDePasse
+ */
+export async function changerMotDePasse(motsDePasse) {
+  const { data } = await axiosClient.patch('/auth/mot-de-passe', motsDePasse)
+  return data
+}
