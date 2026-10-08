@@ -1,0 +1,38 @@
+/* Gros boutons, utilisables aussi sur des liens via les classes .bouton */
+.bouton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: var(--espace-s) var(--espace-l);
+  border: 2px solid var(--couleur-primaire);
+  border-radius: var(--rayon);
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.bouton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.bouton--primaire {
+  background: var(--couleur-primaire);
+  color: var(--couleur-fond);
+}
+
+.bouton--primaire:hover:not(:disabled) {
+  background: var(--couleur-primaire-fonce);
+}
+
+.bouton--secondaire {
+  background: var(--couleur-fond);
+  color: var(--couleur-primaire);
+}
+
+.bouton--secondaire:hover:not(:disabled) {
+  background: var(--couleur-fond-doux);
+}

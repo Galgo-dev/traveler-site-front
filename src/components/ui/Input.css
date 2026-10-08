@@ -1,0 +1,23 @@
+.champ {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-xs);
+}
+
+.champ__label {
+  font-weight: 600;
+}
+
+.champ__input {
+  min-height: 3rem;
+  padding: var(--espace-s) var(--espace-m);
+  border: 2px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+  font: inherit;
+  color: var(--couleur-texte);
+  background: var(--couleur-fond);
+}
+
+.champ__input:focus-visible {
+  border-color: var(--couleur-primaire);
+}
