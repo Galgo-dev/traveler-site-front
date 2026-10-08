@@ -1,6 +1,5 @@
 import axios from 'axios'
-
-export const TOKEN_STORAGE_KEY = 'token'
+import { lireToken } from '../utils/session'
 
 const MESSAGE_SERVEUR_INJOIGNABLE =
   'Le serveur est injoignable. Veuillez réessayer dans quelques instants.'
@@ -13,7 +12,7 @@ const axiosClient = axios.create({
 })
 
 function ajouterToken(config) {
-  const token = localStorage.getItem(TOKEN_STORAGE_KEY)
+  const token = lireToken()
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
   }

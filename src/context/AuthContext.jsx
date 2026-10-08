@@ -1,29 +1,14 @@
 import { useCallback, useMemo, useState } from 'react'
 import { connecterClient, connecterPersonnel, inscrireClient } from '../api/auth.api'
-import { TOKEN_STORAGE_KEY } from '../api/axiosClient'
 import { ROLES, ROLES_PERSONNEL } from '../utils/constants'
+import { effacerSession, enregistrerSession, lireUtilisateur } from '../utils/session'
 import { AuthContext } from './contexteAuth'
 
-const UTILISATEUR_STORAGE_KEY = 'utilisateur'
-
-function lireUtilisateurStocke() {
-  const utilisateur = localStorage.getItem(UTILISATEUR_STORAGE_KEY)
-  const token = localStorage.getItem(TOKEN_STORAGE_KEY)
-  if (!utilisateur || !token) return null
-
-  try {
-    return JSON.parse(utilisateur)
-  } catch {
-    return null
-  }
-}
-
 export function AuthProvider({ children }) {
-  const [utilisateur, setUtilisateur] = useState(lireUtilisateurStocke)
+  const [utilisateur, setUtilisateur] = useState(lireUtilisateur)
 
   const ouvrirSession = useCallback(({ token, utilisateur: utilisateurConnecte }) => {
-    localStorage.setItem(TOKEN_STORAGE_KEY, token)
-    localStorage.setItem(UTILISATEUR_STORAGE_KEY, JSON.stringify(utilisateurConnecte))
+    enregistrerSession(token, utilisateurConnecte)
     setUtilisateur(utilisateurConnecte)
     return utilisateurConnecte
   }, [])
@@ -43,8 +28,7 @@ export function AuthProvider({ children }) {
   )
 
   const deconnexion = useCallback(() => {
-    localStorage.removeItem(TOKEN_STORAGE_KEY)
-    localStorage.removeItem(UTILISATEUR_STORAGE_KEY)
+    effacerSession()
     setUtilisateur(null)
   }, [])
 
