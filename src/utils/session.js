@@ -36,3 +36,39 @@ export function effacerSession() {
   stockage.removeItem(CLE_TOKEN)
   stockage.removeItem(CLE_UTILISATEUR)
 }
+
+/**
+ * Date d'expiration de la session (en millisecondes), lue dans le champ `exp` du token JWT,
+ * ou null si elle est inconnue. Le contenu du token n'est pas vérifié ici : l'API reste
+ * la seule à contrôler sa validité.
+ */
+export function lireExpiration() {
+  const token = lireToken()
+  if (!token) return null
+
+  try {
+    const contenuBase64 = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')
+    const { exp } = JSON.parse(atob(contenuBase64))
+    return typeof exp === 'number' ? exp * 1000 : null
+  } catch {
+    return null
+  }
+}
+
+const abonnesExpiration = new Set()
+
+/**
+ * Prévient quand la session expire (date atteinte ou refus 401 de l'API).
+ * @param {() => void} rappel
+ * @returns {() => void} fonction de désabonnement
+ */
+export function surExpiration(rappel) {
+  abonnesExpiration.add(rappel)
+  return () => abonnesExpiration.delete(rappel)
+}
+
+/** Ferme la session de l'onglet et prévient les abonnés (le contexte d'authentification). */
+export function expirerSession() {
+  effacerSession()
+  abonnesExpiration.forEach((rappel) => rappel())
+}

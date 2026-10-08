@@ -1,5 +1,7 @@
 import axios from 'axios'
-import { lireToken } from '../utils/session'
+import { expirerSession, lireToken } from '../utils/session'
+
+const HTTP_NON_AUTORISE = 401
 
 const MESSAGE_SERVEUR_INJOIGNABLE =
   'Le serveur est injoignable. Veuillez réessayer dans quelques instants.'
@@ -34,9 +36,18 @@ function creerErreurApi(error) {
   return new Error(MESSAGE_ERREUR_INCONNUE)
 }
 
+// Un 401 sur une requête qui portait le token signifie que la session n'est plus valable
+// (expirée, ou compte désactivé entre-temps). Un 401 sans token (ex. mauvais mot de passe) n'est pas concerné.
+function estSessionRefusee(error) {
+  return error.response?.status === HTTP_NON_AUTORISE && Boolean(error.config?.headers?.Authorization)
+}
+
 function normaliserErreur(error) {
   if (axios.isCancel(error)) {
     return Promise.reject(error)
+  }
+  if (estSessionRefusee(error)) {
+    expirerSession()
   }
   return Promise.reject(creerErreurApi(error))
 }
