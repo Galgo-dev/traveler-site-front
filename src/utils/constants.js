@@ -5,6 +5,7 @@ export const ROUTES = {
   CONNEXION: '/connexion',
   INSCRIPTION: '/inscription',
   FAVORIS: '/favoris',
+  PROFIL: '/profil',
   GESTION: '/gestion',
   GESTION_AGENTS: '/gestion/agents',
   GESTION_PAYS: '/gestion/pays',

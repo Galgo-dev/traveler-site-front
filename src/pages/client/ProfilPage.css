@@ -1,0 +1,6 @@
+.profil__section {
+  margin-bottom: var(--espace-xl);
+  padding: var(--espace-l);
+  border: 2px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+}
