@@ -1,0 +1,28 @@
+/* Placé au-dessus du lien qui couvre toute la carte destination, pour rester cliquable. */
+.bouton-favori {
+  position: relative;
+  z-index: 1;
+  margin-top: var(--espace-m);
+}
+
+.bouton-favori__bouton {
+  gap: var(--espace-s);
+  width: 100%;
+  text-align: center;
+}
+
+.bouton-favori__coeur {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.bouton-favori__bouton--actif {
+  background: var(--couleur-fond-doux);
+}
+
+.bouton-favori__erreur {
+  margin: var(--espace-s) 0 0;
+  color: var(--couleur-erreur);
+  font-size: var(--taille-petit);
+  font-weight: 600;
+}

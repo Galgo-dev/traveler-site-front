@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
 import ActiviteCard from '../../components/catalogue/ActiviteCard'
+import BoutonFavori from '../../components/catalogue/BoutonFavori'
 import DestinationPhoto from '../../components/catalogue/DestinationPhoto'
 import InfosPratiques from '../../components/catalogue/InfosPratiques'
 import ErrorMessage from '../../components/ui/ErrorMessage'
@@ -50,7 +51,7 @@ function SectionInfosPratiques({ paysId }) {
 }
 
 function FicheDestination({ destination }) {
-  const { nom, description, periodeIdeale, prixAPartirDe, photoUrl, pays, paysId, activites = [] } =
+  const { id, nom, description, periodeIdeale, prixAPartirDe, photoUrl, pays, paysId, activites = [] } =
     destination
   // Sécurité d'affichage : un élément masqué ne doit jamais être visible côté client.
   const activitesVisibles = activites.filter((activite) => activite.actif !== false)
@@ -84,6 +85,8 @@ function FicheDestination({ destination }) {
               </div>
             )}
           </dl>
+
+          <BoutonFavori type="destinations" id={id} nom={nom} />
         </div>
       </section>
 

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { routeDestinationDetail } from '../../utils/constants'
 import { formaterPrix } from '../../utils/formatters'
+import BoutonFavori from './BoutonFavori'
 import DestinationPhoto from './DestinationPhoto'
 import './DestinationCard.css'
 
@@ -44,6 +45,8 @@ export default function DestinationCard({ destination, niveauTitre = 2 }) {
         <p className="destination-card__invite" aria-hidden="true">
           Voir les détails et activités →
         </p>
+
+        <BoutonFavori type="destinations" id={id} nom={nom} />
       </div>
     </article>
   )
