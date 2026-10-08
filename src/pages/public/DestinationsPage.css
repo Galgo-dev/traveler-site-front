@@ -2,24 +2,3 @@
   margin-bottom: var(--espace-xl);
   color: var(--couleur-texte-secondaire);
 }
-
-.destinations-grille {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--espace-l);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-@media (min-width: 700px) {
-  .destinations-grille {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 1100px) {
-  .destinations-grille {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}

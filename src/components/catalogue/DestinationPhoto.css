@@ -1,0 +1,14 @@
+.destination-photo {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.destination-photo--absente {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--couleur-fond-doux);
+  color: var(--couleur-primaire);
+  font-size: 3rem;
+}

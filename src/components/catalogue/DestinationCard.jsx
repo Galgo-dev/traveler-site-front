@@ -1,25 +1,27 @@
+import { Link } from 'react-router-dom'
+import { routeDestinationDetail } from '../../utils/constants'
 import { formaterPrix } from '../../utils/formatters'
+import DestinationPhoto from './DestinationPhoto'
 import './DestinationCard.css'
 
 export default function DestinationCard({ destination }) {
-  const { nom, description, periodeIdeale, prixAPartirDe, photoUrl, pays } = destination
+  const { id, nom, description, periodeIdeale, prixAPartirDe, photoUrl, pays } = destination
 
   return (
     <article className="destination-card">
-      {photoUrl ? (
-        <img className="destination-card__photo" src={photoUrl} alt={`Vue de ${nom}`} loading="lazy" />
-      ) : (
-        <div className="destination-card__photo destination-card__photo--absente" aria-hidden="true">
-          ✈
-        </div>
-      )}
+      <DestinationPhoto nom={nom} photoUrl={photoUrl} />
 
       <div className="destination-card__contenu">
         {pays && <p className="destination-card__pays">{pays.nom}</p>}
-        <h2 className="destination-card__nom">{nom}</h2>
+        <h2 className="destination-card__nom">
+          {/* Le lien s'étend à toute la carte (voir ::after dans le CSS). */}
+          <Link className="destination-card__lien" to={routeDestinationDetail(id)}>
+            {nom}
+          </Link>
+        </h2>
         {description && <p>{description}</p>}
 
-        <dl className="destination-card__infos">
+        <dl className="liste-infos destination-card__infos">
           {periodeIdeale && (
             <div>
               <dt>Période idéale</dt>
@@ -33,6 +35,10 @@ export default function DestinationCard({ destination }) {
             </div>
           )}
         </dl>
+
+        <p className="destination-card__invite" aria-hidden="true">
+          Voir les détails et activités →
+        </p>
       </div>
     </article>
   )

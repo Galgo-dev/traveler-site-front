@@ -10,7 +10,7 @@ function ListeDestinations({ destinations }) {
   }
 
   return (
-    <ul className="destinations-grille">
+    <ul className="grille-cartes">
       {destinations.map((destination) => (
         <li key={destination.id}>
           <DestinationCard destination={destination} />
