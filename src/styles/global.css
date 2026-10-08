@@ -1,0 +1,57 @@
+@import './variables.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--police);
+  font-size: var(--taille-texte);
+  line-height: var(--interligne);
+  color: var(--couleur-texte);
+  background: var(--couleur-fond);
+}
+
+h1,
+h2,
+h3 {
+  margin: 0 0 var(--espace-m);
+  line-height: 1.25;
+  color: var(--couleur-primaire-fonce);
+}
+
+h1 {
+  font-size: var(--taille-titre-1);
+}
+
+h2 {
+  font-size: var(--taille-titre-2);
+}
+
+p {
+  margin: 0 0 var(--espace-m);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+:focus-visible {
+  outline: 3px solid var(--couleur-primaire);
+  outline-offset: 3px;
+}
+
+.conteneur {
+  width: 100%;
+  max-width: var(--largeur-max);
+  margin: 0 auto;
+  padding: var(--espace-l) var(--espace-m);
+}

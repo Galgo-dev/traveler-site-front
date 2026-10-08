@@ -1,0 +1,68 @@
+.destination-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+  background: var(--couleur-fond);
+  box-shadow: var(--ombre);
+}
+
+.destination-card__photo {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.destination-card__photo--absente {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--couleur-fond-doux);
+  color: var(--couleur-primaire);
+  font-size: 3rem;
+}
+
+.destination-card__contenu {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: var(--espace-l);
+}
+
+.destination-card__pays {
+  margin-bottom: var(--espace-xs);
+  color: var(--couleur-primaire);
+  font-size: var(--taille-petit);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.destination-card__nom {
+  margin-bottom: var(--espace-s);
+}
+
+.destination-card__infos {
+  display: grid;
+  gap: var(--espace-s);
+  margin: auto 0 0;
+  padding-top: var(--espace-m);
+  border-top: 1px solid var(--couleur-bordure);
+}
+
+.destination-card__infos dt {
+  color: var(--couleur-texte-secondaire);
+  font-size: var(--taille-petit);
+}
+
+.destination-card__infos dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.destination-card__prix {
+  color: var(--couleur-primaire-fonce);
+  font-size: 1.25rem;
+}
