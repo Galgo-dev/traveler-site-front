@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useState } from 'react'
 import { connecterClient, connecterPersonnel, inscrireClient } from '../api/auth.api'
 import { TOKEN_STORAGE_KEY } from '../api/axiosClient'
+import { ROLES, ROLES_PERSONNEL } from '../utils/constants'
 import { AuthContext } from './contexteAuth'
 
 const UTILISATEUR_STORAGE_KEY = 'utilisateur'
@@ -47,10 +48,19 @@ export function AuthProvider({ children }) {
     setUtilisateur(null)
   }, [])
 
-  const valeur = useMemo(
-    () => ({ utilisateur, estConnecte: utilisateur !== null, connexion, inscription, deconnexion }),
-    [utilisateur, connexion, inscription, deconnexion],
-  )
+  const valeur = useMemo(() => {
+    const role = utilisateur?.role ?? null
+    return {
+      utilisateur,
+      role,
+      estConnecte: utilisateur !== null,
+      estPersonnel: ROLES_PERSONNEL.includes(role),
+      estAdministrateur: role === ROLES.ADMINISTRATEUR,
+      connexion,
+      inscription,
+      deconnexion,
+    }
+  }, [utilisateur, connexion, inscription, deconnexion])
 
   return <AuthContext.Provider value={valeur}>{children}</AuthContext.Provider>
 }
