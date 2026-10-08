@@ -247,3 +247,23 @@ export function validerChangementMotDePasse({ motDePasseActuel, nouveauMotDePass
     ...autresErreurs,
   })
 }
+
+const FORMAT_JETON_REINITIALISATION = /^[0-9a-f]{64}$/i
+
+/** Le lien reçu par e-mail contient un jeton de 64 caractères hexadécimaux. */
+export function estJetonReinitialisationValide(jeton) {
+  return FORMAT_JETON_REINITIALISATION.test(jeton ?? '')
+}
+
+/**
+ * Valide la demande de lien de réinitialisation.
+ * @param {{ email: string }} champs
+ * @returns {Record<string, string>} message d'erreur par champ (vide si tout est valide)
+ */
+export function validerDemandeReinitialisation({ email }) {
+  return sansChampsValides({
+    email: FORMAT_EMAIL.test(email.trim())
+      ? null
+      : 'Indiquez une adresse e-mail valide, par exemple nom@exemple.be.',
+  })
+}
