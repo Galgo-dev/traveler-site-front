@@ -4,8 +4,13 @@ import { formaterPrix } from '../../utils/formatters'
 import DestinationPhoto from './DestinationPhoto'
 import './DestinationCard.css'
 
-export default function DestinationCard({ destination }) {
+/**
+ * @param {{ destination: object, niveauTitre?: 2 | 3 }} props
+ *   niveauTitre : niveau du titre de la carte, selon la hiérarchie de la page
+ */
+export default function DestinationCard({ destination, niveauTitre = 2 }) {
   const { id, nom, description, periodeIdeale, prixAPartirDe, photoUrl, pays } = destination
+  const Titre = `h${niveauTitre}`
 
   return (
     <article className="destination-card">
@@ -13,12 +18,12 @@ export default function DestinationCard({ destination }) {
 
       <div className="destination-card__contenu">
         {pays && <p className="destination-card__pays">{pays.nom}</p>}
-        <h2 className="destination-card__nom">
+        <Titre className="destination-card__nom">
           {/* Le lien s'étend à toute la carte (voir ::after dans le CSS). */}
           <Link className="destination-card__lien" to={routeDestinationDetail(id)}>
             {nom}
           </Link>
-        </h2>
+        </Titre>
         {description && <p>{description}</p>}
 
         <dl className="liste-infos destination-card__infos">

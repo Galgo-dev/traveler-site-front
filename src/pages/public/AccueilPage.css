@@ -1,0 +1,77 @@
+/* Bandeau d'accueil : texte blanc sur fond bleu foncé (contraste élevé) */
+.accueil__bandeau {
+  padding: var(--espace-xl) 0;
+  color: var(--couleur-fond);
+  background: linear-gradient(135deg, var(--couleur-primaire-fonce), var(--couleur-primaire));
+}
+
+.accueil__titre {
+  color: var(--couleur-fond);
+  font-size: 2.25rem;
+}
+
+.accueil__accroche {
+  max-width: 40rem;
+  margin-bottom: var(--espace-l);
+  font-size: 1.25rem;
+}
+
+.accueil__bouton {
+  display: block;
+  min-height: 3.5rem;
+  padding: var(--espace-m) var(--espace-l);
+  border-radius: var(--rayon);
+  color: var(--couleur-primaire-fonce);
+  background: var(--couleur-fond);
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: var(--ombre);
+}
+
+.accueil__bouton:hover {
+  background: var(--couleur-fond-doux);
+}
+
+/* Contour blanc : reste visible sur le fond bleu */
+.accueil__bouton:focus-visible {
+  outline-color: var(--couleur-fond);
+}
+
+.accueil__section {
+  padding: var(--espace-l) 0;
+}
+
+.accueil__lien-suite {
+  display: inline-block;
+  margin-top: var(--espace-l);
+  padding: var(--espace-s) 0;
+  color: var(--couleur-primaire);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.accueil__atout {
+  padding: var(--espace-l);
+  border-radius: var(--rayon);
+  background: var(--couleur-fond-doux);
+}
+
+.accueil__atout p {
+  margin: 0;
+}
+
+@media (min-width: 700px) {
+  .accueil__bandeau {
+    padding: 4rem 0;
+  }
+
+  .accueil__titre {
+    font-size: 3rem;
+  }
+
+  .accueil__bouton {
+    display: inline-block;
+  }
+}
