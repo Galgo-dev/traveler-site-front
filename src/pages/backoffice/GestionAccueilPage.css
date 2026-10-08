@@ -1,0 +1,25 @@
+.raccourci-gestion {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-s);
+  height: 100%;
+  padding: var(--espace-l);
+  border: 2px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+  background: var(--couleur-fond);
+  box-shadow: var(--ombre);
+  color: var(--couleur-texte);
+  text-decoration: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.raccourci-gestion:hover {
+  border-color: var(--couleur-primaire);
+  background: var(--couleur-fond-doux);
+}
+
+.raccourci-gestion__titre {
+  color: var(--couleur-primaire-fonce);
+  font-size: var(--taille-titre-2);
+  font-weight: 700;
+}

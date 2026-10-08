@@ -35,16 +35,18 @@ export function usePaysDetail(id) {
  * @param {{ page?: number, q?: string, continent?: string }} filtres
  */
 export function useGestionPays(filtres = {}) {
-  const { elements, ...gestion } = useGestionCatalogue(API_PAYS, filtres)
+  return useGestionCatalogue(API_PAYS, filtres)
+}
 
-  return { pays: elements, ...gestion }
+function versOptionPays({ id, nom, actif }) {
+  return { valeur: String(id), libelle: actif ? nom : `${nom} (masqué)` }
 }
 
 /**
- * Tous les pays, masqués compris, pour alimenter les listes déroulantes du back-office.
+ * Tous les pays, masqués compris, sous forme d'options pour les listes déroulantes du back-office.
  */
 export function useOptionsPays() {
   const { donnees, chargement, erreur } = useRequete(getPays, TOUS_LES_PAYS)
 
-  return { pays: donnees?.donnees ?? [], chargement, erreur }
+  return { options: (donnees?.donnees ?? []).map(versOptionPays), chargement, erreur }
 }

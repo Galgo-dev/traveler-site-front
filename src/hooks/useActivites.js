@@ -20,7 +20,5 @@ const API_ACTIVITES = {
  * @param {{ page?: number, q?: string, paysId?: number, categorie?: string }} filtres
  */
 export function useGestionActivites(filtres = {}) {
-  const { elements, ...gestion } = useGestionCatalogue(API_ACTIVITES, filtres)
-
-  return { activites: elements, ...gestion }
+  return useGestionCatalogue(API_ACTIVITES, filtres)
 }

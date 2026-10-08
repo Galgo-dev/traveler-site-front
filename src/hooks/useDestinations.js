@@ -42,17 +42,20 @@ export function useDestinations(filtres = {}) {
  * @param {{ page?: number, q?: string, paysId?: number }} filtres
  */
 export function useGestionDestinations(filtres = {}) {
-  const { elements, ...gestion } = useGestionCatalogue(API_DESTINATIONS, filtres)
+  return useGestionCatalogue(API_DESTINATIONS, filtres)
+}
 
-  return { destinations: elements, ...gestion }
+function versOptionDestination({ id, nom, actif }) {
+  return { valeur: String(id), libelle: actif ? nom : `${nom} (masquée)` }
 }
 
 /**
- * Toutes les destinations d'un pays, masquées comprises (liste déroulante du formulaire d'activité).
+ * Toutes les destinations d'un pays, masquées comprises, sous forme d'options
+ * (liste déroulante du formulaire d'activité).
  * @param {number|string|null} paysId
  */
-export function useDestinationsDuPays(paysId) {
+export function useOptionsDestinations(paysId) {
   const { donnees, chargement, erreur } = useRequete(chargerDestinationsDuPays, paysId || null)
 
-  return { destinations: donnees?.donnees ?? [], chargement, erreur }
+  return { options: (donnees?.donnees ?? []).map(versOptionDestination), chargement, erreur }
 }
