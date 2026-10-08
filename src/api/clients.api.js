@@ -30,3 +30,32 @@ export async function getClientById(id, { signal } = {}) {
   const { data } = await axiosClient.get(`/clients/${id}`, { signal })
   return data
 }
+
+/**
+ * Récupère les favoris d'un client, éléments masqués compris (personnel uniquement).
+ * @param {number|string} id
+ * @param {{ signal?: AbortSignal }} options
+ * @returns {Promise<{ destinations: object[], activites: object[] }>}
+ */
+export async function getFavorisClient(id, { signal } = {}) {
+  const { data } = await axiosClient.get(`/clients/${id}/favoris`, { signal })
+  return data
+}
+
+/**
+ * Corrige les informations d'un client, jamais son mot de passe (personnel uniquement).
+ * @param {number|string} id
+ * @param {{ nom?: string, prenom?: string, email?: string, telephone?: string, dateNaissance?: string }} champs
+ */
+export async function modifierClient(id, champs) {
+  const { data } = await axiosClient.patch(`/clients/${id}`, champs)
+  return data
+}
+
+/**
+ * Efface le compte et les données personnelles d'un client à sa demande (RGPD, personnel uniquement).
+ * @param {number|string} id
+ */
+export async function supprimerClient(id) {
+  await axiosClient.delete(`/clients/${id}`)
+}
