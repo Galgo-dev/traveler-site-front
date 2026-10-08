@@ -1,0 +1,45 @@
+.infos-pratiques {
+  display: grid;
+  gap: var(--espace-l);
+}
+
+.infos-pratiques__bloc {
+  padding: var(--espace-l);
+  border: 1px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+  background: var(--couleur-fond);
+}
+
+.infos-pratiques__bloc h3 {
+  font-size: 1.25rem;
+}
+
+.infos-pratiques__visa {
+  display: inline-block;
+  margin-bottom: var(--espace-m);
+  padding: var(--espace-s) var(--espace-m);
+  border-radius: var(--rayon);
+  font-weight: 700;
+}
+
+.infos-pratiques__visa--requis {
+  background: var(--couleur-erreur-fond);
+  color: var(--couleur-erreur);
+}
+
+.infos-pratiques__visa--libre {
+  background: var(--couleur-succes-fond);
+  color: var(--couleur-succes);
+}
+
+.infos-pratiques__avertissement {
+  margin: 0;
+  color: var(--couleur-texte-secondaire);
+  font-size: var(--taille-petit);
+}
+
+@media (min-width: 900px) {
+  .infos-pratiques {
+    grid-template-columns: 1fr 1fr;
+  }
+}

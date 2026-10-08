@@ -55,3 +55,7 @@
     align-items: start;
   }
 }
+
+.destination-detail__section {
+  margin-bottom: var(--espace-xl);
+}

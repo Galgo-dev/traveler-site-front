@@ -1,9 +1,11 @@
 import { Link, useParams } from 'react-router-dom'
 import ActiviteCard from '../../components/catalogue/ActiviteCard'
 import DestinationPhoto from '../../components/catalogue/DestinationPhoto'
+import InfosPratiques from '../../components/catalogue/InfosPratiques'
 import ErrorMessage from '../../components/ui/ErrorMessage'
 import Loader from '../../components/ui/Loader'
 import { useDestination } from '../../hooks/useDestination'
+import { usePaysDetail } from '../../hooks/usePays'
 import { ROUTES } from '../../utils/constants'
 import { formaterPrix } from '../../utils/formatters'
 import './DestinationDetailPage.css'
@@ -32,8 +34,23 @@ function ListeActivites({ activites }) {
   )
 }
 
+function SectionInfosPratiques({ paysId }) {
+  const { pays, chargement, erreur } = usePaysDetail(paysId)
+
+  return (
+    <section className="destination-detail__section" aria-labelledby="titre-infos-pratiques">
+      <h2 id="titre-infos-pratiques">Formalités et infos pratiques</h2>
+      {chargement && <Loader message="Chargement des informations pratiques…" />}
+      {!chargement && erreur && (
+        <ErrorMessage message="Les informations pratiques sont momentanément indisponibles." />
+      )}
+      {!chargement && pays && <InfosPratiques pays={pays} />}
+    </section>
+  )
+}
+
 function FicheDestination({ destination }) {
-  const { nom, description, periodeIdeale, prixAPartirDe, photoUrl, pays, activites = [] } =
+  const { nom, description, periodeIdeale, prixAPartirDe, photoUrl, pays, paysId, activites = [] } =
     destination
   // Sécurité d'affichage : un élément masqué ne doit jamais être visible côté client.
   const activitesVisibles = activites.filter((activite) => activite.actif !== false)
@@ -70,7 +87,9 @@ function FicheDestination({ destination }) {
         </div>
       </section>
 
-      <section aria-labelledby="titre-activites">
+      <SectionInfosPratiques paysId={paysId} />
+
+      <section className="destination-detail__section" aria-labelledby="titre-activites">
         <h2 id="titre-activites">Activités sur place ({activitesVisibles.length})</h2>
         <ListeActivites activites={activitesVisibles} />
       </section>

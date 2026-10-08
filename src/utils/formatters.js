@@ -19,3 +19,16 @@ export function formaterDuree(duree, unite = 'heures') {
   const libelle = duree < 2 ? libelles.singulier : libelles.pluriel
   return `${formateurNombre.format(duree)} ${libelle}`
 }
+
+/** Ex. : 0 → « Même heure qu'en Belgique » ; 8 → « +8 h » ; -5.5 → « −5 h 30 ». */
+export function formaterDecalageHoraire(heures) {
+  if (!heures) return "Même heure qu'en Belgique"
+
+  const signe = heures > 0 ? '+' : '−'
+  const totalMinutes = Math.round(Math.abs(heures) * 60)
+  const h = Math.floor(totalMinutes / 60)
+  const minutes = totalMinutes % 60
+  const libelle = minutes ? `${h} h ${String(minutes).padStart(2, '0')}` : `${h} h`
+
+  return `${signe}${libelle} par rapport à la Belgique`
+}
