@@ -335,8 +335,23 @@ Mot de passe : au moins 10 caractères, une majuscule, une minuscule et un chiff
 | DELETE | `http://localhost:3000/api/clients/moi` | Client | Supprimer son compte (RGPD) — corps : `motDePasse` |
 | GET | `http://localhost:3000/api/clients` | Personnel | Liste des clients — query : `page`, `limite`, `q` |
 | GET | `http://localhost:3000/api/clients/:id` | Personnel | Dossier d'un client |
+| GET | `http://localhost:3000/api/clients/:id/favoris` | Personnel | Favoris d'un client, éléments masqués compris |
 | PATCH | `http://localhost:3000/api/clients/:id` | Personnel | Corriger un client (jamais le mot de passe) |
 | DELETE | `http://localhost:3000/api/clients/:id` | Personnel | Effacement RGPD sur demande du client |
+
+### Favoris du client connecté
+
+`:id` est l'identifiant de la destination ou de l'activité (pas de corps à envoyer).
+
+| Méthode | URL | Accès | Description |
+|---|---|---|---|
+| GET | `http://localhost:3000/api/clients/moi/favoris` | Client | Ses favoris visibles — réponse : `{ "destinations": [...], "activites": [...] }` |
+| PUT | `http://localhost:3000/api/clients/moi/favoris/destinations/:id` | Client | Ajouter une destination (201 si ajoutée, 200 si déjà présente) |
+| DELETE | `http://localhost:3000/api/clients/moi/favoris/destinations/:id` | Client | Retirer une destination (204 ; 404 si absente des favoris) |
+| PUT | `http://localhost:3000/api/clients/moi/favoris/activites/:id` | Client | Ajouter une activité (201 si ajoutée, 200 si déjà présente) |
+| DELETE | `http://localhost:3000/api/clients/moi/favoris/activites/:id` | Client | Retirer une activité (204 ; 404 si absente des favoris) |
+
+Seuls les éléments visibles du catalogue peuvent être ajoutés (404 sinon). Un élément masqué ensuite disparaît des favoris du client sans être supprimé, et réapparaît s'il est réactivé. Les favoris sont effacés avec le compte du client.
 
 ---
 
@@ -418,6 +433,8 @@ GET  http://localhost:3000/api/pays/3/activites?categorie=gastronomie&budgetMax=
 GET  http://localhost:3000/api/destinations?q=plage&budgetMax=1500
 GET  http://localhost:3000/api/recherche?q=cuisine&categorie=gastronomie&budgetMax=80
 GET  http://localhost:3000/api/clients?page=2&limite=20&q=dupont
+PUT  http://localhost:3000/api/clients/moi/favoris/destinations/12
+GET  http://localhost:3000/api/clients/moi/favoris
 ```
 
 Pagination par défaut : `page=1`, `limite=20` (50 pour le catalogue), `limite` maximum 100.
