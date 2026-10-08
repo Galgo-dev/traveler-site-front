@@ -10,6 +10,7 @@ import ClientsPage from '../pages/backoffice/ClientsPage'
 import DestinationsGestionPage from '../pages/backoffice/DestinationsGestionPage'
 import GestionAccueilPage from '../pages/backoffice/GestionAccueilPage'
 import PaysGestionPage from '../pages/backoffice/PaysGestionPage'
+import FavorisPage from '../pages/client/FavorisPage'
 import NotFoundPage from '../pages/NotFoundPage'
 import AccueilPage from '../pages/public/AccueilPage'
 import DestinationDetailPage from '../pages/public/DestinationDetailPage'
@@ -28,6 +29,11 @@ export default function AppRouter() {
           <Route path={ROUTES.DESTINATION_DETAIL} element={<DestinationDetailPage />} />
           <Route path={ROUTES.CONNEXION} element={<ConnexionPage />} />
           <Route path={ROUTES.INSCRIPTION} element={<InscriptionPage />} />
+          <Route element={<ProtectedRoute />}>
+            <Route element={<RoleRoute roles={[ROLES.CLIENT]} />}>
+              <Route path={ROUTES.FAVORIS} element={<FavorisPage />} />
+            </Route>
+          </Route>
           <Route path="*" element={<NotFoundPage />} />
         </Route>
 

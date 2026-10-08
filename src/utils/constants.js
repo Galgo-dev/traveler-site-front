@@ -4,6 +4,7 @@ export const ROUTES = {
   DESTINATION_DETAIL: '/destinations/:id',
   CONNEXION: '/connexion',
   INSCRIPTION: '/inscription',
+  FAVORIS: '/favoris',
   GESTION: '/gestion',
   GESTION_AGENTS: '/gestion/agents',
   GESTION_PAYS: '/gestion/pays',
