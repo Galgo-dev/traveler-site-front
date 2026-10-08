@@ -1,0 +1,23 @@
+/* Les champs passent à la ligne selon la place disponible (avec ou sans menu latéral) */
+.agents-filtres {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--espace-m);
+  margin-bottom: var(--espace-l);
+  padding: var(--espace-l);
+  border-radius: var(--rayon);
+  background: var(--couleur-fond-doux);
+}
+
+.agents-filtres > .champ {
+  flex: 1 1 12rem;
+}
+
+.agents-filtres > .champ:first-child {
+  flex-basis: 100%;
+}
+
+.agents-filtres > .bouton {
+  flex: 1 1 12rem;
+}

@@ -1,0 +1,17 @@
+/* Menu au-dessus du contenu sur mobile, à gauche sur ordinateur */
+.back-office {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--espace-l);
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .back-office {
+    grid-template-columns: 16rem 1fr;
+  }
+}
+
+.back-office > main {
+  min-width: 0;
+}

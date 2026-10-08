@@ -1,7 +1,11 @@
 import { useId } from 'react'
 import './Input.css'
 
-export default function Input({ label, aide, erreur, ...props }) {
+/**
+ * Liste déroulante avec libellé, aide et message d'erreur (même présentation que Input).
+ * @param {{ label: string, options: { valeur: string, libelle: string }[], aide?: string, erreur?: string }} props
+ */
+export default function Select({ label, options, aide, erreur, ...props }) {
   const id = useId()
   const idAide = `${id}-aide`
   const idErreur = `${id}-erreur`
@@ -17,13 +21,19 @@ export default function Input({ label, aide, erreur, ...props }) {
           {aide}
         </p>
       )}
-      <input
+      <select
         id={id}
         className={`champ__input ${erreur ? 'champ__input--erreur' : ''}`.trim()}
         aria-invalid={erreur ? true : undefined}
         aria-describedby={descriptions || undefined}
         {...props}
-      />
+      >
+        {options.map(({ valeur, libelle }) => (
+          <option key={valeur} value={valeur}>
+            {libelle}
+          </option>
+        ))}
+      </select>
       {erreur && (
         <p id={idErreur} className="champ__erreur">
           {erreur}

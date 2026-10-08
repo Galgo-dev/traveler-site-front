@@ -94,3 +94,18 @@ img {
   margin: 0;
   font-weight: 600;
 }
+
+/* Page étroite (formulaires de connexion, d'inscription…) */
+.conteneur--etroit {
+  max-width: 36rem;
+}
+
+/* Lien vers un parcours voisin (« Pas encore de compte ? ») */
+.lien-alternatif {
+  margin-top: var(--espace-l);
+}
+
+.lien-alternatif a {
+  color: var(--couleur-primaire);
+  font-weight: 700;
+}

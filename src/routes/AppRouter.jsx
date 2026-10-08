@@ -1,10 +1,17 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import BackOfficeLayout from '../layouts/BackOfficeLayout'
 import PublicLayout from '../layouts/PublicLayout'
 import ConnexionPage from '../pages/auth/ConnexionPage'
+import InscriptionPage from '../pages/auth/InscriptionPage'
+import AgentsPage from '../pages/backoffice/AgentsPage'
+import GestionAccueilPage from '../pages/backoffice/GestionAccueilPage'
+import NotFoundPage from '../pages/NotFoundPage'
 import AccueilPage from '../pages/public/AccueilPage'
 import DestinationDetailPage from '../pages/public/DestinationDetailPage'
 import DestinationsPage from '../pages/public/DestinationsPage'
-import { ROUTES } from '../utils/constants'
+import { ROLES, ROLES_PERSONNEL, ROUTES } from '../utils/constants'
+import ProtectedRoute from './ProtectedRoute'
+import RoleRoute from './RoleRoute'
 
 export default function AppRouter() {
   return (
@@ -15,6 +22,19 @@ export default function AppRouter() {
           <Route path={ROUTES.DESTINATIONS} element={<DestinationsPage />} />
           <Route path={ROUTES.DESTINATION_DETAIL} element={<DestinationDetailPage />} />
           <Route path={ROUTES.CONNEXION} element={<ConnexionPage />} />
+          <Route path={ROUTES.INSCRIPTION} element={<InscriptionPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+
+        <Route element={<ProtectedRoute />}>
+          <Route element={<RoleRoute roles={ROLES_PERSONNEL} />}>
+            <Route element={<BackOfficeLayout />}>
+              <Route path={ROUTES.GESTION} element={<GestionAccueilPage />} />
+              <Route element={<RoleRoute roles={[ROLES.ADMINISTRATEUR]} />}>
+                <Route path={ROUTES.GESTION_AGENTS} element={<AgentsPage />} />
+              </Route>
+            </Route>
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

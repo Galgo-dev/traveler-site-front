@@ -1,0 +1,8 @@
+.message-succes {
+  padding: var(--espace-m) var(--espace-l);
+  border-left: 6px solid var(--couleur-succes);
+  border-radius: var(--rayon);
+  background: var(--couleur-succes-fond);
+  color: var(--couleur-succes);
+  font-weight: 600;
+}

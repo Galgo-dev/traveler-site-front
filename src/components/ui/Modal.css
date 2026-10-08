@@ -1,0 +1,27 @@
+.modale {
+  width: calc(100% - 2 * var(--espace-m));
+  max-width: 40rem;
+  max-height: calc(100% - 2 * var(--espace-m));
+  padding: var(--espace-l);
+  border: none;
+  border-radius: var(--rayon);
+  box-shadow: var(--ombre);
+  color: var(--couleur-texte);
+}
+
+.modale::backdrop {
+  background: rgba(8, 58, 102, 0.6);
+}
+
+.modale__entete {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--espace-m);
+  margin-bottom: var(--espace-l);
+}
+
+.modale__entete h2 {
+  margin: 0;
+}

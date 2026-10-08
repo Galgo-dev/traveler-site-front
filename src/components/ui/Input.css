@@ -21,3 +21,20 @@
 .champ__input:focus-visible {
   border-color: var(--couleur-primaire);
 }
+
+.champ__aide {
+  margin: 0;
+  color: var(--couleur-texte-secondaire);
+  font-size: var(--taille-petit);
+}
+
+.champ__input--erreur {
+  border-color: var(--couleur-erreur);
+}
+
+.champ__erreur {
+  margin: 0;
+  color: var(--couleur-erreur);
+  font-size: var(--taille-petit);
+  font-weight: 600;
+}

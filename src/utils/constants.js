@@ -3,6 +3,9 @@ export const ROUTES = {
   DESTINATIONS: '/destinations',
   DESTINATION_DETAIL: '/destinations/:id',
   CONNEXION: '/connexion',
+  INSCRIPTION: '/inscription',
+  GESTION: '/gestion',
+  GESTION_AGENTS: '/gestion/agents',
 }
 
 export function routeDestinationDetail(id) {
@@ -26,4 +29,22 @@ export const LIBELLES_DIFFICULTE = {
 export const UNITES_DUREE = {
   heures: { singulier: 'heure', pluriel: 'heures' },
   jours: { singulier: 'jour', pluriel: 'jours' },
+}
+
+export const ROLES = {
+  CLIENT: 'client',
+  AGENT: 'agent',
+  ADMINISTRATEUR: 'administrateur',
+}
+
+export const ROLES_PERSONNEL = [ROLES.AGENT, ROLES.ADMINISTRATEUR]
+
+export const LIBELLES_ROLE = {
+  [ROLES.AGENT]: 'Agent',
+  [ROLES.ADMINISTRATEUR]: 'Administrateur',
+}
+
+export const LIBELLES_STATUT_COMPTE = {
+  actif: 'Actif',
+  desactive: 'Désactivé',
 }
