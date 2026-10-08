@@ -3,6 +3,8 @@ import BackOfficeLayout from '../layouts/BackOfficeLayout'
 import PublicLayout from '../layouts/PublicLayout'
 import ConnexionPage from '../pages/auth/ConnexionPage'
 import InscriptionPage from '../pages/auth/InscriptionPage'
+import MotDePasseOubliePage from '../pages/auth/MotDePasseOubliePage'
+import ReinitialisationMotDePassePage from '../pages/auth/ReinitialisationMotDePassePage'
 import ActivitesGestionPage from '../pages/backoffice/ActivitesGestionPage'
 import AgentsPage from '../pages/backoffice/AgentsPage'
 import ClientDetailPage from '../pages/backoffice/ClientDetailPage'
@@ -30,6 +32,8 @@ export default function AppRouter() {
           <Route path={ROUTES.DESTINATION_DETAIL} element={<DestinationDetailPage />} />
           <Route path={ROUTES.CONNEXION} element={<ConnexionPage />} />
           <Route path={ROUTES.INSCRIPTION} element={<InscriptionPage />} />
+          <Route path={ROUTES.MOT_DE_PASSE_OUBLIE} element={<MotDePasseOubliePage />} />
+          <Route path={ROUTES.REINITIALISATION_MOT_DE_PASSE} element={<ReinitialisationMotDePassePage />} />
           <Route element={<ProtectedRoute />}>
             <Route element={<RoleRoute roles={[ROLES.CLIENT]} />}>
               <Route path={ROUTES.FAVORIS} element={<FavorisPage />} />

@@ -4,6 +4,9 @@ export const ROUTES = {
   DESTINATION_DETAIL: '/destinations/:id',
   CONNEXION: '/connexion',
   INSCRIPTION: '/inscription',
+  MOT_DE_PASSE_OUBLIE: '/mot-de-passe-oublie',
+  // Doit correspondre au lien envoyé par e-mail par l'API (FRONT_URL + ce chemin + ?token=…).
+  REINITIALISATION_MOT_DE_PASSE: '/reinitialisation-mot-de-passe',
   FAVORIS: '/favoris',
   PROFIL: '/profil',
   GESTION: '/gestion',
