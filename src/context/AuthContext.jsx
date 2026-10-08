@@ -54,6 +54,7 @@ export function AuthProvider({ children }) {
       utilisateur,
       role,
       estConnecte: utilisateur !== null,
+      estClient: role === ROLES.CLIENT,
       estPersonnel: ROLES_PERSONNEL.includes(role),
       estAdministrateur: role === ROLES.ADMINISTRATEUR,
       connexion,
