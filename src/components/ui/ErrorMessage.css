@@ -1,0 +1,8 @@
+.message-erreur {
+  padding: var(--espace-m) var(--espace-l);
+  border-left: 6px solid var(--couleur-erreur);
+  border-radius: var(--rayon);
+  background: var(--couleur-erreur-fond);
+  color: var(--couleur-erreur);
+  font-weight: 600;
+}

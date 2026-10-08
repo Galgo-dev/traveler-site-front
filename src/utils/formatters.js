@@ -1,0 +1,34 @@
+import { UNITES_DUREE } from './constants'
+
+const formateurPrix = new Intl.NumberFormat('fr-BE', {
+  style: 'currency',
+  currency: 'EUR',
+  maximumFractionDigits: 0,
+})
+
+const formateurNombre = new Intl.NumberFormat('fr-BE', { maximumFractionDigits: 1 })
+
+export function formaterPrix(montant) {
+  return formateurPrix.format(montant)
+}
+
+/** Ex. : (1.5, 'heures') → « 1,5 heure » ; (3, 'jours') → « 3 jours ». */
+export function formaterDuree(duree, unite = 'heures') {
+  const libelles = UNITES_DUREE[unite] ?? UNITES_DUREE.heures
+  // En français, une quantité inférieure à 2 reste au singulier.
+  const libelle = duree < 2 ? libelles.singulier : libelles.pluriel
+  return `${formateurNombre.format(duree)} ${libelle}`
+}
+
+/** Ex. : 0 → « Même heure qu'en Belgique » ; 8 → « +8 h » ; -5.5 → « −5 h 30 ». */
+export function formaterDecalageHoraire(heures) {
+  if (!heures) return "Même heure qu'en Belgique"
+
+  const signe = heures > 0 ? '+' : '−'
+  const totalMinutes = Math.round(Math.abs(heures) * 60)
+  const h = Math.floor(totalMinutes / 60)
+  const minutes = totalMinutes % 60
+  const libelle = minutes ? `${h} h ${String(minutes).padStart(2, '0')}` : `${h} h`
+
+  return `${signe}${libelle} par rapport à la Belgique`
+}

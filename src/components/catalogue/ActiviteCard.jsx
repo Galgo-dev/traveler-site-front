@@ -1,0 +1,49 @@
+import { LIBELLES_CATEGORIE, LIBELLES_DIFFICULTE } from '../../utils/constants'
+import { formaterDuree, formaterPrix } from '../../utils/formatters'
+import './ActiviteCard.css'
+
+export default function ActiviteCard({ activite }) {
+  const {
+    nom,
+    description,
+    categorie,
+    duree,
+    dureeUnite,
+    prixParPersonne,
+    niveauDifficulte,
+    ageMinimum,
+  } = activite
+
+  return (
+    <article className="activite-card">
+      <p className="activite-card__categorie">
+        {LIBELLES_CATEGORIE[categorie] ?? categorie}
+      </p>
+      <h3 className="activite-card__nom">{nom}</h3>
+      {description && <p>{description}</p>}
+
+      <dl className="liste-infos activite-card__infos">
+        <div>
+          <dt>Durée</dt>
+          <dd>{formaterDuree(duree, dureeUnite)}</dd>
+        </div>
+        <div>
+          <dt>Prix par personne</dt>
+          <dd className="activite-card__prix">{formaterPrix(prixParPersonne)}</dd>
+        </div>
+        {niveauDifficulte && (
+          <div>
+            <dt>Difficulté</dt>
+            <dd>{LIBELLES_DIFFICULTE[niveauDifficulte] ?? niveauDifficulte}</dd>
+          </div>
+        )}
+        {ageMinimum != null && (
+          <div>
+            <dt>Âge minimum</dt>
+            <dd>À partir de {ageMinimum} ans</dd>
+          </div>
+        )}
+      </dl>
+    </article>
+  )
+}

@@ -1,0 +1,35 @@
+.activite-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--espace-l);
+  border: 1px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+  background: var(--couleur-fond);
+}
+
+.activite-card__categorie {
+  align-self: flex-start;
+  margin-bottom: var(--espace-s);
+  padding: var(--espace-xs) var(--espace-m);
+  border-radius: 999px;
+  background: var(--couleur-fond-doux);
+  color: var(--couleur-primaire-fonce);
+  font-size: var(--taille-petit);
+  font-weight: 700;
+}
+
+.activite-card__nom {
+  font-size: 1.25rem;
+}
+
+.activite-card__infos {
+  grid-template-columns: repeat(2, 1fr);
+  margin-top: auto;
+  padding-top: var(--espace-m);
+  border-top: 1px solid var(--couleur-bordure);
+}
+
+.activite-card__prix {
+  color: var(--couleur-primaire-fonce);
+}
