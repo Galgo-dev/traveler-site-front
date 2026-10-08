@@ -39,3 +39,24 @@ export async function changerMotDePasse(motsDePasse) {
   const { data } = await axiosClient.patch('/auth/mot-de-passe', motsDePasse)
   return data
 }
+
+/**
+ * Demande l'envoi d'un lien de réinitialisation du mot de passe (comptes clients).
+ * L'API répond toujours le même message, que l'adresse existe ou non.
+ * @param {string} email
+ * @returns {Promise<{ message: string }>}
+ */
+export async function demanderReinitialisation(email) {
+  const { data } = await axiosClient.post('/auth/mot-de-passe-oublie', { email })
+  return data
+}
+
+/**
+ * Choisit un nouveau mot de passe grâce au jeton reçu par e-mail.
+ * @param {{ token: string, motDePasse: string }} reinitialisation token : 64 caractères hexadécimaux
+ * @returns {Promise<{ message: string }>}
+ */
+export async function reinitialiserMotDePasse(reinitialisation) {
+  const { data } = await axiosClient.post('/auth/reinitialisation', reinitialisation)
+  return data
+}
