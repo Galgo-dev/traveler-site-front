@@ -32,3 +32,10 @@ export function formaterDecalageHoraire(heures) {
 
   return `${signe}${libelle} par rapport à la Belgique`
 }
+
+const formateurDate = new Intl.DateTimeFormat('fr-BE', { dateStyle: 'long', timeZone: 'UTC' })
+
+/** Ex. : '1965-03-14' → « 14 mars 1965 ». */
+export function formaterDate(dateIso) {
+  return formateurDate.format(new Date(dateIso))
+}

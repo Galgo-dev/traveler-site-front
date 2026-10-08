@@ -12,7 +12,6 @@ import Pagination from '../../components/ui/Pagination'
 import SuccessMessage from '../../components/ui/SuccessMessage'
 import { useAgents } from '../../hooks/useAgents'
 import { useAuth } from '../../hooks/useAuth'
-import './AgentsPage.css'
 
 const FILTRES_VIDES = { q: '', role: '', statut: '' }
 
@@ -133,7 +132,7 @@ export default function AgentsPage() {
 
   return (
     <main>
-      <div className="agents-entete">
+      <div className="entete-gestion">
         <h1>Comptes du personnel</h1>
         <Button onClick={() => ouvrirAction(ACTIONS.CREATION)}>Créer un compte</Button>
       </div>

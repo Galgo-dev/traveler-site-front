@@ -3,8 +3,14 @@ import BackOfficeLayout from '../layouts/BackOfficeLayout'
 import PublicLayout from '../layouts/PublicLayout'
 import ConnexionPage from '../pages/auth/ConnexionPage'
 import InscriptionPage from '../pages/auth/InscriptionPage'
+import ActivitesGestionPage from '../pages/backoffice/ActivitesGestionPage'
 import AgentsPage from '../pages/backoffice/AgentsPage'
+import ClientDetailPage from '../pages/backoffice/ClientDetailPage'
+import ClientsPage from '../pages/backoffice/ClientsPage'
+import DestinationsGestionPage from '../pages/backoffice/DestinationsGestionPage'
 import GestionAccueilPage from '../pages/backoffice/GestionAccueilPage'
+import PaysGestionPage from '../pages/backoffice/PaysGestionPage'
+import FavorisPage from '../pages/client/FavorisPage'
 import NotFoundPage from '../pages/NotFoundPage'
 import AccueilPage from '../pages/public/AccueilPage'
 import DestinationDetailPage from '../pages/public/DestinationDetailPage'
@@ -23,6 +29,11 @@ export default function AppRouter() {
           <Route path={ROUTES.DESTINATION_DETAIL} element={<DestinationDetailPage />} />
           <Route path={ROUTES.CONNEXION} element={<ConnexionPage />} />
           <Route path={ROUTES.INSCRIPTION} element={<InscriptionPage />} />
+          <Route element={<ProtectedRoute />}>
+            <Route element={<RoleRoute roles={[ROLES.CLIENT]} />}>
+              <Route path={ROUTES.FAVORIS} element={<FavorisPage />} />
+            </Route>
+          </Route>
           <Route path="*" element={<NotFoundPage />} />
         </Route>
 
@@ -30,6 +41,11 @@ export default function AppRouter() {
           <Route element={<RoleRoute roles={ROLES_PERSONNEL} />}>
             <Route element={<BackOfficeLayout />}>
               <Route path={ROUTES.GESTION} element={<GestionAccueilPage />} />
+              <Route path={ROUTES.GESTION_PAYS} element={<PaysGestionPage />} />
+              <Route path={ROUTES.GESTION_DESTINATIONS} element={<DestinationsGestionPage />} />
+              <Route path={ROUTES.GESTION_ACTIVITES} element={<ActivitesGestionPage />} />
+              <Route path={ROUTES.GESTION_CLIENTS} element={<ClientsPage />} />
+              <Route path={ROUTES.GESTION_CLIENT_DETAIL} element={<ClientDetailPage />} />
               <Route element={<RoleRoute roles={[ROLES.ADMINISTRATEUR]} />}>
                 <Route path={ROUTES.GESTION_AGENTS} element={<AgentsPage />} />
               </Route>

@@ -1,8 +1,17 @@
-import { ROLES_PERSONNEL } from './constants'
+import {
+  CONTINENTS,
+  LIBELLES_CATEGORIE,
+  LIBELLES_DIFFICULTE,
+  ROLES_PERSONNEL,
+  UNITES_DUREE,
+} from './constants'
 
 const LONGUEUR_MIN_MOT_DE_PASSE = 10
 const FORMAT_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const FORMAT_TELEPHONE = /^\+?[\d\s./-]{8,20}$/
+const FORMAT_URL = /^https?:\/\/\S+$/i
+const DECALAGE_HORAIRE_MIN = -12
+const DECALAGE_HORAIRE_MAX = 14
 
 export const REGLE_MOT_DE_PASSE =
   'Au moins 10 caractères, dont une majuscule, une minuscule et un chiffre.'
@@ -32,7 +41,7 @@ function sansChampsValides(erreurs) {
 }
 
 function validerDateNaissance(dateNaissance) {
-  if (!dateNaissance) return 'Indiquez votre date de naissance.'
+  if (!dateNaissance) return 'Indiquez la date de naissance.'
   const aujourdhui = new Date().toISOString().slice(0, 10)
   return dateNaissance < aujourdhui ? null : 'La date de naissance doit être dans le passé.'
 }
@@ -96,4 +105,128 @@ export function validerAgent(champs, { creation }) {
     ...sansChampsValides(erreurs),
     ...(creation ? validerNouveauMotDePasse(champs) : {}),
   }
+}
+
+function estRenseigne(valeur) {
+  return String(valeur ?? '').trim() !== ''
+}
+
+function exiger(valeur, message) {
+  return estRenseigne(valeur) ? null : message
+}
+
+/**
+ * Vérifie un nombre saisi dans un champ texte ou numérique.
+ * @param {string|number} valeur
+ * @param {{ min?: number, max?: number, positif?: boolean, entier?: boolean, facultatif?: boolean }} regles
+ *   positif : strictement supérieur à zéro
+ * @param {string} message
+ */
+function validerNombre(valeur, regles, message) {
+  const { min = -Infinity, max = Infinity, positif = false, entier = false, facultatif = false } = regles
+  if (!estRenseigne(valeur)) return facultatif ? null : message
+
+  const nombre = Number(valeur)
+  const estValide =
+    Number.isFinite(nombre) &&
+    nombre >= min &&
+    nombre <= max &&
+    (!positif || nombre > 0) &&
+    (!entier || Number.isInteger(nombre))
+
+  return estValide ? null : message
+}
+
+function validerValeurAutorisee(valeur, valeursAutorisees, message) {
+  return valeursAutorisees.includes(valeur) ? null : message
+}
+
+/**
+ * Valide le formulaire d'un pays.
+ * @returns {Record<string, string>} message d'erreur par champ (vide si tout est valide)
+ */
+export function validerPays(champs) {
+  return sansChampsValides({
+    nom: exiger(champs.nom, 'Indiquez le nom du pays.'),
+    continent: validerValeurAutorisee(champs.continent, CONTINENTS, 'Choisissez un continent.'),
+    languePrincipale: exiger(champs.languePrincipale, 'Indiquez la langue principale.'),
+    monnaie: exiger(champs.monnaie, 'Indiquez la monnaie.'),
+    decalageHoraire: validerNombre(
+      champs.decalageHoraire,
+      { min: DECALAGE_HORAIRE_MIN, max: DECALAGE_HORAIRE_MAX, facultatif: true },
+      `Indiquez un décalage en heures entre ${DECALAGE_HORAIRE_MIN} et +${DECALAGE_HORAIRE_MAX}, par exemple 2 ou -5.5.`,
+    ),
+  })
+}
+
+/**
+ * Valide le formulaire d'une destination.
+ * @returns {Record<string, string>} message d'erreur par champ (vide si tout est valide)
+ */
+export function validerDestination(champs) {
+  return sansChampsValides({
+    paysId: exiger(champs.paysId, 'Choisissez le pays de la destination.'),
+    nom: exiger(champs.nom, 'Indiquez le nom de la destination.'),
+    prixAPartirDe: validerNombre(
+      champs.prixAPartirDe,
+      { min: 0, facultatif: true },
+      'Indiquez un prix en euros, par exemple 850.',
+    ),
+    photoUrl:
+      !estRenseigne(champs.photoUrl) || FORMAT_URL.test(champs.photoUrl.trim())
+        ? null
+        : 'Indiquez une adresse web complète, commençant par https://',
+  })
+}
+
+/**
+ * Valide le formulaire d'une activité.
+ * @returns {Record<string, string>} message d'erreur par champ (vide si tout est valide)
+ */
+export function validerActivite(champs) {
+  return sansChampsValides({
+    paysId: exiger(champs.paysId, "Choisissez le pays de l'activité."),
+    nom: exiger(champs.nom, "Indiquez le nom de l'activité."),
+    categorie: validerValeurAutorisee(
+      champs.categorie,
+      Object.keys(LIBELLES_CATEGORIE),
+      'Choisissez une catégorie.',
+    ),
+    duree: validerNombre(champs.duree, { positif: true }, 'Indiquez une durée supérieure à zéro.'),
+    dureeUnite: validerValeurAutorisee(champs.dureeUnite, Object.keys(UNITES_DUREE), 'Choisissez une unité.'),
+    prixParPersonne: validerNombre(
+      champs.prixParPersonne,
+      { min: 0 },
+      'Indiquez un prix par personne en euros, par exemple 45.',
+    ),
+    niveauDifficulte: validerValeurAutorisee(
+      champs.niveauDifficulte,
+      ['', ...Object.keys(LIBELLES_DIFFICULTE)],
+      'Choisissez un niveau de difficulté.',
+    ),
+    ageMinimum: validerNombre(
+      champs.ageMinimum,
+      { min: 0, max: 120, entier: true, facultatif: true },
+      'Indiquez un âge en années entières, par exemple 12.',
+    ),
+  })
+}
+
+/**
+ * Valide la correction des informations d'un client par le personnel (jamais son mot de passe).
+ * @param {{ nom: string, prenom: string, email: string, telephone: string, dateNaissance: string }} champs
+ * @returns {Record<string, string>} message d'erreur par champ (vide si tout est valide)
+ */
+export function validerClient(champs) {
+  return sansChampsValides({
+    nom: exiger(champs.nom, 'Indiquez le nom.'),
+    prenom: exiger(champs.prenom, 'Indiquez le prénom.'),
+    email: FORMAT_EMAIL.test(champs.email.trim())
+      ? null
+      : 'Indiquez une adresse e-mail valide, par exemple nom@exemple.be.',
+    telephone: FORMAT_TELEPHONE.test(champs.telephone.trim())
+      ? null
+      : 'Indiquez un numéro de téléphone valide, par exemple 0470 12 34 56.',
+    dateNaissance: validerDateNaissance(champs.dateNaissance),
+  })
 }

@@ -15,3 +15,17 @@
 .back-office > main {
   min-width: 0;
 }
+
+/* Titre de l'écran et action principale (ex. « Ajouter ») sur la même ligne si la place le permet */
+.entete-gestion {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espace-m);
+  margin-bottom: var(--espace-m);
+}
+
+.entete-gestion h1 {
+  margin: 0;
+}

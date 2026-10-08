@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import {
   changerStatutAgent,
   creerAgent,
@@ -6,12 +6,7 @@ import {
   getAgents,
   modifierAgent,
 } from '../api/agents.api'
-import { useRequete } from './useRequete'
-
-// La version ne sert qu'à relancer la requête après une modification : elle n'est pas envoyée à l'API.
-function chargerAgents({ filtres }, options) {
-  return getAgents(filtres, options)
-}
+import { useListeGeree } from './useListeGeree'
 
 /**
  * Charge les comptes du personnel et expose les actions de gestion (administrateur uniquement).
@@ -19,14 +14,7 @@ function chargerAgents({ filtres }, options) {
  * @param {{ page?: number, limite?: number, q?: string, actif?: boolean, role?: string }} filtres
  */
 export function useAgents(filtres = {}) {
-  const [version, setVersion] = useState(0)
-  const { donnees, chargement, erreur } = useRequete(chargerAgents, { filtres, version })
-
-  const executer = useCallback(async (action) => {
-    const resultat = await action()
-    setVersion((precedente) => precedente + 1)
-    return resultat
-  }, [])
+  const { elements, pagination, chargement, erreur, executer } = useListeGeree(getAgents, filtres)
 
   const creer = useCallback((agent) => executer(() => creerAgent(agent)), [executer])
   const modifier = useCallback((id, champs) => executer(() => modifierAgent(id, champs)), [executer])
@@ -40,8 +28,8 @@ export function useAgents(filtres = {}) {
   )
 
   return {
-    agents: donnees?.donnees ?? [],
-    pagination: donnees?.pagination ?? null,
+    agents: elements,
+    pagination,
     chargement,
     erreur,
     creer,

@@ -1,0 +1,23 @@
+.favoris-client {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--espace-l);
+}
+
+@media (min-width: 700px) {
+  .favoris-client {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.favoris-client__liste {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-s);
+  margin: 0;
+  padding-left: var(--espace-l);
+}
+
+.favoris-client__liste .etiquette {
+  margin-left: var(--espace-s);
+}

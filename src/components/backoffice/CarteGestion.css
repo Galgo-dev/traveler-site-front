@@ -1,0 +1,30 @@
+.carte-gestion {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-m);
+  height: 100%;
+  padding: var(--espace-l);
+  border: 2px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+  background: var(--couleur-fond);
+  box-shadow: var(--ombre);
+}
+
+.carte-gestion--desactive {
+  background: var(--couleur-fond-doux);
+}
+
+.carte-gestion__titre {
+  margin: 0;
+}
+
+.carte-gestion__info dd {
+  overflow-wrap: anywhere;
+}
+
+.carte-gestion__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-s);
+  margin-top: auto;
+}

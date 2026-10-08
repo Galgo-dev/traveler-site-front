@@ -1,0 +1,29 @@
+.favoris__section {
+  margin-bottom: var(--espace-xl);
+}
+
+.favoris__vide {
+  padding: var(--espace-l);
+  border-radius: var(--rayon);
+  background: var(--couleur-fond-doux);
+}
+
+/* Le lieu est placé au-dessus de la carte d'activité, qui garde toute la hauteur restante. */
+.favoris__activite {
+  display: flex;
+  flex-direction: column;
+}
+
+.favoris__activite .activite-card {
+  flex: 1;
+}
+
+.favoris__lieu {
+  margin-bottom: var(--espace-s);
+  color: var(--couleur-primaire);
+  font-weight: 700;
+}
+
+.favoris__lieu a {
+  color: inherit;
+}

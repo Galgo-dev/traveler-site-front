@@ -1,9 +1,11 @@
 import { LIBELLES_CATEGORIE, LIBELLES_DIFFICULTE } from '../../utils/constants'
 import { formaterDuree, formaterPrix } from '../../utils/formatters'
+import BoutonFavori from './BoutonFavori'
 import './ActiviteCard.css'
 
 export default function ActiviteCard({ activite }) {
   const {
+    id,
     nom,
     description,
     categorie,
@@ -44,6 +46,8 @@ export default function ActiviteCard({ activite }) {
           </div>
         )}
       </dl>
+
+      <BoutonFavori type="activites" id={id} nom={nom} />
     </article>
   )
 }

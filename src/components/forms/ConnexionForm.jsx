@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useAuth } from '../../hooks/useAuth'
 import Button from '../ui/Button'
+import Checkbox from '../ui/Checkbox'
 import ErrorMessage from '../ui/ErrorMessage'
 import Input from '../ui/Input'
 import './Formulaire.css'
@@ -56,14 +57,11 @@ export default function ConnexionForm({ onSucces }) {
         onChange={modifierChamp}
       />
 
-      <label className="formulaire__case">
-        <input
-          type="checkbox"
-          checked={personnel}
-          onChange={(event) => setPersonnel(event.target.checked)}
-        />
-        Je fais partie du personnel de l'agence
-      </label>
+      <Checkbox
+        label="Je fais partie du personnel de l'agence"
+        checked={personnel}
+        onChange={(event) => setPersonnel(event.target.checked)}
+      />
 
       <Button type="submit" disabled={envoi}>
         {envoi ? 'Connexion en cours…' : 'Se connecter'}

@@ -5,6 +5,10 @@ import './SideMenu.css'
 
 const LIENS = [
   { to: ROUTES.GESTION, libelle: 'Accueil de la gestion', end: true },
+  { to: ROUTES.GESTION_PAYS, libelle: 'Pays' },
+  { to: ROUTES.GESTION_DESTINATIONS, libelle: 'Destinations' },
+  { to: ROUTES.GESTION_ACTIVITES, libelle: 'Activités' },
+  { to: ROUTES.GESTION_CLIENTS, libelle: 'Clients' },
   { to: ROUTES.GESTION_AGENTS, libelle: 'Comptes du personnel', administrateurSeulement: true },
 ]
 
