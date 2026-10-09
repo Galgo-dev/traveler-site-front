@@ -32,7 +32,11 @@ export default function ConnexionPage() {
         <Link to={ROUTES.MOT_DE_PASSE_OUBLIE}>Mot de passe oublié ?</Link>
       </p>
       <p className="lien-alternatif">
-        Pas encore de compte ? <Link to={ROUTES.INSCRIPTION}>Créer un compte</Link>
+        Pas encore de compte ?{' '}
+        {/* La page demandée suit le visiteur : après l'inscription, il y arrive directement. */}
+        <Link to={ROUTES.INSCRIPTION} state={{ from: location.state?.from }}>
+          Créer un compte
+        </Link>
       </p>
     </main>
   )
