@@ -6,7 +6,7 @@ import {
   supprimerDestination,
 } from '../api/destinations.api'
 import { useGestionCatalogue } from './useGestionCatalogue'
-import { useRequete } from './useRequete'
+import { useRequeteCatalogue } from './useRequeteCatalogue'
 
 const API_DESTINATIONS = {
   lister: getDestinations,
@@ -27,7 +27,7 @@ function chargerDestinationsDuPays(paysId, options) {
  * @param {{ page?: number, limite?: number, q?: string, paysId?: number, budgetMax?: number }} filtres
  */
 export function useDestinations(filtres = {}) {
-  const { donnees, chargement, erreur } = useRequete(getDestinations, filtres)
+  const { donnees, chargement, erreur } = useRequeteCatalogue(getDestinations, filtres)
 
   return {
     destinations: donnees?.donnees ?? [],
@@ -55,7 +55,7 @@ function versOptionDestination({ id, nom, actif }) {
  * @param {number|string|null} paysId
  */
 export function useOptionsDestinations(paysId) {
-  const { donnees, chargement, erreur } = useRequete(chargerDestinationsDuPays, paysId || null)
+  const { donnees, chargement, erreur } = useRequeteCatalogue(chargerDestinationsDuPays, paysId || null)
 
   return { options: (donnees?.donnees ?? []).map(versOptionDestination), chargement, erreur }
 }

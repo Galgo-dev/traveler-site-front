@@ -7,7 +7,7 @@ import {
   retirerDestinationFavorite,
 } from '../api/favoris.api'
 import { useAuth } from '../hooks/useAuth'
-import { useRequete } from '../hooks/useRequete'
+import { useRequeteCatalogue } from '../hooks/useRequeteCatalogue'
 import { FavorisContext } from './contexteFavoris'
 
 const AUCUN_FAVORI = { destinations: [], activites: [] }
@@ -30,27 +30,31 @@ function chargerFavoris(idClient, options) {
 export function FavorisProvider({ children }) {
   const { utilisateur, estClient } = useAuth()
   const idClient = estClient ? utilisateur.id : null
-  const { donnees, chargement, erreur } = useRequete(chargerFavoris, idClient)
+  const { donnees, chargement, erreur } = useRequeteCatalogue(chargerFavoris, idClient)
 
-  // Favoris modifiés depuis le chargement, rattachés au client pour être oubliés à la déconnexion.
+  // Favoris modifiés par le client depuis le dernier chargement. Ils sont rattachés au client (oubliés à la
+  // déconnexion) et aux données chargées : dès que le catalogue est rechargé, les données fraîches priment.
   const [miseAJour, setMiseAJour] = useState(null)
-  const favoris = (miseAJour?.idClient === idClient ? miseAJour.favoris : donnees) ?? AUCUN_FAVORI
+  const miseAJourValable = miseAJour?.idClient === idClient && miseAJour.chargees === donnees
+  const favoris = (miseAJourValable ? miseAJour.favoris : donnees) ?? AUCUN_FAVORI
 
   const ajouter = useCallback(
     async (type, id) => {
       const favorisAJour = await ACTIONS_PAR_TYPE[type].ajouter(id)
-      setMiseAJour({ idClient, favoris: favorisAJour })
+      setMiseAJour({ idClient, chargees: donnees, favoris: favorisAJour })
     },
-    [idClient],
+    [idClient, donnees],
   )
 
   const retirer = useCallback(
     async (type, id) => {
       await ACTIONS_PAR_TYPE[type].retirer(id)
       setMiseAJour((precedente) => {
-        const base = (precedente?.idClient === idClient ? precedente.favoris : donnees) ?? AUCUN_FAVORI
+        const valable = precedente?.idClient === idClient && precedente.chargees === donnees
+        const base = (valable ? precedente.favoris : donnees) ?? AUCUN_FAVORI
         return {
           idClient,
+          chargees: donnees,
           favoris: { ...base, [type]: base[type].filter((element) => element.id !== Number(id)) },
         }
       })

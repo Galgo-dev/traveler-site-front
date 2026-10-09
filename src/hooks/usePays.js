@@ -7,7 +7,7 @@ import {
   supprimerPays,
 } from '../api/pays.api'
 import { useGestionCatalogue } from './useGestionCatalogue'
-import { useRequete } from './useRequete'
+import { useRequeteCatalogue } from './useRequeteCatalogue'
 
 const API_PAYS = {
   lister: getPays,
@@ -25,7 +25,7 @@ const TOUS_LES_PAYS = { limite: 100, inclureMasques: true }
  * @param {number|string} id
  */
 export function usePaysDetail(id) {
-  const { donnees, chargement, erreur } = useRequete(getPaysById, id)
+  const { donnees, chargement, erreur } = useRequeteCatalogue(getPaysById, id)
 
   return { pays: donnees, chargement, erreur }
 }
@@ -46,7 +46,7 @@ function versOptionPays({ id, nom, actif }) {
  * Tous les pays, masqués compris, sous forme d'options pour les listes déroulantes du back-office.
  */
 export function useOptionsPays() {
-  const { donnees, chargement, erreur } = useRequete(getPays, TOUS_LES_PAYS)
+  const { donnees, chargement, erreur } = useRequeteCatalogue(getPays, TOUS_LES_PAYS)
 
   return { options: (donnees?.donnees ?? []).map(versOptionPays), chargement, erreur }
 }
