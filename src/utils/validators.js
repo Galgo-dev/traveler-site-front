@@ -3,7 +3,9 @@ import {
   LIBELLES_CATEGORIE,
   LIBELLES_DIFFICULTE,
   LONGUEUR_MAX_COMMENTAIRE_AVIS,
+  LONGUEUR_MAX_MOTIF_AVIS,
   LONGUEUR_MAX_REMARQUES,
+  LONGUEUR_MAX_REPONSE_AVIS,
   LONGUEUR_MAX_TITRE_AVIS,
   MAX_VOYAGEURS,
   NOTE_MAX,
@@ -385,5 +387,34 @@ export function validerAvis({ note, titre, commentaire = '' }) {
         ? `Le titre est limité à ${LONGUEUR_MAX_TITRE_AVIS} caractères.`
         : null),
     commentaire: validerCommentaireAvis(note, commentaire),
+  })
+}
+
+function validerTexteLimite(texte, longueurMax, messageVide, nom) {
+  return (
+    exiger(texte, messageVide) ??
+    (texte.trim().length > longueurMax ? `${nom} est limité à ${longueurMax} caractères.` : null)
+  )
+}
+
+/**
+ * Valide le refus ou le masquage d'un avis par le personnel : le motif est obligatoire (R11).
+ * @param {{ motif: string }} champs
+ * @returns {Record<string, string>} message d'erreur par champ (vide si tout est valide)
+ */
+export function validerModerationAvis({ motif }) {
+  return sansChampsValides({
+    motif: validerTexteLimite(motif, LONGUEUR_MAX_MOTIF_AVIS, 'Indiquez le motif, il sera montré au client.', 'Le motif'),
+  })
+}
+
+/**
+ * Valide la réponse de l'agence à un avis (R14, P4).
+ * @param {{ texte: string }} champs
+ * @returns {Record<string, string>} message d'erreur par champ (vide si tout est valide)
+ */
+export function validerReponseAvis({ texte }) {
+  return sansChampsValides({
+    texte: validerTexteLimite(texte, LONGUEUR_MAX_REPONSE_AVIS, 'Écrivez la réponse de l’agence.', 'La réponse'),
   })
 }

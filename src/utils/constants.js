@@ -25,6 +25,8 @@ export const ROUTES = {
   GESTION_CLIENT_DETAIL: '/gestion/clients/:id',
   GESTION_DEMANDES: '/gestion/demandes',
   GESTION_DEMANDE_DETAIL: '/gestion/demandes/:id',
+  GESTION_AVIS: '/gestion/avis',
+  GESTION_AVIS_DETAIL: '/gestion/avis/:id',
 }
 
 export function routeDestinationDetail(id) {
@@ -51,6 +53,10 @@ export function routeNouvelAvis(demandeId) {
 
 export function routeGestionDemande(id) {
   return `${ROUTES.GESTION_DEMANDES}/${id}`
+}
+
+export function routeGestionAvis(id) {
+  return `${ROUTES.GESTION_AVIS}/${id}`
 }
 
 /** Liste du personnel limitée aux demandes d'un client (depuis son dossier). */
@@ -155,3 +161,27 @@ export const LIBELLES_NOTE = {
   4: 'Très bien',
   5: 'Excellent',
 }
+
+export const ETATS_AVIS = {
+  EN_ATTENTE: 'en_attente',
+  PUBLIE: 'publie',
+  REFUSE: 'refuse',
+}
+
+export const LIBELLES_ETAT_AVIS = {
+  [ETATS_AVIS.EN_ATTENTE]: 'À modérer',
+  [ETATS_AVIS.PUBLIE]: 'Publié',
+  [ETATS_AVIS.REFUSE]: 'Refusé',
+}
+
+// P4 : réponse de l'agence, 1 000 caractères maximum ; même limite pour le motif de refus.
+export const LONGUEUR_MAX_REPONSE_AVIS = 1000
+export const LONGUEUR_MAX_MOTIF_AVIS = 1000
+
+// P3 : le client lit le motif de refus ; des motifs types, formulés pour lui, évitent une rédaction maladroite.
+export const MOTIFS_REFUS_AVIS = [
+  'Votre avis contient des coordonnées ou des informations personnelles, qui ne peuvent pas être publiées.',
+  'Votre avis contient des propos injurieux ou irrespectueux.',
+  'Votre avis ne porte pas sur le voyage effectué ni sur la destination.',
+  "Votre avis contient de la publicité ou des liens vers d'autres sites.",
+]
