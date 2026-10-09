@@ -427,6 +427,16 @@ Valeurs autorisées :
 
 ---
 
+## Événements en direct — `/api/evenements`
+
+| Méthode | URL | Accès | Description |
+|---|---|---|---|
+| GET | `http://localhost:3000/api/evenements/catalogue` | Public | Flux Server-Sent Events : après chaque modification réussie du catalogue, événement `catalogue` avec `{ "ressource": "pays" \| "destinations" \| "activites" }` |
+
+Côté front : écouté dans `api/evenements.api.js` ; les hooks du catalogue (`useRequeteCatalogue`) rechargent alors leurs données en arrière-plan.
+
+---
+
 ## Exemples d'appels
 
 ```
