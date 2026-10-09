@@ -19,12 +19,13 @@ import axiosClient from './axiosClient'
  * Calcule le prix estimé d'une demande avant sa validation, sans rien enregistrer.
  * Prix estimé = (prix de la destination + Σ prix des activités) × (adultes + 0,5 × enfants).
  * @param {NouvelleDemande} demande
+ * @param {{ signal?: AbortSignal }} options une nouvelle saisie annule l'estimation précédente
  * @returns {Promise<{ destination: object, activites: object[], prixDestination: number, prixUnitaire: number,
  *   prixEstime: number, mentionPrix: string, avertissement?: string }>}
  *   mentionPrix : « Estimation, non contractuel » ; avertissement : demande identique déjà en attente (R14, non bloquant)
  */
-export async function estimerDemande(demande) {
-  const { data } = await axiosClient.post('/demandes/estimation', demande)
+export async function estimerDemande(demande, { signal } = {}) {
+  const { data } = await axiosClient.post('/demandes/estimation', demande, { signal })
   return data
 }
 
