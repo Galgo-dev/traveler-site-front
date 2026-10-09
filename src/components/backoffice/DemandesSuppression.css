@@ -1,0 +1,42 @@
+/* Encadré d'alerte : des demandes RGPD attendent un traitement. */
+.demandes-suppression {
+  margin-bottom: var(--espace-xl);
+  padding: var(--espace-l);
+  border-left: 6px solid var(--couleur-erreur);
+  border-radius: var(--rayon);
+  background: var(--couleur-erreur-fond);
+}
+
+.demandes-suppression h2 {
+  color: var(--couleur-erreur);
+}
+
+.demandes-suppression__liste {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-m);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Une demande par ligne : identité à gauche, bouton à droite (l'un sous l'autre sur mobile). */
+.demandes-suppression__demande {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espace-m);
+  padding: var(--espace-m);
+  border-radius: var(--rayon);
+  background: var(--couleur-fond);
+}
+
+.demandes-suppression__demande > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.demandes-suppression__email {
+  overflow-wrap: anywhere;
+}

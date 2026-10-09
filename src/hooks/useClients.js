@@ -8,6 +8,9 @@ import {
 } from '../api/clients.api'
 import { useRequete } from './useRequete'
 
+// Toutes les demandes en attente tiennent sur une page : elles sont traitées au fil de l'eau.
+const DEMANDES_SUPPRESSION = { suppressionDemandee: true, limite: 100 }
+
 // La version ne sert qu'à relancer la requête après une correction : elle n'est pas envoyée à l'API.
 function chargerClient({ id }, options) {
   return getClientById(id, options)
@@ -26,6 +29,16 @@ export function useClients(filtres = {}) {
     chargement,
     erreur,
   }
+}
+
+/**
+ * Charge les clients ayant demandé la suppression de leur compte, les plus anciennes demandes d'abord
+ * (personnel uniquement).
+ */
+export function useDemandesSuppression() {
+  const { donnees, chargement, erreur } = useRequete(getClients, DEMANDES_SUPPRESSION)
+
+  return { demandes: donnees?.donnees ?? [], chargement, erreur }
 }
 
 /**
