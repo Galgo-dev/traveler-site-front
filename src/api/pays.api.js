@@ -57,3 +57,24 @@ export async function changerStatutPays(id, actif) {
 export async function supprimerPays(id) {
   await axiosClient.delete(`/pays/${id}`)
 }
+
+/**
+ * Récupère les destinations visibles d'un pays.
+ * @param {{ id: number|string, filtres?: { page?: number, limite?: number, q?: string, budgetMax?: number } }} parametres
+ * @param {{ signal?: AbortSignal }} options
+ */
+export async function getDestinationsDuPays({ id, filtres = {} }, { signal } = {}) {
+  const { data } = await axiosClient.get(`/pays/${id}/destinations`, { params: filtres, signal })
+  return data
+}
+
+/**
+ * Récupère les activités visibles d'un pays.
+ * @param {{ id: number|string, filtres?: { page?: number, limite?: number, q?: string,
+ *   categorie?: string, budgetMax?: number } }} parametres
+ * @param {{ signal?: AbortSignal }} options
+ */
+export async function getActivitesDuPays({ id, filtres = {} }, { signal } = {}) {
+  const { data } = await axiosClient.get(`/pays/${id}/activites`, { params: filtres, signal })
+  return data
+}
