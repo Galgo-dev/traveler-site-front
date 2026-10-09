@@ -12,6 +12,7 @@
 
 .filtres-gestion > .champ {
   flex: 1 1 12rem;
+  min-width: 0;
 }
 
 .filtres-gestion > .champ:first-child {

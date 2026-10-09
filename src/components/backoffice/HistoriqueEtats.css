@@ -1,5 +1,5 @@
 /* Frise verticale : un changement d'état par ligne, du plus ancien au plus récent. */
-.historique-demande {
+.historique-etats {
   display: flex;
   flex-direction: column;
   gap: var(--espace-m);
@@ -9,12 +9,17 @@
   list-style: none;
 }
 
-.historique-demande__ligne {
+.historique-etats__ligne {
   display: flex;
   flex-direction: column;
 }
 
-.historique-demande__date {
+.historique-etats__date {
   color: var(--couleur-texte-secondaire);
   font-size: var(--taille-petit);
+}
+
+.historique-etats__motif {
+  color: var(--couleur-texte-secondaire);
+  white-space: pre-line;
 }

@@ -9,6 +9,8 @@
 }
 
 .champ__input {
+  /* Une liste aux libellés longs (ex. « Destination (Pays) ») ne dépasse pas de son conteneur. */
+  max-width: 100%;
   min-height: 3rem;
   padding: var(--espace-s) var(--espace-m);
   border: 2px solid var(--couleur-bordure);
