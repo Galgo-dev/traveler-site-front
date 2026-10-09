@@ -8,8 +8,11 @@ const RESULTAT_INITIAL = { cle: null, donnees: null, erreur: null }
  * @param {(parametres: unknown, options: { signal: AbortSignal }) => Promise<unknown>} appel
  *   fonction de service stable (déclarée hors d'un composant)
  * @param {unknown} parametres valeur sérialisable en JSON
+ * @param {{ actualisation?: unknown }} [options]
+ *   actualisation : quand cette valeur change (ex. version du catalogue), la requête est relancée
+ *   en arrière-plan — les données affichées restent visibles, sans état de chargement.
  */
-export function useRequete(appel, parametres) {
+export function useRequete(appel, parametres, { actualisation = null } = {}) {
   const [resultat, setResultat] = useState(RESULTAT_INITIAL)
 
   // Clé stable : évite de relancer la requête quand les paramètres sont recréés à l'identique.
@@ -26,9 +29,10 @@ export function useRequete(appel, parametres) {
       })
 
     return () => controller.abort()
-  }, [appel, cle])
+  }, [appel, cle, actualisation])
 
   // Le chargement dure tant que le résultat ne correspond pas aux paramètres demandés.
+  // Une simple actualisation ne change pas la clé : les données précédentes restent affichées.
   const chargement = resultat.cle !== cle
 
   return { donnees: resultat.donnees, chargement, erreur: resultat.erreur }
