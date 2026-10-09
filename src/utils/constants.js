@@ -2,6 +2,9 @@ export const ROUTES = {
   ACCUEIL: '/',
   DESTINATIONS: '/destinations',
   DESTINATION_DETAIL: '/destinations/:id',
+  PAYS: '/pays',
+  PAYS_DETAIL: '/pays/:id',
+  RECHERCHE: '/recherche',
   CONNEXION: '/connexion',
   INSCRIPTION: '/inscription',
   MOT_DE_PASSE_OUBLIE: '/mot-de-passe-oublie',
@@ -20,6 +23,10 @@ export const ROUTES = {
 
 export function routeDestinationDetail(id) {
   return `${ROUTES.DESTINATIONS}/${id}`
+}
+
+export function routePaysDetail(id) {
+  return `${ROUTES.PAYS}/${id}`
 }
 
 export function routeClientDetail(id) {

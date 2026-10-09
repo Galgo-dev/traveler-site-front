@@ -278,3 +278,18 @@ export function validerDemandeSuppression({ motDePasse }) {
     motDePasse: motDePasse ? null : 'Indiquez votre mot de passe pour confirmer votre demande.',
   })
 }
+
+/**
+ * Valide les critères de recherche du catalogue : seul le budget, facultatif, doit être un montant positif.
+ * @param {{ budgetMax?: string }} champs
+ * @returns {Record<string, string>} message d'erreur par champ (vide si tout est valide)
+ */
+export function validerCriteresRecherche({ budgetMax = '' }) {
+  return sansChampsValides({
+    budgetMax: validerNombre(
+      budgetMax,
+      { min: 0, facultatif: true },
+      'Indiquez un budget en euros, par exemple 1000.',
+    ),
+  })
+}
