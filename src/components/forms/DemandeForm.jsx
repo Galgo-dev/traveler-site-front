@@ -74,7 +74,7 @@ function LibelleActivite({ activite, destinationId }) {
         personne
         {/* R10 : l'âge minimum est affiché, pas vérifié. */}
         {activite.ageMinimum != null && ` · à partir de ${activite.ageMinimum} ans`}
-        {ailleurs && ` · à ${activite.destination.nom}`}
+        {ailleurs && ` · destination : ${activite.destination.nom}`}
       </span>
     </span>
   )
