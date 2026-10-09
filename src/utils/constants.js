@@ -185,3 +185,10 @@ export const MOTIFS_REFUS_AVIS = [
   'Votre avis ne porte pas sur le voyage effectué ni sur la destination.',
   "Votre avis contient de la publicité ou des liens vers d'autres sites.",
 ]
+
+// Fiche destination : plus récents (par défaut) ou meilleures notes (§7).
+export const TRIS_AVIS = {
+  recents: 'Les plus récents',
+  meilleures: 'Les meilleures notes',
+}
+export const TRI_AVIS_PAR_DEFAUT = 'recents'

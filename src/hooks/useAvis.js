@@ -3,8 +3,10 @@ import {
   creerAvis,
   getAvis,
   getAvisById,
+  getAvisDestination,
   getCommandesEligibles,
   getCompteurAvis,
+  getDerniersAvis,
   getFileModeration,
   masquerAvis,
   refuserAvis,
@@ -12,10 +14,19 @@ import {
   validerAvis,
 } from '../api/avis.api'
 import { useRequete } from './useRequete'
+import { useRequeteCatalogue } from './useRequeteCatalogue'
 
 // L'appel ne prend pas de paramètres : seule l'annulation est transmise.
 function chargerCommandesEligibles(_parametres, options) {
   return getCommandesEligibles(options)
+}
+
+function chargerDerniersAvis(_parametres, options) {
+  return getDerniersAvis(options)
+}
+
+function chargerAvisDestination({ destinationId, ...filtres }, options) {
+  return getAvisDestination(destinationId, filtres, options)
 }
 
 function chargerCompteur(_parametres, options) {
@@ -34,6 +45,27 @@ function versListe({ donnees, chargement, erreur }) {
     chargement,
     erreur,
   }
+}
+
+/**
+ * Avis publiés d'une destination et résumé de ses notes (R15). Rechargés si la destination est modifiée ou
+ * masquée (R18).
+ * @param {number|string} destinationId
+ * @param {{ tri?: 'recents'|'meilleures', note?: number, page?: number }} filtres
+ */
+export function useAvisDestination(destinationId, filtres = {}) {
+  const { donnees, chargement, erreur } = useRequeteCatalogue(chargerAvisDestination, { destinationId, ...filtres })
+
+  return { resume: donnees?.resume ?? null, ...versListe({ donnees, chargement, erreur }) }
+}
+
+/**
+ * Les 5 derniers avis publiés à 5 étoiles, pour la page d'accueil.
+ */
+export function useDerniersAvis() {
+  const { donnees, chargement, erreur } = useRequeteCatalogue(chargerDerniersAvis, null)
+
+  return { avis: donnees ?? [], chargement, erreur }
 }
 
 /**
