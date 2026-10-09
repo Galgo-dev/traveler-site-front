@@ -1,0 +1,28 @@
+.resume-notes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--espace-xs) var(--espace-s);
+  margin: 0;
+}
+
+.resume-notes__etoile {
+  color: var(--couleur-avertissement);
+  font-size: 1.25em;
+}
+
+.resume-notes__sur,
+.resume-notes__nombre,
+.resume-notes--vide {
+  color: var(--couleur-texte-secondaire);
+  font-weight: 400;
+}
+
+.resume-notes--grand {
+  font-size: var(--taille-titre-2);
+}
+
+.resume-notes--grand .resume-notes__nombre,
+.resume-notes--grand.resume-notes--vide {
+  font-size: var(--taille-texte);
+}

@@ -54,3 +54,17 @@
   gap: var(--espace-s);
   margin-top: var(--espace-l);
 }
+
+/* Note moyenne sous le nom, avec le raccourci vers la liste des avis. */
+.destination-detail__notes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--espace-s) var(--espace-l);
+  margin-bottom: var(--espace-m);
+}
+
+.destination-detail__notes a {
+  color: var(--couleur-primaire);
+  font-weight: 700;
+}

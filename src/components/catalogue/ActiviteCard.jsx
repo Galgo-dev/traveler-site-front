@@ -1,5 +1,6 @@
 import { LIBELLES_CATEGORIE, LIBELLES_DIFFICULTE } from '../../utils/constants'
 import { formaterDuree, formaterPrix } from '../../utils/formatters'
+import ResumeNotes from '../avis/ResumeNotes'
 import BoutonFavori from './BoutonFavori'
 import './ActiviteCard.css'
 
@@ -14,6 +15,7 @@ export default function ActiviteCard({ activite }) {
     prixParPersonne,
     niveauDifficulte,
     ageMinimum,
+    avis,
   } = activite
 
   return (
@@ -22,6 +24,8 @@ export default function ActiviteCard({ activite }) {
         {LIBELLES_CATEGORIE[categorie] ?? categorie}
       </p>
       <h3 className="activite-card__nom">{nom}</h3>
+      {/* P11 : moyenne des notes données dans les avis, affichée seulement quand il y en a. */}
+      {avis?.nombreAvis > 0 && <ResumeNotes resume={avis} />}
       {description && <p>{description}</p>}
 
       <dl className="liste-infos activite-card__infos">

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { routeDestinationDetail } from '../../utils/constants'
 import { formaterPrix } from '../../utils/formatters'
+import ResumeNotes from '../avis/ResumeNotes'
 import BoutonFavori from './BoutonFavori'
 import DestinationPhoto from './DestinationPhoto'
 import './DestinationCard.css'
@@ -10,7 +11,7 @@ import './DestinationCard.css'
  *   niveauTitre : niveau du titre de la carte, selon la hiérarchie de la page
  */
 export default function DestinationCard({ destination, niveauTitre = 2 }) {
-  const { id, nom, description, periodeIdeale, prixAPartirDe, photoUrl, pays } = destination
+  const { id, nom, description, periodeIdeale, prixAPartirDe, photoUrl, pays, avis } = destination
   const Titre = `h${niveauTitre}`
 
   return (
@@ -25,6 +26,8 @@ export default function DestinationCard({ destination, niveauTitre = 2 }) {
             {nom}
           </Link>
         </Titre>
+        {/* V3 : « ★ 4,6 / 5 (23 avis) » ou « Pas encore d'avis » (R16). */}
+        <ResumeNotes resume={avis} />
         {description && <p>{description}</p>}
 
         <dl className="liste-infos destination-card__infos">

@@ -1,0 +1,56 @@
+.avis-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-s);
+  height: 100%;
+  padding: var(--espace-l);
+  border: 1px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+  background: var(--couleur-fond);
+  box-shadow: var(--ombre);
+}
+
+.avis-card__titre {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.avis-card__destination {
+  margin: 0;
+  font-weight: 700;
+}
+
+.avis-card__destination a {
+  color: var(--couleur-primaire);
+}
+
+/* Texte libre du client ou de l'agence : retours à la ligne conservés. */
+.avis-card__commentaire {
+  margin: 0;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.avis-card__auteur {
+  margin: 0;
+  color: var(--couleur-texte-secondaire);
+  font-size: var(--taille-petit);
+}
+
+.avis-card__auteur strong {
+  color: var(--couleur-texte);
+}
+
+.avis-card__reponse {
+  margin-top: var(--espace-s);
+  padding: var(--espace-m);
+  border-left: 4px solid var(--couleur-primaire);
+  border-radius: 0 var(--rayon) var(--rayon) 0;
+  background: var(--couleur-fond-doux);
+}
+
+.avis-card__reponse-titre {
+  margin: 0 0 var(--espace-xs);
+  color: var(--couleur-primaire-fonce);
+  font-weight: 700;
+}

@@ -1,4 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
+import AvisDestination from '../../components/avis/AvisDestination'
+import ResumeNotes from '../../components/avis/ResumeNotes'
 import ActiviteCard from '../../components/catalogue/ActiviteCard'
 import BoutonDemande from '../../components/catalogue/BoutonDemande'
 import BoutonFavori from '../../components/catalogue/BoutonFavori'
@@ -52,7 +54,7 @@ function SectionInfosPratiques({ paysId }) {
 }
 
 function FicheDestination({ destination }) {
-  const { id, nom, description, periodeIdeale, prixAPartirDe, photoUrl, pays, paysId, activites = [] } =
+  const { id, nom, description, periodeIdeale, prixAPartirDe, photoUrl, pays, paysId, activites = [], avis } =
     destination
   // Sécurité d'affichage : un élément masqué ne doit jamais être visible côté client.
   const activitesVisibles = activites.filter((activite) => activite.actif !== false)
@@ -70,6 +72,10 @@ function FicheDestination({ destination }) {
             </p>
           )}
           <h1>{nom}</h1>
+          <div className="destination-detail__notes">
+            <ResumeNotes resume={avis} grand />
+            {avis?.nombreAvis > 0 && <a href="#avis">Lire les avis</a>}
+          </div>
           {description && <p className="destination-detail__description">{description}</p>}
 
           <dl className="liste-infos destination-detail__infos">
@@ -100,6 +106,8 @@ function FicheDestination({ destination }) {
         <h2 id="titre-activites">Activités sur place ({activitesVisibles.length})</h2>
         <ListeActivites activites={activitesVisibles} />
       </section>
+
+      <AvisDestination destinationId={id} resumeInitial={avis} />
     </>
   )
 }

@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom'
+import AvisCard from '../../components/avis/AvisCard'
 import DestinationCard from '../../components/catalogue/DestinationCard'
 import ErrorMessage from '../../components/ui/ErrorMessage'
 import Loader from '../../components/ui/Loader'
+import { useDerniersAvis } from '../../hooks/useAvis'
 import { useDestinations } from '../../hooks/useDestinations'
 import { ROUTES } from '../../utils/constants'
 import './AccueilPage.css'
@@ -76,6 +78,25 @@ function DestinationsALaUne() {
   )
 }
 
+/** Les 5 derniers avis publiés à 5 étoiles (V3, souhaitable) ; rien tant qu'il n'y en a pas. */
+function DerniersAvis() {
+  const { avis } = useDerniersAvis()
+  if (avis.length === 0) return null
+
+  return (
+    <section className="accueil__section" aria-labelledby="titre-derniers-avis">
+      <h2 id="titre-derniers-avis">Ils ont voyagé avec nous</h2>
+      <ul className="grille-cartes">
+        {avis.map((unAvis) => (
+          <li key={unAvis.id}>
+            <AvisCard avis={unAvis} avecDestination />
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+
 function ListeAtouts() {
   return (
     <section className="accueil__section" aria-labelledby="titre-atouts">
@@ -98,6 +119,7 @@ export default function AccueilPage() {
       <Bandeau />
       <div className="conteneur">
         <DestinationsALaUne />
+        <DerniersAvis />
         <ListeAtouts />
       </div>
     </main>

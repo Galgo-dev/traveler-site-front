@@ -1,0 +1,38 @@
+.avis-destination {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-l);
+  margin-bottom: var(--espace-xl);
+  /* Le lien « Lire les avis » ne place pas le titre sous l'en-tête du site. */
+  scroll-margin-top: var(--espace-l);
+}
+
+.avis-destination h2 {
+  margin-bottom: 0;
+}
+
+/* Tri et filtre côte à côte sur grand écran, l'un sous l'autre sur mobile. */
+.avis-destination__criteres {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--espace-m);
+  padding: var(--espace-l);
+  border-radius: var(--rayon);
+  background: var(--couleur-fond-doux);
+}
+
+@media (min-width: 600px) {
+  .avis-destination__criteres {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Un avis par ligne : des textes longs, plus lisibles en pleine largeur. */
+.avis-destination__liste {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-l);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
