@@ -1,0 +1,11 @@
+.profil__section {
+  margin-bottom: var(--espace-xl);
+  padding: var(--espace-l);
+  border: 2px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+}
+
+/* Action irréversible : le cadre reprend la couleur d'alerte. */
+.profil__section--suppression {
+  border-color: var(--couleur-erreur);
+}

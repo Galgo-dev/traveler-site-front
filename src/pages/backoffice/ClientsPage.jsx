@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import ClientCard from '../../components/backoffice/ClientCard'
+import DemandesSuppression from '../../components/backoffice/DemandesSuppression'
 import FiltresGestion from '../../components/backoffice/FiltresGestion'
 import ErrorMessage from '../../components/ui/ErrorMessage'
 import Loader from '../../components/ui/Loader'
@@ -44,6 +45,8 @@ export default function ClientsPage() {
       <p>Retrouvez un client pour consulter son dossier, corriger ses informations ou effacer son compte à sa demande.</p>
 
       {succes && <SuccessMessage message={succes} />}
+
+      <DemandesSuppression />
 
       <FiltresGestion
         libelleRecherche="Rechercher (nom, prénom ou e-mail)"

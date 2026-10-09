@@ -230,3 +230,51 @@ export function validerClient(champs) {
     dateNaissance: validerDateNaissance(champs.dateNaissance),
   })
 }
+
+/**
+ * Valide le changement de son propre mot de passe.
+ * @param {{ motDePasseActuel: string, nouveauMotDePasse: string, confirmation: string }} champs
+ * @returns {Record<string, string>} message d'erreur par champ (vide si tout est valide)
+ */
+export function validerChangementMotDePasse({ motDePasseActuel, nouveauMotDePasse, confirmation }) {
+  const { motDePasse, ...autresErreurs } = validerNouveauMotDePasse({ motDePasse: nouveauMotDePasse, confirmation })
+
+  return sansChampsValides({
+    motDePasseActuel: motDePasseActuel ? null : 'Indiquez votre mot de passe actuel.',
+    nouveauMotDePasse:
+      motDePasse ??
+      (nouveauMotDePasse === motDePasseActuel ? "Choisissez un mot de passe différent de l'actuel." : null),
+    ...autresErreurs,
+  })
+}
+
+const FORMAT_JETON_REINITIALISATION = /^[0-9a-f]{64}$/i
+
+/** Le lien reçu par e-mail contient un jeton de 64 caractères hexadécimaux. */
+export function estJetonReinitialisationValide(jeton) {
+  return FORMAT_JETON_REINITIALISATION.test(jeton ?? '')
+}
+
+/**
+ * Valide la demande de lien de réinitialisation.
+ * @param {{ email: string }} champs
+ * @returns {Record<string, string>} message d'erreur par champ (vide si tout est valide)
+ */
+export function validerDemandeReinitialisation({ email }) {
+  return sansChampsValides({
+    email: FORMAT_EMAIL.test(email.trim())
+      ? null
+      : 'Indiquez une adresse e-mail valide, par exemple nom@exemple.be.',
+  })
+}
+
+/**
+ * Valide la demande de suppression de son compte : le mot de passe confirme qu'il s'agit du titulaire.
+ * @param {{ motDePasse: string }} champs
+ * @returns {Record<string, string>} message d'erreur par champ (vide si tout est valide)
+ */
+export function validerDemandeSuppression({ motDePasse }) {
+  return sansChampsValides({
+    motDePasse: motDePasse ? null : 'Indiquez votre mot de passe pour confirmer votre demande.',
+  })
+}

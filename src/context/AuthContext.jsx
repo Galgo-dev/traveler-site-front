@@ -1,30 +1,51 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { connecterClient, connecterPersonnel, inscrireClient } from '../api/auth.api'
-import { TOKEN_STORAGE_KEY } from '../api/axiosClient'
 import { ROLES, ROLES_PERSONNEL } from '../utils/constants'
+import {
+  effacerSession,
+  enregistrerSession,
+  enregistrerUtilisateur,
+  expirerSession,
+  lireExpiration,
+  lireUtilisateur,
+  surExpiration,
+} from '../utils/session'
 import { AuthContext } from './contexteAuth'
 
-const UTILISATEUR_STORAGE_KEY = 'utilisateur'
-
-function lireUtilisateurStocke() {
-  const utilisateur = localStorage.getItem(UTILISATEUR_STORAGE_KEY)
-  const token = localStorage.getItem(TOKEN_STORAGE_KEY)
-  if (!utilisateur || !token) return null
-
-  try {
-    return JSON.parse(utilisateur)
-  } catch {
-    return null
-  }
-}
+// Plus grand délai accepté par setTimeout (environ 24 jours).
+const DELAI_MAX_MINUTEUR = 2 ** 31 - 1
 
 export function AuthProvider({ children }) {
-  const [utilisateur, setUtilisateur] = useState(lireUtilisateurStocke)
+  const [utilisateur, setUtilisateur] = useState(lireUtilisateur)
+  // Vrai quand la dernière session s'est fermée d'elle-même : la page de connexion l'explique.
+  const [sessionExpiree, setSessionExpiree] = useState(false)
+
+  // Expiration signalée par le minuteur ci-dessous ou par un refus 401 de l'API (axiosClient).
+  useEffect(
+    () =>
+      surExpiration(() => {
+        setUtilisateur(null)
+        setSessionExpiree(true)
+      }),
+    [],
+  )
+
+  // Déconnexion automatique à la date d'expiration du token, même si la page reste ouverte sans activité.
+  useEffect(() => {
+    if (!utilisateur) return undefined
+
+    const expiration = lireExpiration()
+    if (expiration === null) return undefined
+
+    const delai = Math.min(Math.max(expiration - Date.now(), 0), DELAI_MAX_MINUTEUR)
+    const minuteur = setTimeout(expirerSession, delai)
+    return () => clearTimeout(minuteur)
+  }, [utilisateur])
 
   const ouvrirSession = useCallback(({ token, utilisateur: utilisateurConnecte }) => {
-    localStorage.setItem(TOKEN_STORAGE_KEY, token)
-    localStorage.setItem(UTILISATEUR_STORAGE_KEY, JSON.stringify(utilisateurConnecte))
+    enregistrerSession(token, utilisateurConnecte)
     setUtilisateur(utilisateurConnecte)
+    setSessionExpiree(false)
     return utilisateurConnecte
   }, [])
 
@@ -42,10 +63,19 @@ export function AuthProvider({ children }) {
     [ouvrirSession],
   )
 
+  // Garde l'en-tête (« Bonjour … ») à jour après une modification du profil.
+  const mettreAJourUtilisateur = useCallback((champs) => {
+    setUtilisateur((precedent) => {
+      const utilisateurAJour = { ...precedent, ...champs }
+      enregistrerUtilisateur(utilisateurAJour)
+      return utilisateurAJour
+    })
+  }, [])
+
   const deconnexion = useCallback(() => {
-    localStorage.removeItem(TOKEN_STORAGE_KEY)
-    localStorage.removeItem(UTILISATEUR_STORAGE_KEY)
+    effacerSession()
     setUtilisateur(null)
+    setSessionExpiree(false)
   }, [])
 
   const valeur = useMemo(() => {
@@ -57,11 +87,13 @@ export function AuthProvider({ children }) {
       estClient: role === ROLES.CLIENT,
       estPersonnel: ROLES_PERSONNEL.includes(role),
       estAdministrateur: role === ROLES.ADMINISTRATEUR,
+      sessionExpiree,
       connexion,
       inscription,
+      mettreAJourUtilisateur,
       deconnexion,
     }
-  }, [utilisateur, connexion, inscription, deconnexion])
+  }, [utilisateur, sessionExpiree, connexion, inscription, mettreAJourUtilisateur, deconnexion])
 
   return <AuthContext.Provider value={valeur}>{children}</AuthContext.Provider>
 }

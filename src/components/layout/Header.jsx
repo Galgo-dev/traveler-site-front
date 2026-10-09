@@ -17,6 +17,11 @@ function ZoneCompte() {
             <span aria-hidden="true">♥&nbsp;</span>Mes favoris
           </Link>
         )}
+        {estClient && (
+          <Link to={ROUTES.PROFIL} className="bouton bouton--secondaire">
+            Mon profil
+          </Link>
+        )}
         {estPersonnel && (
           <Link to={ROUTES.GESTION} className="bouton bouton--secondaire">
             Espace agence

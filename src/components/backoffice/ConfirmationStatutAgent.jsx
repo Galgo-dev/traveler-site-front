@@ -1,4 +1,4 @@
-import Confirmation from './Confirmation'
+import Confirmation from '../ui/Confirmation'
 
 /**
  * Demande confirmation avant de désactiver ou de réactiver un compte du personnel.
