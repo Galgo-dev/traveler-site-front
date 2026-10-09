@@ -267,3 +267,14 @@ export function validerDemandeReinitialisation({ email }) {
       : 'Indiquez une adresse e-mail valide, par exemple nom@exemple.be.',
   })
 }
+
+/**
+ * Valide la demande de suppression de son compte : le mot de passe confirme qu'il s'agit du titulaire.
+ * @param {{ motDePasse: string }} champs
+ * @returns {Record<string, string>} message d'erreur par champ (vide si tout est valide)
+ */
+export function validerDemandeSuppression({ motDePasse }) {
+  return sansChampsValides({
+    motDePasse: motDePasse ? null : 'Indiquez votre mot de passe pour confirmer votre demande.',
+  })
+}
