@@ -318,7 +318,7 @@ Les routes `POST` ci-dessous sont limitées en nombre de tentatives (réponse 42
 | POST | `http://localhost:3000/api/auth/inscription` | Public | `nom`, `prenom`, `email`, `telephone`, `dateNaissance`, `motDePasse` |
 | POST | `http://localhost:3000/api/auth/connexion` | Public | `email`, `motDePasse` — connexion client |
 | POST | `http://localhost:3000/api/auth/agents/connexion` | Public | `email`, `motDePasse` — connexion du personnel |
-| POST | `http://localhost:3000/api/auth/mot-de-passe-oublie` | Public | `email` |
+| POST | `http://localhost:3000/api/auth/mot-de-passe-oublie` | Public | `email` — envoie un e-mail avec un lien `FRONT_URL/reinitialisation-mot-de-passe?token=…` (en dev : visible sur http://localhost:8025) |
 | POST | `http://localhost:3000/api/auth/reinitialisation` | Public | `token` (64 caractères hexadécimaux), `motDePasse` |
 | PATCH | `http://localhost:3000/api/auth/mot-de-passe` | Connecté | `motDePasseActuel`, `nouveauMotDePasse` |
 
@@ -427,13 +427,40 @@ Valeurs autorisées :
 
 ---
 
+## Demandes de voyage (v2) — `/api/demandes`
+
+Toutes les routes exigent d'être connecté.
+
+| Méthode | URL | Accès | Corps / query |
+|---|---|---|---|
+| POST | `http://localhost:3000/api/demandes/estimation` | Client | Même corps que la création → `{ prixDestination, prixUnitaire, prixEstime, mentionPrix, activites, avertissement? }` |
+| POST | `http://localhost:3000/api/demandes` | Client | `destinationId`, `dateDepart`, `dateRetour` (AAAA-MM-JJ), `nbAdultes`, `nbEnfants`, `activiteIds` (facultatif), `remarques` (facultatif, 1 000 caractères max.) → 201 `{ message, demande, avertissement? }` |
+| GET | `http://localhost:3000/api/demandes` | Client / Personnel | Client : ses demandes. Personnel : toutes — query : `etat`, `paysId`, `destinationId`, `clientId`, `q`, `departDu`, `departAu`, `page`, `limite` |
+| GET | `http://localhost:3000/api/demandes/:id` | Client / Personnel | Détail ; le personnel voit aussi le client et l'historique |
+| POST | `http://localhost:3000/api/demandes/:id/confirmation` | Personnel | — |
+| POST | `http://localhost:3000/api/demandes/:id/annulation` | Client / Personnel | `motif` (obligatoire pour le personnel) |
+
+- `etat` : `en_attente`, `confirmee`, `annulee`
+- Liste triée par date de commande décroissante.
+
+---
+
 ## Événements en direct — `/api/evenements`
 
 | Méthode | URL | Accès | Description |
 |---|---|---|---|
-| GET | `http://localhost:3000/api/evenements/catalogue` | Public | Flux Server-Sent Events : après chaque modification réussie du catalogue, événement `catalogue` avec `{ "ressource": "pays" \| "destinations" \| "activites" }` |
+| GET | `http://localhost:3000/api/evenements/catalogue` | Public | Flux Server-Sent Events (`text/event-stream`) : prévient les pages ouvertes de chaque modification du catalogue |
 
-Côté front : écouté dans `api/evenements.api.js` ; les hooks du catalogue (`useRequeteCatalogue`) rechargent alors leurs données en arrière-plan.
+Après chaque création, modification, masquage / réactivation ou suppression **réussie** d'un pays, d'une
+destination ou d'une activité, l'API envoie :
+
+```
+event: catalogue
+data: {"ressource":"destinations"}
+```
+
+`ressource` vaut `pays`, `destinations` ou `activites`. Côté navigateur :
+`new EventSource(url).addEventListener('catalogue', …)` — la reconnexion après une coupure est automatique.
 
 ---
 
