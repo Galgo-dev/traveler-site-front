@@ -1,0 +1,28 @@
+.navigation__liste {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espace-s);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Liens larges et bien visibles sur le fond bleu de l'en-tête. */
+.navigation__lien {
+  display: inline-flex;
+  align-items: center;
+  min-height: 3rem;
+  padding: var(--espace-s) var(--espace-m);
+  border-bottom: 3px solid transparent;
+  color: var(--couleur-fond);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.navigation__lien:hover {
+  text-decoration: underline;
+}
+
+.navigation__lien--actif {
+  border-bottom-color: var(--couleur-fond);
+}

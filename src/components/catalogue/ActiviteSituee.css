@@ -1,0 +1,10 @@
+/* Le lieu est placé au-dessus de la carte d'activité, qui garde toute la hauteur restante. */
+.activite-situee {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.activite-situee .activite-card {
+  flex: 1;
+}

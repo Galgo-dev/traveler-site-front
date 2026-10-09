@@ -1,28 +1,11 @@
 import { Link } from 'react-router-dom'
-import ActiviteCard from '../../components/catalogue/ActiviteCard'
+import ActiviteSituee from '../../components/catalogue/ActiviteSituee'
 import DestinationCard from '../../components/catalogue/DestinationCard'
 import ErrorMessage from '../../components/ui/ErrorMessage'
 import Loader from '../../components/ui/Loader'
 import { useFavoris } from '../../hooks/useFavoris'
-import { ROUTES, routeDestinationDetail } from '../../utils/constants'
+import { ROUTES } from '../../utils/constants'
 import './FavorisPage.css'
-
-/** Situe une activité : « Pérou · Lima », avec un lien vers sa destination quand elle en a une. */
-function LieuActivite({ activite }) {
-  const { pays, destination } = activite
-
-  return (
-    <p className="favoris__lieu">
-      {pays?.nom}
-      {destination && (
-        <>
-          {' · '}
-          <Link to={routeDestinationDetail(destination.id)}>{destination.nom}</Link>
-        </>
-      )}
-    </p>
-  )
-}
 
 function SectionFavoris({ titre, elements, messageVide, children }) {
   return (
@@ -68,9 +51,8 @@ function ListesFavoris({ favoris }) {
 
       <SectionFavoris titre="Mes activités" elements={activites} messageVide="Aucune activité dans vos favoris.">
         {activites.map((activite) => (
-          <li key={activite.id} className="favoris__activite">
-            <LieuActivite activite={activite} />
-            <ActiviteCard activite={activite} />
+          <li key={activite.id}>
+            <ActiviteSituee activite={activite} />
           </li>
         ))}
       </SectionFavoris>

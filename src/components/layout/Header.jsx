@@ -2,6 +2,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
 import { ROUTES } from '../../utils/constants'
 import Button from '../ui/Button'
+import NavBar from './NavBar'
 import './Header.css'
 
 function ZoneCompte() {
@@ -50,6 +51,7 @@ export default function Header() {
         <Link to={ROUTES.ACCUEIL} className="header__marque">
           Nos voyages
         </Link>
+        <NavBar />
         <ZoneCompte />
       </div>
     </header>

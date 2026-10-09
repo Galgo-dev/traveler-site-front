@@ -1,0 +1,9 @@
+.lieu-activite {
+  margin-bottom: var(--espace-s);
+  color: var(--couleur-primaire);
+  font-weight: 700;
+}
+
+.lieu-activite a {
+  color: inherit;
+}

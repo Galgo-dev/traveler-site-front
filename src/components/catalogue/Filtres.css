@@ -1,0 +1,28 @@
+/* Champs l'un sous l'autre sur mobile, côte à côte dès que la place le permet. */
+.filtres {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--espace-m);
+  align-items: end;
+  margin-bottom: var(--espace-xl);
+  padding: var(--espace-l);
+  border-radius: var(--rayon);
+  background: var(--couleur-fond-doux);
+}
+
+@media (min-width: 900px) {
+  .filtres {
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  }
+}
+
+.filtres__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espace-m);
+  grid-column: 1 / -1;
+}
+
+.filtres__actions .bouton {
+  flex: 1 1 12rem;
+}
