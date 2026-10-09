@@ -5,6 +5,8 @@ import ConnexionPage from '../pages/auth/ConnexionPage'
 import InscriptionPage from '../pages/auth/InscriptionPage'
 import MotDePasseOubliePage from '../pages/auth/MotDePasseOubliePage'
 import ReinitialisationMotDePassePage from '../pages/auth/ReinitialisationMotDePassePage'
+import AvisGestionDetailPage from '../pages/backoffice/AvisGestionDetailPage'
+import AvisGestionPage from '../pages/backoffice/AvisGestionPage'
 import ActivitesGestionPage from '../pages/backoffice/ActivitesGestionPage'
 import AgentsPage from '../pages/backoffice/AgentsPage'
 import ClientDetailPage from '../pages/backoffice/ClientDetailPage'
@@ -70,6 +72,8 @@ export default function AppRouter() {
               <Route path={ROUTES.GESTION_CLIENT_DETAIL} element={<ClientDetailPage />} />
               <Route path={ROUTES.GESTION_DEMANDES} element={<DemandesGestionPage />} />
               <Route path={ROUTES.GESTION_DEMANDE_DETAIL} element={<DemandeGestionDetailPage />} />
+              <Route path={ROUTES.GESTION_AVIS} element={<AvisGestionPage />} />
+              <Route path={ROUTES.GESTION_AVIS_DETAIL} element={<AvisGestionDetailPage />} />
               <Route element={<RoleRoute roles={[ROLES.ADMINISTRATEUR]} />}>
                 <Route path={ROUTES.GESTION_AGENTS} element={<AgentsPage />} />
               </Route>

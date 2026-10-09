@@ -1,0 +1,7 @@
+.note-etoiles {
+  color: var(--couleur-avertissement);
+  font-size: 1.5rem;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  white-space: nowrap;
+}

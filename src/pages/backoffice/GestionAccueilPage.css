@@ -23,3 +23,25 @@
   font-size: var(--taille-titre-2);
   font-weight: 700;
 }
+
+/* Travail en attente, mis en avant au-dessus des raccourcis. */
+.gestion-accueil__alerte {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espace-s);
+  border: 2px solid var(--couleur-primaire);
+  color: var(--couleur-primaire-fonce);
+  font-size: var(--taille-titre-2);
+  text-decoration: none;
+}
+
+.gestion-accueil__alerte span {
+  font-size: var(--taille-texte);
+  font-weight: 700;
+}
+
+.gestion-accueil__alerte:hover {
+  background: var(--couleur-fond);
+}

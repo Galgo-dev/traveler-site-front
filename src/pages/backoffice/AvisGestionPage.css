@@ -1,0 +1,31 @@
+/* Deux listes d'avis présentées en onglets : de gros liens, l'onglet actif est plein. */
+.onglets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espace-s);
+  margin-bottom: var(--espace-l);
+  border-bottom: 2px solid var(--couleur-bordure);
+}
+
+.onglets__lien {
+  display: inline-flex;
+  align-items: center;
+  min-height: 3rem;
+  padding: var(--espace-s) var(--espace-l);
+  border: 2px solid var(--couleur-bordure);
+  border-bottom: 0;
+  border-radius: var(--rayon) var(--rayon) 0 0;
+  color: var(--couleur-primaire);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.onglets__lien:hover {
+  background: var(--couleur-fond-doux);
+}
+
+.onglets__lien[aria-current='page'] {
+  border-color: var(--couleur-primaire);
+  background: var(--couleur-primaire);
+  color: var(--couleur-fond);
+}

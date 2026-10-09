@@ -1,0 +1,36 @@
+.avis-gestion__bloc {
+  margin-bottom: var(--espace-l);
+  padding: var(--espace-l);
+  border: 2px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+}
+
+.avis-gestion__bloc a {
+  color: var(--couleur-primaire);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.avis-gestion__entete {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espace-s);
+}
+
+.avis-gestion__titre {
+  overflow-wrap: anywhere;
+}
+
+/* Textes libres (avis, motif, réponse) : retours à la ligne conservés. */
+.avis-gestion__texte {
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.avis-gestion__notes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-s);
+  padding-left: var(--espace-l);
+}

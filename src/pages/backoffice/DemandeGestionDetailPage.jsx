@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import HistoriqueDemande from '../../components/backoffice/HistoriqueDemande'
+import CoordonneesClient from '../../components/backoffice/CoordonneesClient'
+import HistoriqueEtats from '../../components/backoffice/HistoriqueEtats'
 import ResumeDemande from '../../components/demandes/ResumeDemande'
 import AnnulationDemandeForm from '../../components/forms/AnnulationDemandeForm'
 import Button from '../../components/ui/Button'
@@ -10,41 +11,11 @@ import Loader from '../../components/ui/Loader'
 import Modal from '../../components/ui/Modal'
 import SuccessMessage from '../../components/ui/SuccessMessage'
 import { useDemande } from '../../hooks/useDemandes'
-import { ETATS_DEMANDE, ROUTES, routeClientDetail } from '../../utils/constants'
+import { ETATS_DEMANDE, LIBELLES_ETAT_DEMANDE, ROUTES } from '../../utils/constants'
 import './DemandeGestionDetailPage.css'
 
 const ACTIONS = { CONFIRMATION: 'confirmation', ANNULATION: 'annulation' }
 const STATUT_INTROUVABLE = 404
-
-/** Coordonnées du client pour le rappeler (§7), ou mention d'anonymisation si son compte a été supprimé (§8). */
-function CoordonneesClient({ client }) {
-  if (!client) {
-    return <p>Compte supprimé à la demande du client : cette demande est anonymisée.</p>
-  }
-
-  return (
-    <dl className="liste-infos">
-      <div>
-        <dt>Nom</dt>
-        <dd>
-          <Link to={routeClientDetail(client.id)}>
-            {client.prenom} {client.nom}
-          </Link>
-        </dd>
-      </div>
-      <div>
-        <dt>Téléphone</dt>
-        <dd>{client.telephone ? <a href={`tel:${client.telephone.replace(/\s/g, '')}`}>{client.telephone}</a> : '—'}</dd>
-      </div>
-      <div>
-        <dt>E-mail</dt>
-        <dd>
-          <a href={`mailto:${client.email}`}>{client.email}</a>
-        </dd>
-      </div>
-    </dl>
-  )
-}
 
 function ActionsDemande({ etat, onAction }) {
   if (etat === ETATS_DEMANDE.ANNULEE) return null
@@ -99,7 +70,11 @@ export default function DemandeGestionDetailPage() {
 
           <section className="demande-gestion__bloc" aria-labelledby="titre-client">
             <h2 id="titre-client">Client</h2>
-            <CoordonneesClient client={demande.client} />
+            {/* Coordonnées pour rappeler le client (§7) ; anonymisation si son compte a été supprimé (§8). */}
+            <CoordonneesClient
+              client={demande.client}
+              messageAnonymise="Compte supprimé à la demande du client : cette demande est anonymisée."
+            />
           </section>
 
           {demande.etat === ETATS_DEMANDE.ANNULEE && demande.motifAnnulation && (
@@ -113,7 +88,11 @@ export default function DemandeGestionDetailPage() {
 
           <section className="demande-gestion__bloc" aria-labelledby="titre-historique">
             <h2 id="titre-historique">Historique</h2>
-            <HistoriqueDemande historique={demande.historique ?? []} />
+            <HistoriqueEtats
+              historique={demande.historique ?? []}
+              libelles={LIBELLES_ETAT_DEMANDE}
+              libelleCreation="Demande créée"
+            />
           </section>
         </>
       )}

@@ -9,6 +9,7 @@ const LIENS = [
   { to: ROUTES.GESTION_DESTINATIONS, libelle: 'Destinations' },
   { to: ROUTES.GESTION_ACTIVITES, libelle: 'Activités' },
   { to: ROUTES.GESTION_DEMANDES, libelle: 'Demandes de voyage' },
+  { to: ROUTES.GESTION_AVIS, libelle: 'Avis clients' },
   { to: ROUTES.GESTION_CLIENTS, libelle: 'Clients' },
   { to: ROUTES.GESTION_AGENTS, libelle: 'Comptes du personnel', administrateurSeulement: true },
 ]
