@@ -1,21 +1,3 @@
-.destination-detail__retour {
-  display: inline-flex;
-  align-items: center;
-  min-height: 48px;
-  margin-bottom: var(--espace-l);
-  padding: var(--espace-s) var(--espace-m);
-  border: 2px solid var(--couleur-primaire);
-  border-radius: var(--rayon);
-  color: var(--couleur-primaire);
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.destination-detail__retour:hover {
-  background: var(--couleur-primaire);
-  color: var(--couleur-fond);
-}
-
 .destination-detail__entete {
   display: grid;
   gap: var(--espace-l);
@@ -58,4 +40,9 @@
 
 .destination-detail__section {
   margin-bottom: var(--espace-xl);
+}
+
+/* Le nom du pays mène à sa page (autres destinations et activités du pays). */
+.destination-detail__pays a {
+  color: inherit;
 }

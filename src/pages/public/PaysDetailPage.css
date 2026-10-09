@@ -1,0 +1,15 @@
+.pays-detail__entete {
+  margin-bottom: var(--espace-xl);
+}
+
+.pays-detail__continent {
+  margin-bottom: var(--espace-xs);
+  color: var(--couleur-primaire);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.pays-detail__description {
+  font-size: 1.25rem;
+}

@@ -137,3 +137,33 @@ img {
   clip-path: inset(50%);
   white-space: nowrap;
 }
+
+/* Texte d'introduction sous le titre d'une page */
+.introduction {
+  margin-bottom: var(--espace-xl);
+  color: var(--couleur-texte-secondaire);
+}
+
+/* Lien « ← Retour … » en haut des fiches, présenté comme un gros bouton */
+.lien-retour {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  margin-bottom: var(--espace-l);
+  padding: var(--espace-s) var(--espace-m);
+  border: 2px solid var(--couleur-primaire);
+  border-radius: var(--rayon);
+  color: var(--couleur-primaire);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.lien-retour:hover {
+  background: var(--couleur-primaire);
+  color: var(--couleur-fond);
+}
+
+/* Section d'une page de catalogue (destinations, activités…) */
+.section-catalogue {
+  margin-bottom: var(--espace-xl);
+}

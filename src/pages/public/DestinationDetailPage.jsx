@@ -7,7 +7,7 @@ import ErrorMessage from '../../components/ui/ErrorMessage'
 import Loader from '../../components/ui/Loader'
 import { useDestination } from '../../hooks/useDestination'
 import { usePaysDetail } from '../../hooks/usePays'
-import { ROUTES } from '../../utils/constants'
+import { ROUTES, routePaysDetail } from '../../utils/constants'
 import { formaterPrix } from '../../utils/formatters'
 import './DestinationDetailPage.css'
 
@@ -64,7 +64,7 @@ function FicheDestination({ destination }) {
         <div>
           {pays && (
             <p className="destination-detail__pays">
-              {pays.nom}
+              <Link to={routePaysDetail(pays.id)}>{pays.nom}</Link>
               {pays.continent && ` · ${pays.continent}`}
             </p>
           )}
@@ -106,7 +106,7 @@ export default function DestinationDetailPage() {
 
   return (
     <main className="conteneur">
-      <Link className="destination-detail__retour" to={ROUTES.DESTINATIONS}>
+      <Link className="lien-retour" to={ROUTES.DESTINATIONS}>
         ← Retour aux destinations
       </Link>
 

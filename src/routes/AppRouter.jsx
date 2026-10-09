@@ -18,6 +18,9 @@ import NotFoundPage from '../pages/NotFoundPage'
 import AccueilPage from '../pages/public/AccueilPage'
 import DestinationDetailPage from '../pages/public/DestinationDetailPage'
 import DestinationsPage from '../pages/public/DestinationsPage'
+import PaysDetailPage from '../pages/public/PaysDetailPage'
+import PaysListePage from '../pages/public/PaysListePage'
+import RecherchePage from '../pages/public/RecherchePage'
 import { ROLES, ROLES_PERSONNEL, ROUTES } from '../utils/constants'
 import ProtectedRoute from './ProtectedRoute'
 import RoleRoute from './RoleRoute'
@@ -30,6 +33,9 @@ export default function AppRouter() {
           <Route path={ROUTES.ACCUEIL} element={<AccueilPage />} />
           <Route path={ROUTES.DESTINATIONS} element={<DestinationsPage />} />
           <Route path={ROUTES.DESTINATION_DETAIL} element={<DestinationDetailPage />} />
+          <Route path={ROUTES.PAYS} element={<PaysListePage />} />
+          <Route path={ROUTES.PAYS_DETAIL} element={<PaysDetailPage />} />
+          <Route path={ROUTES.RECHERCHE} element={<RecherchePage />} />
           <Route path={ROUTES.CONNEXION} element={<ConnexionPage />} />
           <Route path={ROUTES.INSCRIPTION} element={<InscriptionPage />} />
           <Route path={ROUTES.MOT_DE_PASSE_OUBLIE} element={<MotDePasseOubliePage />} />
