@@ -2,8 +2,12 @@ import {
   CONTINENTS,
   LIBELLES_CATEGORIE,
   LIBELLES_DIFFICULTE,
+  LONGUEUR_MAX_COMMENTAIRE_AVIS,
   LONGUEUR_MAX_REMARQUES,
+  LONGUEUR_MAX_TITRE_AVIS,
   MAX_VOYAGEURS,
+  NOTE_MAX,
+  NOTE_MAX_SANS_COMMENTAIRE,
   ROLES_PERSONNEL,
   UNITES_DUREE,
 } from './constants'
@@ -353,4 +357,33 @@ export function validerDemande(champs) {
  */
 export function validerAnnulationDemande({ motif }) {
   return sansChampsValides({ motif: exiger(motif, "Indiquez le motif de l'annulation.") })
+}
+
+function validerCommentaireAvis(note, commentaire) {
+  if (commentaire.length > LONGUEUR_MAX_COMMENTAIRE_AVIS) {
+    return `Le commentaire est limité à ${LONGUEUR_MAX_COMMENTAIRE_AVIS} caractères.`
+  }
+  // R8
+  const noteBasse = estRenseigne(note) && Number(note) <= NOTE_MAX_SANS_COMMENTAIRE
+  return noteBasse && !estRenseigne(commentaire)
+    ? `Expliquez-nous ce qui ne vous a pas plu : le commentaire est obligatoire pour ${NOTE_MAX_SANS_COMMENTAIRE} étoiles ou moins.`
+    : null
+}
+
+/**
+ * Valide un avis avant son envoi (V3, récap réunion 3). L'éligibilité de la commande (R2 à R4) est vérifiée par l'API.
+ * @param {{ note: string, titre: string, commentaire?: string }} champs
+ * @returns {Record<string, string>} message d'erreur par champ (vide si tout est valide)
+ */
+export function validerAvis({ note, titre, commentaire = '' }) {
+  return sansChampsValides({
+    // R6
+    note: validerNombre(note, { min: 1, max: NOTE_MAX, entier: true }, `Choisissez une note de 1 à ${NOTE_MAX} étoiles.`),
+    titre:
+      exiger(titre, 'Donnez un titre à votre avis.') ??
+      (titre.trim().length > LONGUEUR_MAX_TITRE_AVIS
+        ? `Le titre est limité à ${LONGUEUR_MAX_TITRE_AVIS} caractères.`
+        : null),
+    commentaire: validerCommentaireAvis(note, commentaire),
+  })
 }

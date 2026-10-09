@@ -15,6 +15,7 @@ export const ROUTES = {
   NOUVELLE_DEMANDE: '/demandes/nouvelle',
   MES_DEMANDES: '/demandes',
   MA_DEMANDE: '/demandes/:id',
+  NOUVEL_AVIS: '/demandes/:id/avis',
   GESTION: '/gestion',
   GESTION_AGENTS: '/gestion/agents',
   GESTION_PAYS: '/gestion/pays',
@@ -41,6 +42,11 @@ export function routeNouvelleDemande(destinationId) {
 
 export function routeMaDemande(id) {
   return `${ROUTES.MES_DEMANDES}/${id}`
+}
+
+/** Formulaire d'avis sur une commande terminée (V3). */
+export function routeNouvelAvis(demandeId) {
+  return `${routeMaDemande(demandeId)}/avis`
 }
 
 export function routeGestionDemande(id) {
@@ -133,3 +139,19 @@ export const LIBELLES_ETAT_DEMANDE = {
 // R5 : 10 voyageurs au maximum, adultes et enfants confondus.
 export const MAX_VOYAGEURS = 10
 export const LONGUEUR_MAX_REMARQUES = 1000
+
+// V3 — Avis clients (récap réunion 3)
+export const NOTE_MAX = 5
+// R8 : un commentaire est obligatoire pour une note de 2 étoiles ou moins.
+export const NOTE_MAX_SANS_COMMENTAIRE = 2
+// P4 : titre court ; R7 : commentaire de 1 000 caractères maximum.
+export const LONGUEUR_MAX_TITRE_AVIS = 100
+export const LONGUEUR_MAX_COMMENTAIRE_AVIS = 1000
+
+export const LIBELLES_NOTE = {
+  1: 'Décevant',
+  2: 'Moyen',
+  3: 'Bien',
+  4: 'Très bien',
+  5: 'Excellent',
+}

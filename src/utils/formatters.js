@@ -68,3 +68,8 @@ const formateurDateHeure = new Intl.DateTimeFormat('fr-BE', { dateStyle: 'long',
 export function formaterDateHeure(dateIso) {
   return formateurDateHeure.format(new Date(dateIso))
 }
+
+/** Nom sous lequel un avis est publié (R17) : « Julie D. ». */
+export function formaterNomPublic({ prenom, nom }) {
+  return `${prenom} ${nom.charAt(0).toUpperCase()}.`
+}
