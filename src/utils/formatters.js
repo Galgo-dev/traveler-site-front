@@ -39,3 +39,32 @@ const formateurDate = new Intl.DateTimeFormat('fr-BE', { dateStyle: 'long', time
 export function formaterDate(dateIso) {
   return formateurDate.format(new Date(dateIso))
 }
+
+const formateurPrixCentimes = new Intl.NumberFormat('fr-BE', {
+  style: 'currency',
+  currency: 'EUR',
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+})
+
+/**
+ * Prix d'une demande de voyage (l'API renvoie des chaînes comme « 2462.50 »).
+ * Les centimes ne sont affichés que s'il y en a : 2462.5 → « 2 462,50 € », 950 → « 950 € ».
+ */
+export function formaterPrixEstime(montant) {
+  const nombre = Number(montant)
+  return Number.isInteger(nombre) ? formaterPrix(nombre) : formateurPrixCentimes.format(nombre)
+}
+
+/** Ex. : (2, 1) → « 2 adultes, 1 enfant » ; (1, 0) → « 1 adulte ». */
+export function formaterVoyageurs(nbAdultes, nbEnfants = 0) {
+  const pluriel = (nombre, mot) => `${nombre} ${mot}${nombre > 1 ? 's' : ''}`
+  return [pluriel(nbAdultes, 'adulte'), nbEnfants > 0 && pluriel(nbEnfants, 'enfant')].filter(Boolean).join(', ')
+}
+
+const formateurDateHeure = new Intl.DateTimeFormat('fr-BE', { dateStyle: 'long', timeStyle: 'short' })
+
+/** Ex. : « 9 octobre 2026 à 14:32 » (date de commande, historique d'une demande). */
+export function formaterDateHeure(dateIso) {
+  return formateurDateHeure.format(new Date(dateIso))
+}

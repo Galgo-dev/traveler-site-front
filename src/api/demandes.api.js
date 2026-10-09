@@ -39,3 +39,49 @@ export async function creerDemande(demande) {
   const { data } = await axiosClient.post('/demandes', demande)
   return data
 }
+
+/**
+ * Liste des demandes de voyage, de la plus récente à la plus ancienne commande.
+ * Un client ne reçoit que les siennes (R15) ; le personnel les reçoit toutes.
+ * @param {{ page?: number, limite?: number, etat?: 'en_attente'|'confirmee'|'annulee', paysId?: number,
+ *   destinationId?: number, clientId?: number, q?: string, departDu?: string, departAu?: string }} filtres
+ *   paysId, destinationId, clientId, q (nom ou e-mail du client), departDu et departAu : personnel uniquement
+ * @param {{ signal?: AbortSignal }} options
+ */
+export async function getDemandes(filtres = {}, { signal } = {}) {
+  const { data } = await axiosClient.get('/demandes', { params: filtres, signal })
+  return data
+}
+
+/**
+ * Détail d'une demande : destination, activités et prix figés à la commande.
+ * Le personnel reçoit en plus le client (null si son compte a été supprimé), le motif d'annulation et l'historique.
+ * @param {number|string} id
+ * @param {{ signal?: AbortSignal }} options
+ */
+export async function getDemandeById(id, { signal } = {}) {
+  const { data } = await axiosClient.get(`/demandes/${id}`, { signal })
+  return data
+}
+
+/**
+ * Confirme une demande « en attente » (personnel uniquement).
+ * @param {number|string} id
+ * @returns {Promise<object>} la demande à jour
+ */
+export async function confirmerDemande(id) {
+  const { data } = await axiosClient.post(`/demandes/${id}/confirmation`)
+  return data
+}
+
+/**
+ * Annule une demande. Le client ne peut annuler que si elle est « en attente » (R11) ;
+ * le personnel doit indiquer un motif (R13).
+ * @param {number|string} id
+ * @param {string} [motif]
+ * @returns {Promise<object>} la demande à jour
+ */
+export async function annulerDemande(id, motif) {
+  const { data } = await axiosClient.post(`/demandes/${id}/annulation`, motif ? { motif } : {})
+  return data
+}

@@ -2,6 +2,8 @@ import {
   CONTINENTS,
   LIBELLES_CATEGORIE,
   LIBELLES_DIFFICULTE,
+  LONGUEUR_MAX_REMARQUES,
+  MAX_VOYAGEURS,
   ROLES_PERSONNEL,
   UNITES_DUREE,
 } from './constants'
@@ -292,4 +294,63 @@ export function validerCriteresRecherche({ budgetMax = '' }) {
       'Indiquez un budget en euros, par exemple 1000.',
     ),
   })
+}
+
+/** Date du jour au format AAAA-MM-JJ, à l'heure locale (comme les champs de type date). */
+export function aujourdhuiIso() {
+  const maintenant = new Date()
+  return new Date(maintenant.getTime() - maintenant.getTimezoneOffset() * 60000).toISOString().slice(0, 10)
+}
+
+// R2 : départ dans le futur.
+function validerDateDepart(dateDepart) {
+  if (!dateDepart) return 'Indiquez la date de départ.'
+  return dateDepart > aujourdhuiIso() ? null : 'La date de départ doit être dans le futur.'
+}
+
+// R1 : retour strictement après le départ.
+function validerDateRetour(dateDepart, dateRetour) {
+  if (!dateRetour) return 'Indiquez la date de retour.'
+  return !dateDepart || dateRetour > dateDepart ? null : 'La date de retour doit être après la date de départ.'
+}
+
+/**
+ * Valide une demande de voyage avant l'estimation et l'envoi (V2, récap réunion 2).
+ * R3 (délai minimum avant le départ, paramétrable), R6 et R8 sont vérifiées par l'API.
+ * @param {{ destinationId: string, dateDepart: string, dateRetour: string, nbAdultes: string,
+ *   nbEnfants: string, remarques?: string }} champs
+ * @returns {Record<string, string>} message d'erreur par champ (vide si tout est valide)
+ */
+export function validerDemande(champs) {
+  const { destinationId, dateDepart, dateRetour, nbAdultes, nbEnfants, remarques = '' } = champs
+  const erreurAdultes = validerNombre(nbAdultes, { min: 1, entier: true }, 'Indiquez au moins 1 adulte.')
+  const erreurEnfants = validerNombre(nbEnfants, { min: 0, entier: true }, "Indiquez le nombre d'enfants (0 si aucun).")
+  const totalVoyageurs = Number(nbAdultes) + Number(nbEnfants)
+
+  return sansChampsValides({
+    destinationId: exiger(destinationId, 'Choisissez une destination.'),
+    dateDepart: validerDateDepart(dateDepart),
+    dateRetour: validerDateRetour(dateDepart, dateRetour),
+    // R4
+    nbAdultes: erreurAdultes,
+    // R5
+    nbEnfants:
+      erreurEnfants ??
+      (!erreurAdultes && totalVoyageurs > MAX_VOYAGEURS
+        ? `Une demande compte au maximum ${MAX_VOYAGEURS} voyageurs, adultes compris.`
+        : null),
+    remarques:
+      remarques.length > LONGUEUR_MAX_REMARQUES
+        ? `Les remarques sont limitées à ${LONGUEUR_MAX_REMARQUES} caractères.`
+        : null,
+  })
+}
+
+/**
+ * Valide l'annulation d'une demande par le personnel : le motif est obligatoire (R13).
+ * @param {{ motif: string }} champs
+ * @returns {Record<string, string>} message d'erreur par champ (vide si tout est valide)
+ */
+export function validerAnnulationDemande({ motif }) {
+  return sansChampsValides({ motif: exiger(motif, "Indiquez le motif de l'annulation.") })
 }

@@ -12,6 +12,9 @@ export const ROUTES = {
   REINITIALISATION_MOT_DE_PASSE: '/reinitialisation-mot-de-passe',
   FAVORIS: '/favoris',
   PROFIL: '/profil',
+  NOUVELLE_DEMANDE: '/demandes/nouvelle',
+  MES_DEMANDES: '/demandes',
+  MA_DEMANDE: '/demandes/:id',
   GESTION: '/gestion',
   GESTION_AGENTS: '/gestion/agents',
   GESTION_PAYS: '/gestion/pays',
@@ -19,6 +22,8 @@ export const ROUTES = {
   GESTION_ACTIVITES: '/gestion/activites',
   GESTION_CLIENTS: '/gestion/clients',
   GESTION_CLIENT_DETAIL: '/gestion/clients/:id',
+  GESTION_DEMANDES: '/gestion/demandes',
+  GESTION_DEMANDE_DETAIL: '/gestion/demandes/:id',
 }
 
 export function routeDestinationDetail(id) {
@@ -27,6 +32,19 @@ export function routeDestinationDetail(id) {
 
 export function routePaysDetail(id) {
   return `${ROUTES.PAYS}/${id}`
+}
+
+/** Formulaire de demande, avec la destination présélectionnée si elle est connue. */
+export function routeNouvelleDemande(destinationId) {
+  return destinationId ? `${ROUTES.NOUVELLE_DEMANDE}?destination=${destinationId}` : ROUTES.NOUVELLE_DEMANDE
+}
+
+export function routeMaDemande(id) {
+  return `${ROUTES.MES_DEMANDES}/${id}`
+}
+
+export function routeGestionDemande(id) {
+  return `${ROUTES.GESTION_DEMANDES}/${id}`
 }
 
 export function routeClientDetail(id) {
@@ -93,3 +111,20 @@ export const LIBELLES_STATUT_CATALOGUE = {
   visible: 'Visible',
   masque: 'Masqué',
 }
+
+// V2 — Demandes de voyage (récap réunion 2)
+export const ETATS_DEMANDE = {
+  EN_ATTENTE: 'en_attente',
+  CONFIRMEE: 'confirmee',
+  ANNULEE: 'annulee',
+}
+
+export const LIBELLES_ETAT_DEMANDE = {
+  [ETATS_DEMANDE.EN_ATTENTE]: 'En attente',
+  [ETATS_DEMANDE.CONFIRMEE]: 'Confirmée',
+  [ETATS_DEMANDE.ANNULEE]: 'Annulée',
+}
+
+// R5 : 10 voyageurs au maximum, adultes et enfants confondus.
+export const MAX_VOYAGEURS = 10
+export const LONGUEUR_MAX_REMARQUES = 1000
