@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import { LIBELLES_STATUT_CATALOGUE } from '../../utils/constants'
 import Button from '../ui/Button'
+import Confirmation from '../ui/Confirmation'
 import ErrorMessage from '../ui/ErrorMessage'
 import Loader from '../ui/Loader'
 import Modal from '../ui/Modal'
 import Pagination from '../ui/Pagination'
 import SuccessMessage from '../ui/SuccessMessage'
 import CarteGestion from './CarteGestion'
-import Confirmation from './Confirmation'
 import FiltresGestion from './FiltresGestion'
 
 const ACTIONS = {

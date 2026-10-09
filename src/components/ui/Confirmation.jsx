@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import Button from '../ui/Button'
-import ErrorMessage from '../ui/ErrorMessage'
+import Button from './Button'
+import ErrorMessage from './ErrorMessage'
 import './Confirmation.css'
 
 /**
