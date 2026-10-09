@@ -74,14 +74,19 @@ export function useDestinationsDuPays(id) {
   return { destinations: donnees?.donnees ?? [], chargement, erreur }
 }
 
+// Sans pays choisi (ex. formulaire de demande avant le choix de la destination), aucune requête n'est utile.
+function chargerActivitesDuPays(parametres, options) {
+  return parametres.id ? getActivitesDuPays(parametres, options) : Promise.resolve({ donnees: [] })
+}
+
 /**
  * Activités visibles d'un pays, éventuellement filtrées par catégorie et budget.
- * @param {number|string} id
+ * @param {number|string|null} id
  * @param {{ categorie?: string, budgetMax?: number }} filtres
  */
 export function useActivitesDuPays(id, filtres = {}) {
-  const { donnees, chargement, erreur } = useRequeteCatalogue(getActivitesDuPays, {
-    id,
+  const { donnees, chargement, erreur } = useRequeteCatalogue(chargerActivitesDuPays, {
+    id: id ?? null,
     filtres: { ...UNE_SEULE_PAGE, ...filtres },
   })
 

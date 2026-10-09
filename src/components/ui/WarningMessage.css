@@ -1,0 +1,8 @@
+.message-avertissement {
+  padding: var(--espace-m) var(--espace-l);
+  border-left: 6px solid var(--couleur-avertissement);
+  border-radius: var(--rayon);
+  background: var(--couleur-avertissement-fond);
+  color: var(--couleur-avertissement);
+  font-weight: 600;
+}

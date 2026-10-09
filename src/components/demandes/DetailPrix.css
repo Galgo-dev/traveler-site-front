@@ -1,0 +1,40 @@
+/* Lignes du calcul : libellé à gauche, montant à droite. */
+.detail-prix__lignes {
+  display: grid;
+  gap: var(--espace-s);
+  margin: 0 0 var(--espace-m);
+}
+
+.detail-prix__lignes > div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--espace-s);
+}
+
+.detail-prix__lignes dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.detail-prix__precision {
+  color: var(--couleur-texte-secondaire);
+  font-weight: 400;
+}
+
+.detail-prix__total {
+  margin-bottom: var(--espace-xs);
+  padding-top: var(--espace-m);
+  border-top: 2px solid var(--couleur-bordure);
+  font-size: var(--taille-titre-2);
+}
+
+.detail-prix__total strong {
+  color: var(--couleur-primaire-fonce);
+}
+
+.detail-prix__mention,
+.detail-prix__absente {
+  color: var(--couleur-texte-secondaire);
+  font-style: italic;
+}

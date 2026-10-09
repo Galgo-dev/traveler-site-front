@@ -1,0 +1,6 @@
+.estimation-prix {
+  padding: var(--espace-l);
+  border: 2px solid var(--couleur-primaire);
+  border-radius: var(--rayon);
+  background: var(--couleur-fond-doux);
+}

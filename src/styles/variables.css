@@ -11,6 +11,8 @@
   --couleur-erreur-fond: #fdecec;
   --couleur-succes: #1b5e20;
   --couleur-succes-fond: #e8f5e9;
+  --couleur-avertissement: #7a4b00;
+  --couleur-avertissement-fond: #fff4e0;
 
   /* Typographie (public d'environ 58 ans : base ≥ 18 px) */
   --police: system-ui, 'Segoe UI', Roboto, Arial, sans-serif;

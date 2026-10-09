@@ -167,3 +167,9 @@ img {
 .section-catalogue {
   margin-bottom: var(--espace-xl);
 }
+
+/* Demande de voyage en attente de traitement (ni confirmée, ni annulée) */
+.etiquette--attente {
+  background: var(--couleur-fond-doux);
+  color: var(--couleur-primaire-fonce);
+}

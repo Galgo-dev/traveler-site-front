@@ -7,13 +7,14 @@ import './FiltresGestion.css'
 const TOUS = { valeur: '', libelle: 'Tous' }
 
 /**
- * Recherche par mot-clé (champ `q`) complétée de listes déroulantes, chacune avec le choix « Tous ».
- * Les filtres ne sont appliqués qu'au clic sur « Rechercher ».
+ * Recherche par mot-clé (champ `q`) complétée de listes déroulantes, chacune avec le choix « Tous »,
+ * et éventuellement de dates (ex. période de départ). Les filtres ne sont appliqués qu'au clic sur « Rechercher ».
  * @param {{ libelleRecherche: string,
  *   listes?: { name: string, label: string, options: { valeur: string, libelle: string }[] }[],
+ *   dates?: { name: string, label: string }[],
  *   filtres: Record<string, string>, onRechercher: (filtres: Record<string, string>) => void }} props
  */
-export default function FiltresGestion({ libelleRecherche, listes = [], filtres, onRechercher }) {
+export default function FiltresGestion({ libelleRecherche, listes = [], dates = [], filtres, onRechercher }) {
   const [valeurs, setValeurs] = useState(filtres)
 
   function modifierChamp(event) {
@@ -38,6 +39,9 @@ export default function FiltresGestion({ libelleRecherche, listes = [], filtres,
           value={valeurs[name]}
           onChange={modifierChamp}
         />
+      ))}
+      {dates.map(({ name, label }) => (
+        <Input key={name} label={label} type="date" name={name} value={valeurs[name]} onChange={modifierChamp} />
       ))}
       <Button type="submit">Rechercher</Button>
     </form>

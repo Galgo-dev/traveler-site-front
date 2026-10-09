@@ -1,0 +1,24 @@
+/* Liste des activités à cocher : une par ligne, nom en gras puis caractéristiques. */
+.demande-form__activites {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-s);
+  margin: 0;
+  padding: var(--espace-m);
+  border: 2px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+}
+
+.demande-form__activites legend {
+  padding: 0 var(--espace-s);
+}
+
+.demande-form__activite {
+  display: flex;
+  flex-direction: column;
+}
+
+.demande-form__activite span {
+  color: var(--couleur-texte-secondaire);
+  font-size: var(--taille-petit);
+}

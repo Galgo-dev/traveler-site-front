@@ -59,3 +59,19 @@ export function useOptionsDestinations(paysId) {
 
   return { options: (donnees?.donnees ?? []).map(versOptionDestination), chargement, erreur }
 }
+
+const TOUTES_LES_DESTINATIONS = { limite: 100, inclureMasques: true }
+
+function versOptionDestinationAvecPays({ id, nom, actif, pays }) {
+  const libelle = pays ? `${nom} (${pays.nom})` : nom
+  return { valeur: String(id), libelle: actif ? libelle : `${libelle} — masquée` }
+}
+
+/**
+ * Toutes les destinations, masquées comprises, avec leur pays (filtres du back-office).
+ */
+export function useOptionsToutesDestinations() {
+  const { donnees, chargement, erreur } = useRequeteCatalogue(getDestinations, TOUTES_LES_DESTINATIONS)
+
+  return { options: (donnees?.donnees ?? []).map(versOptionDestinationAvecPays), chargement, erreur }
+}

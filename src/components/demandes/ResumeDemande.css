@@ -1,0 +1,43 @@
+.resume-demande__bloc {
+  margin-bottom: var(--espace-l);
+  padding: var(--espace-l);
+  border: 2px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+}
+
+.resume-demande__entete {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espace-s);
+  margin-bottom: var(--espace-m);
+}
+
+.resume-demande__entete h2 {
+  margin: 0;
+}
+
+.resume-demande__bloc dd a {
+  color: var(--couleur-primaire);
+  font-weight: 700;
+}
+
+.resume-demande__activites {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-s);
+  margin: 0;
+  padding-left: var(--espace-l);
+}
+
+.resume-demande__retiree {
+  color: var(--couleur-texte-secondaire);
+  font-style: italic;
+}
+
+/* Les retours à la ligne saisis par le client sont conservés. */
+.resume-demande__remarques {
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
