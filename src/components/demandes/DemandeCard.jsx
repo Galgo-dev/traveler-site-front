@@ -9,10 +9,10 @@ function nomClient(client) {
 
 /**
  * Résumé d'une demande de voyage dans une liste, avec le lien vers son détail.
- * @param {{ demande: object, lien: string, avecClient?: boolean }} props
- *   avecClient : affiche le client (liste du personnel)
+ * @param {{ demande: object, lien: string, avecClient?: boolean, lienAvis?: string|null }} props
+ *   avecClient : affiche le client (liste du personnel) ; lienAvis : voyage terminé à noter (V3)
  */
-export default function DemandeCard({ demande, lien, avecClient = false }) {
+export default function DemandeCard({ demande, lien, avecClient = false, lienAvis = null }) {
   const { destination, dateDepart, dateRetour, nbAdultes, nbEnfants, prixEstime, dateCommande, etat } = demande
 
   return (
@@ -52,9 +52,16 @@ export default function DemandeCard({ demande, lien, avecClient = false }) {
         </div>
       </dl>
 
-      <Link to={lien} className="bouton bouton--secondaire demande-card__lien">
-        Voir le détail
-      </Link>
+      <div className="demande-card__liens">
+        {lienAvis && (
+          <Link to={lienAvis} className="bouton bouton--primaire">
+            Donner mon avis
+          </Link>
+        )}
+        <Link to={lien} className="bouton bouton--secondaire">
+          Voir le détail
+        </Link>
+      </div>
     </article>
   )
 }

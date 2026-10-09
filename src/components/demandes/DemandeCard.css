@@ -27,6 +27,9 @@
   font-weight: 400;
 }
 
-.demande-card__lien {
+.demande-card__liens {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espace-s);
   margin-top: auto;
 }

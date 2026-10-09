@@ -1,0 +1,71 @@
+.choix-note {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.choix-note__etoiles {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espace-xs);
+}
+
+/* Grandes zones cliquables (≥ 48 px) pour un public âgé. */
+.choix-note__etoile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 3.25rem;
+  min-height: 3.25rem;
+  border-radius: var(--rayon);
+  color: var(--couleur-texte-secondaire);
+  font-size: 2.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.choix-note__etoile--pleine {
+  color: var(--couleur-avertissement);
+}
+
+.choix-note__etoile:hover {
+  background: var(--couleur-fond-doux);
+}
+
+.choix-note__aucune {
+  display: inline-flex;
+  align-items: center;
+  min-height: 3rem;
+  margin-left: var(--espace-s);
+  padding: 0 var(--espace-m);
+  border: 2px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+  font-size: var(--taille-petit);
+  cursor: pointer;
+}
+
+input:checked + .choix-note__aucune {
+  border-color: var(--couleur-primaire);
+  background: var(--couleur-fond-doux);
+  font-weight: 700;
+}
+
+/* Le bouton radio est caché : le contour de focus est porté par son étoile. */
+input:focus-visible + .choix-note__etoile,
+input:focus-visible + .choix-note__aucune {
+  outline: 3px solid var(--couleur-primaire);
+  outline-offset: 2px;
+}
+
+.choix-note__resume {
+  margin: var(--espace-xs) 0 0;
+  color: var(--couleur-texte-secondaire);
+  font-size: var(--taille-petit);
+}
+
+.choix-note--petite .choix-note__etoile {
+  min-width: 3rem;
+  min-height: 3rem;
+  font-size: 2rem;
+}

@@ -1,0 +1,19 @@
+/* Notes facultatives des activités de la commande : une par ligne. */
+.avis-form__activites {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-l);
+  margin: 0;
+  padding: var(--espace-m);
+  border: 2px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+}
+
+.avis-form__activites legend {
+  padding: 0 var(--espace-s);
+}
+
+/* Le nom de l'activité est un libellé secondaire, moins appuyé que celui du formulaire. */
+.avis-form__activites .choix-note legend {
+  font-weight: 400;
+}

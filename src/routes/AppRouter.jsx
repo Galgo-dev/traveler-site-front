@@ -17,6 +17,7 @@ import PaysGestionPage from '../pages/backoffice/PaysGestionPage'
 import FavorisPage from '../pages/client/FavorisPage'
 import MaDemandePage from '../pages/client/MaDemandePage'
 import MesDemandesPage from '../pages/client/MesDemandesPage'
+import NouvelAvisPage from '../pages/client/NouvelAvisPage'
 import NouvelleDemandePage from '../pages/client/NouvelleDemandePage'
 import ProfilPage from '../pages/client/ProfilPage'
 import NotFoundPage from '../pages/NotFoundPage'
@@ -52,6 +53,7 @@ export default function AppRouter() {
               <Route path={ROUTES.NOUVELLE_DEMANDE} element={<NouvelleDemandePage />} />
               <Route path={ROUTES.MES_DEMANDES} element={<MesDemandesPage />} />
               <Route path={ROUTES.MA_DEMANDE} element={<MaDemandePage />} />
+              <Route path={ROUTES.NOUVEL_AVIS} element={<NouvelAvisPage />} />
             </Route>
           </Route>
           <Route path="*" element={<NotFoundPage />} />

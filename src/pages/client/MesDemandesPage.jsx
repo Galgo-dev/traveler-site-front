@@ -4,10 +4,11 @@ import DemandeCard from '../../components/demandes/DemandeCard'
 import ErrorMessage from '../../components/ui/ErrorMessage'
 import Loader from '../../components/ui/Loader'
 import Pagination from '../../components/ui/Pagination'
+import { useCommandesEligibles } from '../../hooks/useAvis'
 import { useDemandes } from '../../hooks/useDemandes'
-import { ROUTES, routeMaDemande } from '../../utils/constants'
+import { ROUTES, routeMaDemande, routeNouvelAvis } from '../../utils/constants'
 
-function ListeDemandes({ demandes }) {
+function ListeDemandes({ demandes, idsANoter }) {
   if (demandes.length === 0) {
     return (
       <div className="encadre">
@@ -23,7 +24,11 @@ function ListeDemandes({ demandes }) {
     <ul className="grille-cartes">
       {demandes.map((demande) => (
         <li key={demande.id}>
-          <DemandeCard demande={demande} lien={routeMaDemande(demande.id)} />
+          <DemandeCard
+            demande={demande}
+            lien={routeMaDemande(demande.id)}
+            lienAvis={idsANoter.has(demande.id) ? routeNouvelAvis(demande.id) : null}
+          />
         </li>
       ))}
     </ul>
@@ -33,6 +38,9 @@ function ListeDemandes({ demandes }) {
 export default function MesDemandesPage() {
   const [page, setPage] = useState(1)
   const { demandes, pagination, chargement, erreur } = useDemandes({ page })
+  // Voyages terminés sans avis : bouton « Donner mon avis » (V3).
+  const { commandes } = useCommandesEligibles()
+  const idsANoter = new Set(commandes.map((commande) => commande.id))
 
   return (
     <main className="conteneur">
@@ -45,7 +53,7 @@ export default function MesDemandesPage() {
       {!chargement && erreur && <ErrorMessage message={erreur.message} />}
       {!chargement && !erreur && (
         <>
-          <ListeDemandes demandes={demandes} />
+          <ListeDemandes demandes={demandes} idsANoter={idsANoter} />
           {pagination && <Pagination page={pagination.page} pages={pagination.pages} onChanger={setPage} />}
         </>
       )}
