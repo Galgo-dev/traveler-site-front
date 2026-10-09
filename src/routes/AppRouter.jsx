@@ -9,10 +9,15 @@ import ActivitesGestionPage from '../pages/backoffice/ActivitesGestionPage'
 import AgentsPage from '../pages/backoffice/AgentsPage'
 import ClientDetailPage from '../pages/backoffice/ClientDetailPage'
 import ClientsPage from '../pages/backoffice/ClientsPage'
+import DemandeGestionDetailPage from '../pages/backoffice/DemandeGestionDetailPage'
+import DemandesGestionPage from '../pages/backoffice/DemandesGestionPage'
 import DestinationsGestionPage from '../pages/backoffice/DestinationsGestionPage'
 import GestionAccueilPage from '../pages/backoffice/GestionAccueilPage'
 import PaysGestionPage from '../pages/backoffice/PaysGestionPage'
 import FavorisPage from '../pages/client/FavorisPage'
+import MaDemandePage from '../pages/client/MaDemandePage'
+import MesDemandesPage from '../pages/client/MesDemandesPage'
+import NouvelleDemandePage from '../pages/client/NouvelleDemandePage'
 import ProfilPage from '../pages/client/ProfilPage'
 import NotFoundPage from '../pages/NotFoundPage'
 import AccueilPage from '../pages/public/AccueilPage'
@@ -44,6 +49,9 @@ export default function AppRouter() {
             <Route element={<RoleRoute roles={[ROLES.CLIENT]} />}>
               <Route path={ROUTES.FAVORIS} element={<FavorisPage />} />
               <Route path={ROUTES.PROFIL} element={<ProfilPage />} />
+              <Route path={ROUTES.NOUVELLE_DEMANDE} element={<NouvelleDemandePage />} />
+              <Route path={ROUTES.MES_DEMANDES} element={<MesDemandesPage />} />
+              <Route path={ROUTES.MA_DEMANDE} element={<MaDemandePage />} />
             </Route>
           </Route>
           <Route path="*" element={<NotFoundPage />} />
@@ -58,6 +66,8 @@ export default function AppRouter() {
               <Route path={ROUTES.GESTION_ACTIVITES} element={<ActivitesGestionPage />} />
               <Route path={ROUTES.GESTION_CLIENTS} element={<ClientsPage />} />
               <Route path={ROUTES.GESTION_CLIENT_DETAIL} element={<ClientDetailPage />} />
+              <Route path={ROUTES.GESTION_DEMANDES} element={<DemandesGestionPage />} />
+              <Route path={ROUTES.GESTION_DEMANDE_DETAIL} element={<DemandeGestionDetailPage />} />
               <Route element={<RoleRoute roles={[ROLES.ADMINISTRATEUR]} />}>
                 <Route path={ROUTES.GESTION_AGENTS} element={<AgentsPage />} />
               </Route>

@@ -1,0 +1,6 @@
+.nouvelle-demande__suite {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espace-m);
+  margin-top: var(--espace-l);
+}

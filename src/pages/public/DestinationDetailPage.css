@@ -46,3 +46,11 @@
 .destination-detail__pays a {
   color: inherit;
 }
+
+/* « Demander ce voyage » puis le bouton favori, l'un sous l'autre. */
+.destination-detail__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-s);
+  margin-top: var(--espace-l);
+}

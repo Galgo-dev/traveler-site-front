@@ -19,6 +19,11 @@ function ZoneCompte() {
           </Link>
         )}
         {estClient && (
+          <Link to={ROUTES.MES_DEMANDES} className="bouton bouton--secondaire">
+            Mes demandes
+          </Link>
+        )}
+        {estClient && (
           <Link to={ROUTES.PROFIL} className="bouton bouton--secondaire">
             Mon profil
           </Link>

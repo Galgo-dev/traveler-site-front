@@ -1,0 +1,17 @@
+.demande-gestion__bloc {
+  margin-bottom: var(--espace-l);
+  padding: var(--espace-l);
+  border: 2px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+}
+
+.demande-gestion__bloc a {
+  color: var(--couleur-primaire);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+/* Le motif saisi par l'agent garde ses retours à la ligne. */
+.demande-gestion__motif {
+  white-space: pre-line;
+}

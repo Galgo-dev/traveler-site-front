@@ -9,7 +9,7 @@ import Loader from '../../components/ui/Loader'
 import Modal from '../../components/ui/Modal'
 import SuccessMessage from '../../components/ui/SuccessMessage'
 import { useDossierClient } from '../../hooks/useClients'
-import { ROUTES } from '../../utils/constants'
+import { ROUTES, routeDemandesDuClient } from '../../utils/constants'
 import { formaterDate } from '../../utils/formatters'
 import './ClientDetailPage.css'
 
@@ -80,6 +80,9 @@ export default function ClientDetailPage() {
         <InfosClient client={client} />
         <div className="dossier-client__actions">
           <Button onClick={() => ouvrirAction(ACTIONS.CORRECTION)}>Corriger les informations</Button>
+          <Link to={routeDemandesDuClient(client.id)} className="bouton bouton--secondaire">
+            Voir ses demandes de voyage
+          </Link>
           <Button variante="danger" onClick={() => ouvrirAction(ACTIONS.EFFACEMENT)}>
             Effacer le compte (RGPD)
           </Button>

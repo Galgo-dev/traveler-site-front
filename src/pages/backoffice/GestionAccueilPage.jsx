@@ -16,6 +16,11 @@ const SECTIONS = [
     description: 'Gérer les activités : catégorie, durée, prix, âge minimum…',
   },
   {
+    to: ROUTES.GESTION_DEMANDES,
+    titre: 'Demandes de voyage',
+    description: 'Rappeler les clients, confirmer ou annuler leurs demandes de voyage.',
+  },
+  {
     to: ROUTES.GESTION_CLIENTS,
     titre: 'Clients',
     description: 'Consulter le dossier d’un client, corriger ses informations ou effacer son compte.',

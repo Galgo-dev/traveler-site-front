@@ -47,6 +47,11 @@ export function routeGestionDemande(id) {
   return `${ROUTES.GESTION_DEMANDES}/${id}`
 }
 
+/** Liste du personnel limitée aux demandes d'un client (depuis son dossier). */
+export function routeDemandesDuClient(clientId) {
+  return `${ROUTES.GESTION_DEMANDES}?clientId=${clientId}`
+}
+
 export function routeClientDetail(id) {
   return `${ROUTES.GESTION_CLIENTS}/${id}`
 }

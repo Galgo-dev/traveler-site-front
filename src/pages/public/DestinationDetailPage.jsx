@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
 import ActiviteCard from '../../components/catalogue/ActiviteCard'
+import BoutonDemande from '../../components/catalogue/BoutonDemande'
 import BoutonFavori from '../../components/catalogue/BoutonFavori'
 import DestinationPhoto from '../../components/catalogue/DestinationPhoto'
 import InfosPratiques from '../../components/catalogue/InfosPratiques'
@@ -86,7 +87,10 @@ function FicheDestination({ destination }) {
             )}
           </dl>
 
-          <BoutonFavori type="destinations" id={id} nom={nom} />
+          <div className="destination-detail__actions">
+            <BoutonDemande destinationId={id} />
+            <BoutonFavori type="destinations" id={id} nom={nom} />
+          </div>
         </div>
       </section>
 
